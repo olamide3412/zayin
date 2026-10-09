@@ -1,0 +1,117 @@
+[
+  {
+    "id": "worked_example",
+    "description": "Standard worked example from §3.4 of the specification",
+    "inputs": {
+      "appliances": [
+        { "name": "LED bulb", "watts": 10, "qty": 8, "hours": 5, "surge": 1.0, "is_resistive": false },
+        { "name": "Ceiling fan", "watts": 75, "qty": 3, "hours": 8, "surge": 2.0, "is_resistive": false },
+        { "name": "TV (LED)", "watts": 80, "qty": 1, "hours": 6, "surge": 1.0, "is_resistive": false },
+        { "name": "Decoder", "watts": 20, "qty": 1, "hours": 6, "surge": 1.0, "is_resistive": false },
+        { "name": "Fridge (medium, duty-cycled)", "watts": 150, "qty": 1, "hours": 10, "surge": 3.0, "is_resistive": false },
+        { "name": "Wi-Fi router", "watts": 12, "qty": 1, "hours": 24, "surge": 1.0, "is_resistive": false },
+        { "name": "Laptop", "watts": 65, "qty": 1, "hours": 6, "surge": 1.0, "is_resistive": false }
+      ],
+      "backup_hours": 12,
+      "goal": "full_solar",
+      "battery_type": "lithium",
+      "zone": "south_west",
+      "days_of_autonomy": 1,
+      "panel_watts": 550,
+      "diversity_factor": 1.0
+    },
+    "expected": {
+      "energy": {
+        "dailyWh": 4978,
+        "monthlyKWh": 149.3,
+        "peakW": 632,
+        "surgePeakW": 932,
+        "windowWh": 4834
+      },
+      "inverter": {
+        "kva": 2.5,
+        "voltage": 24,
+        "upsizedForBattery": true,
+        "surgeOk": true
+      },
+      "battery": {
+        "usableWhNeeded": 5371,
+        "bankWh": 6714,
+        "bankAh": 280,
+        "type": "lithium",
+        "unitsNeeded": 3
+      },
+      "solar": {
+        "requiredW": 1475,
+        "panelW": 550,
+        "panels": 3,
+        "arrayW": 1650,
+        "peakSunHours": 4.5
+      },
+      "controller": {
+        "mpptAmps": 85.9,
+        "recommendedA": 100
+      }
+    }
+  },
+  {
+    "id": "small_apartment",
+    "description": "Minimal 1-bedroom flat: lights, standing fan, TV, phones",
+    "inputs": {
+      "appliances": [
+        { "name": "LED bulb", "watts": 10, "qty": 4, "hours": 5, "surge": 1.0 },
+        { "name": "Standing fan", "watts": 60, "qty": 1, "hours": 8, "surge": 2.0 },
+        { "name": "TV LED 32\"", "watts": 50, "qty": 1, "hours": 5, "surge": 1.0 },
+        { "name": "Phone charger", "watts": 10, "qty": 2, "hours": 3, "surge": 1.0 }
+      ],
+      "backup_hours": 8,
+      "goal": "backup",
+      "battery_type": "tubular",
+      "zone": "south_west",
+      "days_of_autonomy": 1,
+      "panel_watts": 550,
+      "diversity_factor": 1.0
+    },
+    "expected": {
+      "energy": {
+        "dailyWh": 990,
+        "peakW": 170
+      },
+      "inverter": {
+        "kva": 1.0,
+        "voltage": 12
+      },
+      "battery": {
+        "type": "tubular"
+      }
+    }
+  },
+  {
+    "id": "home_with_ac",
+    "description": "Family home with 1.5HP AC and refrigerator",
+    "inputs": {
+      "appliances": [
+        { "name": "Air conditioner 1.5 HP", "watts": 1200, "qty": 1, "hours": 6, "surge": 3.0 },
+        { "name": "Refrigerator (medium)", "watts": 150, "qty": 1, "hours": 10, "surge": 3.0 },
+        { "name": "Ceiling fan", "watts": 75, "qty": 4, "hours": 8, "surge": 2.0 },
+        { "name": "TV LED 43\"–55\"", "watts": 80, "qty": 2, "hours": 6, "surge": 1.0 },
+        { "name": "LED bulb", "watts": 10, "qty": 12, "hours": 6, "surge": 1.0 }
+      ],
+      "backup_hours": 10,
+      "goal": "full_solar",
+      "battery_type": "lithium",
+      "zone": "south_west",
+      "days_of_autonomy": 1,
+      "panel_watts": 550,
+      "diversity_factor": 1.0
+    },
+    "expected": {
+      "inverter": {
+        "voltage": 48
+      },
+      "battery": {
+        "type": "lithium"
+      }
+    }
+  }
+]
