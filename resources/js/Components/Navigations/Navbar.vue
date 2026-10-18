@@ -63,7 +63,7 @@ onUnmounted(() => {
 });
 
 const site = computed(() => page.props.site || {
-    name: 'Zayin Technologies',
+    name: 'Zayin Global Limited',
     phone: '+234 803 123 4567',
     whatsapp: '2348031234567',
     email: 'support@zayin.ng',
@@ -75,7 +75,7 @@ const cartCount = computed(() => page.props.cart?.count || 0);
 const whatsappLink = computed(() => {
     const raw = site.value.whatsapp || '2348031234567';
     const clean = String(raw).replace(/[^0-9]/g, '');
-    return generateWhatappLink(clean, 'Hello Zayin Technologies, I would like to make an enquiry.');
+    return generateWhatappLink(clean, 'Hello Zayin Global Limited, I would like to make an enquiry.');
 });
 
 const servicesList = [
@@ -134,22 +134,28 @@ const packagesList = [
 
 const companyList = [
     {
-        title: 'About Zayin Technologies',
+        title: 'About Zayin Global Limited',
         href: '/about',
         desc: 'Our engineering heritage, certified installers, and mission.',
         icon: 'circle-info',
     },
     {
-        title: 'Solar Maintenance Plans',
-        href: '/maintenance-plans',
-        desc: 'Preventive bi-monthly panel wash and electrical audits.',
-        icon: 'shield-halved',
+        title: 'Verified Projects & Gallery',
+        href: '/projects',
+        desc: 'Real-world solar, Starlink & DSTV field installations.',
+        icon: 'solar-panel',
     },
     {
         title: 'Customer Reviews',
         href: '/testimonials',
         desc: 'Verified homeowner and corporate client feedback.',
         icon: 'comments',
+    },
+    {
+        title: 'Solar Maintenance Plans',
+        href: '/maintenance-plans',
+        desc: 'Preventive bi-monthly panel wash and electrical audits.',
+        icon: 'shield-halved',
     },
     {
         title: 'Knowledge & FAQs',
@@ -163,6 +169,12 @@ const companyList = [
         desc: 'Field project updates and company bulletins.',
         icon: 'book-open',
     },
+    {
+        title: 'Contact Us & Hubs',
+        href: '/contact',
+        desc: 'Delta HQ, Lagos & Abuja operations offices.',
+        icon: 'envelope',
+    },
 ];
 </script>
 
@@ -170,9 +182,9 @@ const companyList = [
     <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <!-- Top Contact & Utility Bar (Desktop) -->
         <div class="hidden lg:block bg-slate-950 text-slate-300 text-xs py-2 px-4 sm:px-6 lg:px-8 border-b border-slate-800/80">
-            <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="max-w-[1440px] mx-auto flex items-center justify-between">
                 <!-- Left: Quick Direct Contact -->
-                <div class="flex items-center space-x-5 whitespace-nowrap">
+                <div class="flex items-center space-x-4 whitespace-nowrap">
                     <a 
                         :href="`tel:${site.phone}`" 
                         class="inline-flex items-center space-x-1.5 hover:text-amber-400 transition-colors"
@@ -202,16 +214,23 @@ const companyList = [
                 </div>
 
                 <!-- Right: Location & Quick Utility Links -->
-                <div class="flex items-center space-x-5 text-slate-400 whitespace-nowrap">
+                <div class="flex items-center space-x-4 text-slate-400 whitespace-nowrap text-[11px]">
                     <span class="inline-flex items-center space-x-1.5">
                         <font-awesome-icon :icon="['fas', 'location-dot']" class="text-amber-400 text-[11px]" />
                         <span>{{ site.address }}</span>
-                        <span class="text-[10px] bg-slate-800 text-amber-300 font-bold px-1.5 py-0.5 rounded ml-1">Nationwide</span>
+                        <span class="text-[9px] bg-slate-800 text-amber-300 font-bold px-1.5 py-0.5 rounded ml-1">Nationwide</span>
                     </span>
 
                     <span class="text-slate-700">|</span>
 
-                    <Link href="/about" class="hover:text-amber-400 transition-colors">Why Zayin</Link>
+                    <Link href="/book-installation" class="inline-flex items-center space-x-1 text-slate-300 hover:text-amber-400 transition-colors font-medium">
+                        <font-awesome-icon :icon="['fas', 'calendar-check']" class="text-amber-400 text-[10px]" />
+                        <span>Book a Visit</span>
+                    </Link>
+
+                    <span class="text-slate-700">|</span>
+
+                    <Link href="/contact" class="hover:text-amber-400 transition-colors font-medium">Contact Us</Link>
                     <Link href="/faq" class="hover:text-amber-400 transition-colors">FAQs</Link>
                 </div>
             </div>
@@ -221,10 +240,10 @@ const companyList = [
         <nav 
             :class="[
                 'w-full transition-all duration-300 bg-white/95 backdrop-blur-md border-b',
-                isSticky ? 'shadow-md py-2.5 border-slate-200' : 'py-3.5 border-slate-100'
+                isSticky ? 'shadow-md py-2.5 border-slate-200' : 'py-3 border-slate-100'
             ]"
         >
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 xl:gap-6">
                 <!-- Brand Logo (Shrink-0 to avoid crushing) -->
                 <Link href="/" class="flex items-center space-x-2.5 group shrink-0">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-slate-900 to-amber-500 flex items-center justify-center text-white shadow-md shadow-amber-500/10 group-hover:scale-105 transition-transform duration-300 shrink-0">
@@ -232,7 +251,8 @@ const companyList = [
                     </div>
                     <div class="leading-tight">
                         <span class="text-xl sm:text-2xl font-black tracking-tight text-slate-900 flex items-center">
-                            ZAYIN<span class="text-amber-500 ml-1">TECH</span>
+                            ZAYIN<span class="text-amber-500 ml-1">GLOBAL</span>
+                            <span class="text-[9px] font-bold text-amber-700 bg-amber-100 border border-amber-300 rounded px-1.5 py-0.5 ml-1.5 leading-none">LTD</span>
                         </span>
                         <p class="text-[9px] text-slate-500 tracking-wider font-bold uppercase hidden sm:block">
                             Solar · Starlink · DSTV
@@ -240,8 +260,8 @@ const companyList = [
                     </div>
                 </Link>
 
-                <!-- Desktop Menu Links (Clean, Uncluttered, Single-line) -->
-                <div class="hidden lg:flex items-center space-x-1 xl:space-x-2 text-sm font-semibold text-slate-700">
+                <!-- Desktop Menu Links (Clean, Balanced 5-Item Navigation) -->
+                <div class="hidden lg:flex items-center space-x-1 xl:space-x-1.5 text-sm font-semibold text-slate-700">
                     <Link 
                         href="/" 
                         class="px-3 py-2 rounded-xl hover:text-amber-600 hover:bg-slate-50 transition-colors whitespace-nowrap"
@@ -272,8 +292,11 @@ const companyList = [
                             class="absolute left-0 top-full pt-2 w-80 z-50"
                         >
                             <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 animate-in fade-in slide-in-from-top-1 duration-150">
-                                <div class="px-3 py-1.5 border-b border-slate-100 mb-1">
+                                <div class="px-3 py-1.5 border-b border-slate-100 mb-1 flex items-center justify-between">
                                     <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Engineering Solutions</span>
+                                    <Link href="/services" @click="servicesOpen = false" class="text-[11px] font-semibold text-amber-600 hover:underline">
+                                        All Services &rarr;
+                                    </Link>
                                 </div>
 
                                 <Link 
@@ -296,14 +319,14 @@ const companyList = [
                                     </div>
                                 </Link>
 
-                                <div class="px-2 pt-2 border-t border-slate-100 mt-1">
+                                <div class="px-2 pt-2 border-t border-slate-100 mt-1 flex items-center justify-between gap-2">
                                     <Link 
-                                        href="/services" 
+                                        href="/book-installation" 
                                         @click="servicesOpen = false" 
-                                        class="px-2 py-1 text-xs font-bold text-amber-600 hover:text-amber-700 flex items-center justify-between rounded-lg hover:bg-amber-50/50"
+                                        class="w-full py-1.5 px-2.5 text-xs font-bold text-slate-800 bg-slate-100 hover:bg-amber-100 hover:text-amber-900 rounded-lg transition-colors flex items-center justify-center space-x-1.5"
                                     >
-                                        <span>View All Services</span>
-                                        <font-awesome-icon :icon="['fas', 'arrow-right']" class="text-[10px]" />
+                                        <font-awesome-icon :icon="['fas', 'calendar-check']" class="text-amber-600 text-xs" />
+                                        <span>Book Installation Visit</span>
                                     </Link>
                                 </div>
                             </div>
@@ -356,25 +379,17 @@ const companyList = [
                         </div>
                     </div>
 
-                    <!-- Solar Calculator (Sleek single-line badge tool) -->
+                    <!-- Solar Calculator Tool (Sleek, eye-catching badge) -->
                     <Link 
                         href="/solar-calculator" 
                         class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-slate-700 hover:text-amber-600 hover:bg-amber-50/80 transition-colors font-semibold whitespace-nowrap group"
                     >
                         <font-awesome-icon :icon="['fas', 'calculator']" class="text-amber-500 text-xs group-hover:scale-110 transition-transform" />
                         <span>Solar Calculator</span>
-                        <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-extrabold bg-amber-100 text-amber-800 border border-amber-300 tracking-wider">TOOL</span>
+                        <span class="inline-flex items-center px-1.5 py-0.2 rounded-full text-[9px] font-extrabold bg-amber-100 text-amber-800 border border-amber-300 tracking-wider">TOOL</span>
                     </Link>
 
-                    <!-- Projects -->
-                    <Link 
-                        href="/projects" 
-                        class="px-3 py-2 rounded-xl hover:text-amber-600 hover:bg-slate-50 transition-colors whitespace-nowrap"
-                    >
-                        Projects
-                    </Link>
-
-                    <!-- Company Dropdown (Consolidates Maintenance, About, FAQs, Reviews, Blog) -->
+                    <!-- Company Dropdown (Consolidates About, Projects, Reviews, Maintenance, Blog, FAQs, Contact) -->
                     <div 
                         ref="companyRef" 
                         class="relative"
@@ -394,24 +409,31 @@ const companyList = [
 
                         <div 
                             v-show="companyOpen"
-                            class="absolute right-0 top-full pt-2 w-72 z-50"
+                            class="absolute right-0 top-full pt-2 w-80 z-50"
                         >
                             <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 animate-in fade-in slide-in-from-top-1 duration-150">
+                                <div class="px-3 py-1.5 border-b border-slate-100 mb-1 flex items-center justify-between">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">About & Resources</span>
+                                    <Link href="/about" @click="companyOpen = false" class="text-[11px] font-semibold text-amber-600 hover:underline">
+                                        Why Zayin &rarr;
+                                    </Link>
+                                </div>
+
                                 <Link 
                                     v-for="item in companyList" 
                                     :key="item.href"
                                     :href="item.href"
                                     @click="companyOpen = false"
-                                    class="flex items-start p-2.5 rounded-xl hover:bg-slate-50 transition-colors group"
+                                    class="flex items-start p-2 rounded-xl hover:bg-slate-50 transition-colors group"
                                 >
-                                    <div class="mt-0.5 mr-3 w-7 h-7 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                                    <div class="mt-0.5 mr-2.5 w-7 h-7 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:text-white transition-colors">
                                         <font-awesome-icon :icon="['fas', item.icon]" class="text-xs" />
                                     </div>
                                     <div>
                                         <div class="font-bold text-slate-900 group-hover:text-amber-600 text-xs transition-colors">
                                             {{ item.title }}
                                         </div>
-                                        <div class="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                                        <div class="text-[10.5px] text-slate-500 line-clamp-1">
                                             {{ item.desc }}
                                         </div>
                                     </div>
@@ -419,18 +441,10 @@ const companyList = [
                             </div>
                         </div>
                     </div>
-
-                    <!-- Contact Direct Link -->
-                    <Link 
-                        href="/contact" 
-                        class="px-3 py-2 rounded-xl hover:text-amber-600 hover:bg-slate-50 transition-colors whitespace-nowrap"
-                    >
-                        Contact
-                    </Link>
                 </div>
 
                 <!-- Desktop Actions: Cart + Book Visit (on wide screens) + Primary Quote Button -->
-                <div class="hidden lg:flex items-center space-x-2.5 shrink-0">
+                <div class="hidden lg:flex items-center space-x-2 shrink-0">
                     <!-- Cart Trigger -->
                     <Link 
                         href="/cart"
@@ -446,10 +460,10 @@ const companyList = [
                         </span>
                     </Link>
 
-                    <!-- Book Visit (Shown gracefully on xl+ screens so 1024px-1279px remains breathable) -->
+                    <!-- Book Visit (Shown on xl+ screens with compact pill styling) -->
                     <Link 
                         href="/book-installation"
-                        class="hidden xl:inline-flex items-center px-3.5 py-2 rounded-xl text-slate-700 hover:text-slate-950 font-bold text-xs border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors shadow-xs whitespace-nowrap"
+                        class="hidden xl:inline-flex items-center px-3 py-2 rounded-xl text-slate-700 hover:text-slate-950 font-bold text-xs border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors shadow-xs whitespace-nowrap shrink-0"
                     >
                         <font-awesome-icon :icon="['fas', 'calendar-check']" class="mr-1.5 text-slate-500 text-xs" />
                         <span>Book Visit</span>
@@ -458,7 +472,7 @@ const companyList = [
                     <!-- Primary High-Impact CTA -->
                     <Link 
                         href="/request-quote"
-                        class="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 hover:text-slate-950 font-extrabold text-xs shadow-md shadow-amber-500/25 hover:shadow-lg transition-all duration-200 transform active:scale-95 whitespace-nowrap"
+                        class="inline-flex items-center space-x-1.5 px-3.5 xl:px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 hover:text-slate-950 font-extrabold text-xs shadow-md shadow-amber-500/25 hover:shadow-lg transition-all duration-200 transform active:scale-95 whitespace-nowrap shrink-0"
                     >
                         <font-awesome-icon :icon="['fas', 'file-invoice-dollar']" class="text-xs" />
                         <span>Get Free Quote</span>

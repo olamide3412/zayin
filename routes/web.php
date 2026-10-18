@@ -21,6 +21,15 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\MaintenancePlanController as AdminPlanController;
 use App\Http\Controllers\Admin\StateFeeController as AdminStateFeeController;
 use App\Http\Controllers\Admin\SolarCalcSettingController as AdminSolarCalcSettingController;
+use App\Http\Controllers\Invoice\InvoiceController;
+use App\Http\Controllers\Invoice\InvoicePdfController;
+use App\Http\Controllers\Invoice\InvoicePreviewController;
+use App\Http\Controllers\Invoice\InvoicePublicController;
+use App\Http\Controllers\Invoice\InvoiceItemSuggestionController;
+use App\Http\Controllers\Invoice\CustomerController;
+use App\Http\Controllers\Invoice\CatalogController;
+use App\Http\Controllers\Invoice\TemplateController;
+use App\Http\Controllers\Invoice\BusinessProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -72,8 +81,11 @@ Route::post('/quote', [QuoteController::class, 'store'])->name('quote.store');
 
 Route::get('/book-installation', [BookingController::class, 'create'])->name('bookings.create');
 Route::get('/book', [BookingController::class, 'create'])->name('booking.create');
+Route::redirect('/book-appointment', '/book-installation')->name('book-appointment');
+Route::redirect('/appointments', '/book-installation')->name('appointments.index');
 Route::post('/book-installation', [BookingController::class, 'store'])->name('bookings.store');
 Route::post('/book', [BookingController::class, 'store'])->name('booking.store');
+Route::post('/appointments', [BookingController::class, 'store'])->name('appointments.store');
 
 // Contact alias
 Route::post('/contact/submit', [PageController::class, 'submitContact'])->name('contact.submit');
@@ -93,6 +105,10 @@ Route::post('/orders/{number}/proof', [CommerceController::class, 'uploadProof']
 Route::get('/sitemap.xml', [SitemapController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 
+// Public Invoice Routes
+Route::get('/i/{token}', [InvoicePublicController::class, 'show'])->name('invoices.public');
+Route::get('/i/{token}/pdf', [InvoicePublicController::class, 'downloadPdf'])->name('invoices.public.pdf');
+
 // Auth Routes
 Route::get('/login', [AuthController::class, 'showLinkRequestForm'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
@@ -101,6 +117,46 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 // Dashboard & Staff Routes
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
+    // ── Invoice Module Routes ───────────────────────────────────────────────
+    Route::get('/invoice-items/suggest', [InvoiceItemSuggestionController::class, 'suggest'])->name('invoices.items.suggest');
+    Route::post('/invoices/preview', [InvoicePreviewController::class, 'live'])->name('invoices.preview.live');
+
+    Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
+    Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('invoices.create');
+    Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
+    Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('invoices.show');
+    Route::get('/invoices/{invoice}/edit', [InvoiceController::class, 'edit'])->name('invoices.edit');
+    Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])->name('invoices.update');
+    Route::post('/invoices/{invoice}/issue', [InvoiceController::class, 'issue'])->name('invoices.issue');
+    Route::post('/invoices/{invoice}/void', [InvoiceController::class, 'void'])->name('invoices.void');
+    Route::post('/invoices/{invoice}/duplicate', [InvoiceController::class, 'duplicate'])->name('invoices.duplicate');
+    Route::post('/invoices/{invoice}/payments', [InvoiceController::class, 'recordPayment'])->name('invoices.payments.store');
+    Route::get('/invoices/{invoice}/download', [InvoicePdfController::class, 'download'])->name('invoices.pdf.download');
+    Route::get('/invoices/{invoice}/stream', [InvoicePdfController::class, 'stream'])->name('invoices.pdf.stream');
+    Route::get('/invoices/{invoice}/preview', [InvoicePreviewController::class, 'show'])->name('invoices.preview.show');
+
+    // Customers
+    Route::get('/invoices-customers', [CustomerController::class, 'index'])->name('invoices.customers.index');
+    Route::get('/invoices-customers/search', [CustomerController::class, 'search'])->name('invoices.customers.search');
+    Route::post('/invoices-customers', [CustomerController::class, 'store'])->name('invoices.customers.store');
+    Route::put('/invoices-customers/{customer}', [CustomerController::class, 'update'])->name('invoices.customers.update');
+    Route::delete('/invoices-customers/{customer}', [CustomerController::class, 'destroy'])->name('invoices.customers.destroy');
+
+    // Item Catalog
+    Route::get('/invoices-catalog', [CatalogController::class, 'index'])->name('invoices.catalog.index');
+    Route::post('/invoices-catalog', [CatalogController::class, 'store'])->name('invoices.catalog.store');
+    Route::put('/invoices-catalog/{item}', [CatalogController::class, 'update'])->name('invoices.catalog.update');
+    Route::delete('/invoices-catalog/{item}', [CatalogController::class, 'destroy'])->name('invoices.catalog.destroy');
+
+    // Invoice Settings
+    Route::get('/invoices-settings/templates', [TemplateController::class, 'index'])->name('invoices.settings.templates');
+    Route::put('/invoices-settings/templates/{template}', [TemplateController::class, 'update'])->name('invoices.settings.templates.update');
+    Route::get('/invoices-settings/business', [BusinessProfileController::class, 'edit'])->name('invoices.settings.business');
+    Route::put('/invoices-settings/business', [BusinessProfileController::class, 'update'])->name('invoices.settings.business.update');
+    Route::post('/invoices-settings/bank-accounts', [BusinessProfileController::class, 'storeBankAccount'])->name('invoices.settings.bank-accounts.store');
+    Route::put('/invoices-settings/bank-accounts/{account}', [BusinessProfileController::class, 'updateBankAccount'])->name('invoices.settings.bank-accounts.update');
+    Route::delete('/invoices-settings/bank-accounts/{account}', [BusinessProfileController::class, 'destroyBankAccount'])->name('invoices.settings.bank-accounts.destroy');
 
     // ── Image Upload ─────────────────────────────────────────────────────────
     Route::post('/admin/upload-image', [ImageUploadController::class, 'store'])->name('admin.upload-image');

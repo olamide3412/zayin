@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Solar Load Sizing Report - Zayin Technologies</title>
+    <title>Solar Load Sizing Report - Zayin Global Limited</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -254,11 +254,11 @@
 
     <div class="disclaimer-box">
         <strong>Official Engineering Disclaimer:</strong>
-        This sizing calculation is an engineering estimate based on the electrical appliances and usage patterns entered. Actual system performance varies with appliance power factors, ambient site temperatures, seasonal sunlight, roof orientation/shading, wire distances, and hardware brands. A certified Zayin Technologies technician will survey your site before final deployment.
+        This sizing calculation is an engineering estimate based on the electrical appliances and usage patterns entered. Actual system performance varies with appliance power factors, ambient site temperatures, seasonal sunlight, roof orientation/shading, wire distances, and hardware brands. A certified Zayin Global Limited technician will survey your site before final deployment.
     </div>
 
     <div class="footer">
-        Zayin Technologies Limited &bull; Abraka, Ethiope East, Delta State &bull; Engineering Field Deployments Across All 36 States + FCT &bull; www.zayin.ng
+        Zayin Global Limited &bull; Abraka, Ethiope East, Delta State &bull; Engineering Field Deployments Across All 36 States + FCT &bull; www.zayin.ng
     </div>
 </body>
 </html>

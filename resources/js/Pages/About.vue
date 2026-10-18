@@ -82,7 +82,7 @@ const milestones = [
                     Powering Nigeria’s Homes &amp; Enterprises with Precision Engineering.
                 </h1>
                 <p class="mt-6 text-base sm:text-lg text-slate-300 leading-relaxed">
-                    Zayin Technologies is a leading Nigerian engineering and installations firm specializing in high-performance solar power plants, Starlink satellite internet, enterprise Wi-Fi networks, and professional DSTV distribution.
+                    Zayin Global Limited is a leading Nigerian engineering and installations firm specializing in high-performance solar power plants, Starlink satellite internet, enterprise Wi-Fi networks, and professional DSTV distribution.
                 </p>
                 <div class="mt-8 flex flex-wrap gap-4">
                     <Link
@@ -127,7 +127,7 @@ const milestones = [
                         The Nigerian environment presents unique electrical challenges: volatile grid voltages, frequent surges, extreme solar irradiance, and high humidity. Ordinary, uncertified setups fail quickly, costing homeowners and business owners millions in blown inverters and damaged electronics.
                     </p>
                     <p class="mt-4 text-slate-600 leading-relaxed text-sm sm:text-base">
-                        At Zayin Technologies, every installation is engineered from first principles. We calculate true starting surge currents (inrush inductive loads), install class-leading DC/AC lightning protection, balance phases with digital meters, and deliver clean, uninterrupted power and gigabit communication.
+                        At Zayin Global Limited, every installation is engineered from first principles. We calculate true starting surge currents (inrush inductive loads), install class-leading DC/AC lightning protection, balance phases with digital meters, and deliver clean, uninterrupted power and gigabit communication.
                     </p>
                     
                     <div class="mt-8 grid grid-cols-2 gap-4">
@@ -146,7 +146,7 @@ const milestones = [
                     <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-100 aspect-4/3 bg-slate-900">
                         <img 
                             src="https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=1200&auto=format&fit=crop" 
-                            alt="Solar Engineering by Zayin Technologies" 
+                            alt="Solar Engineering by Zayin Global Limited" 
                             class="w-full h-full object-cover"
                         />
                     </div>

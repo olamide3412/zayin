@@ -38,8 +38,8 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-NG', { month: '
 
 <template>
     <div class="bg-slate-50 min-h-screen">
-        <Head title="Client Testimonials & Reviews | Zayin Technologies">
-            <meta name="description" content="Read verified feedback from Nigerian homeowners and businesses powered by Zayin Technologies solar inverters, Starlink satellite internet, and DSTV setups." />
+        <Head title="Client Testimonials & Reviews | Zayin Global Limited">
+            <meta name="description" content="Read verified feedback from Nigerian homeowners and businesses powered by Zayin Global Limited solar inverters, Starlink satellite internet, and DSTV setups." />
         </Head>
 
         <!-- Hero Header -->

@@ -57,8 +57,8 @@ class NewsController extends Controller
             'layoutStyle' => $layoutStyle,
         ])->withViewData([
             'meta' => [
-                'title' => 'News, Deployments & Field Bulletins | Zayin Technologies',
-                'description' => 'Stay updated with regional solar projects, Starlink field milestones, and corporate announcements from Zayin Technologies.'
+                'title' => 'News, Deployments & Field Bulletins | Zayin Global Limited',
+                'description' => 'Stay updated with regional solar projects, Starlink field milestones, and corporate announcements from Zayin Global Limited.'
             ]
         ]);
     }
@@ -85,7 +85,7 @@ class NewsController extends Controller
             'related' => $related,
         ])->withViewData([
             'meta' => [
-                'title' => $article->title . ' | News | Zayin Technologies',
+                'title' => $article->title . ' | News | Zayin Global Limited',
                 'description' => $article->excerpt ?: Str::limit(strip_tags($article->body), 150),
                 'image' => $article->cover_image ? asset($article->cover_image) : asset('images/logo.png'),
                 'type' => 'article'

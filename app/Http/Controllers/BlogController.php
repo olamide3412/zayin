@@ -56,7 +56,7 @@ class BlogController extends Controller
             'layoutStyle' => $layoutStyle,
         ])->withViewData([
             'meta' => [
-                'title' => 'Engineering Blog & Solar Insights | Zayin Technologies',
+                'title' => 'Engineering Blog & Solar Insights | Zayin Global Limited',
                 'description' => 'Read our latest engineering articles on solar inverter sizing, Starlink mounting, DSTV signal optimization, and battery storage.'
 
             ]
@@ -83,7 +83,7 @@ class BlogController extends Controller
             'related' => $related,
         ])->withViewData([
             'meta' => [
-                'title' => $post->title . ' | Blog | Zayin Technologies',
+                'title' => $post->title . ' | Blog | Zayin Global Limited',
                 'description' => $post->excerpt ?: Str::limit(strip_tags($post->body), 150),
                 'image' => $post->cover_image ? asset($post->cover_image) : asset('images/logo.png'),
                 'type' => 'article'

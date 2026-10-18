@@ -8,7 +8,7 @@ const page = usePage();
 const whatsappLink = computed(() => {
     const raw = page.props.site?.whatsapp || page.props.settings?.whatsapp || '2348030000000';
     const cleanPhone = String(raw).replace(/[^0-9]/g, '');
-    return generateWhatappLink(cleanPhone, 'Hello Zayin Technologies, I would like to make an enquiry about your Solar, Starlink & DSTV services.');
+    return generateWhatappLink(cleanPhone, 'Hello Zayin Global Limited, I would like to make an enquiry about your Solar, Starlink & DSTV services.');
 });
 </script>
 

@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             TestimonialSeeder::class,
             BlogAndNewsSeeder::class,
             PartnerSeeder::class,
+            SolarCalculatorSeeder::class,
+            SolarPackagesSeeder::class,
+            InvoiceSeeder::class,
         ]);
     }
 }

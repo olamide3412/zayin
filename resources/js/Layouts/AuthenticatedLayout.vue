@@ -1,9 +1,35 @@
 <script setup>
-import { ref } from 'vue'
-import { Link, usePage } from '@inertiajs/vue3'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { Link, usePage, router } from '@inertiajs/vue3'
 import FlashMessages from '@/Components/FlashMessages.vue'
 
-const isSidebarOpen = ref(true)
+const isSidebarOpen = ref(false)
+const isMobile = ref(false)
+
+const checkScreenSize = () => {
+    if (typeof window !== 'undefined') {
+        const mobile = window.innerWidth < 1024
+        isMobile.value = mobile
+        if (!mobile) {
+            isSidebarOpen.value = true
+        }
+    }
+}
+
+onMounted(() => {
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('resize', checkScreenSize)
+})
+
+router.on('navigate', () => {
+    if (isMobile.value) {
+        isSidebarOpen.value = false
+    }
+})
 
 const toggleSidebar = () => {
     isSidebarOpen.value = !isSidebarOpen.value
@@ -11,24 +37,59 @@ const toggleSidebar = () => {
 </script>
 
 <template>
-    <div class="flex h-screen bg-gray-100 font-sans">
+    <div class="flex h-screen bg-gray-100 font-sans overflow-hidden">
         <FlashMessages />
         
+        <!-- Mobile Backdrop Overlay -->
+        <transition 
+            enter-active-class="transition-opacity duration-200" 
+            enter-from-class="opacity-0" 
+            enter-to-class="opacity-100"
+            leave-active-class="transition-opacity duration-150" 
+            leave-from-class="opacity-100" 
+            leave-to-class="opacity-0"
+        >
+            <div 
+                v-if="isMobile && isSidebarOpen" 
+                @click="isSidebarOpen = false" 
+                class="fixed inset-0 bg-slate-950/50 backdrop-blur-xs z-30 lg:hidden"
+                aria-hidden="true"
+            />
+        </transition>
+
         <!-- Sidebar -->
         <aside 
             :class="[
-                'bg-white text-gray-800 shadow-xl transition-all duration-300 ease-in-out z-20 flex flex-col',
-                isSidebarOpen ? 'w-64' : 'w-20'
+                'bg-white text-gray-800 shadow-xl transition-all duration-300 ease-in-out flex flex-col',
+                isMobile 
+                    ? ['fixed inset-y-0 left-0 w-64 z-40', isSidebarOpen ? 'translate-x-0' : '-translate-x-full']
+                    : ['relative z-20', isSidebarOpen ? 'w-64' : 'w-20']
             ]"
         >
             <!-- Sidebar Header -->
             <div class="flex items-center justify-between h-16 border-b border-gray-100 px-4">
-                <div class="flex items-center" v-if="isSidebarOpen">
-                    <span class="text-lg font-bold text-primary truncate">Administration</span>
+                <div class="flex items-center" v-if="isSidebarOpen || isMobile">
+                    <span class="text-base font-black text-slate-900 tracking-tight">
+                        ZAYIN<span class="text-amber-500 ml-1">GLOBAL</span>
+                    </span>
+                    <span class="text-[9px] font-bold text-amber-700 bg-amber-100 border border-amber-300 rounded px-1.5 py-0.5 ml-1.5 leading-none">LTD</span>
                 </div>
                 <div v-else class="mx-auto">
-                    <span class="text-xl font-bold text-primary">A</span>
+                    <span class="text-xl font-bold text-amber-500">Z</span>
                 </div>
+
+                <!-- Close Button on Mobile -->
+                <button 
+                    v-if="isMobile && isSidebarOpen" 
+                    type="button"
+                    @click="isSidebarOpen = false" 
+                    class="lg:hidden p-1.5 text-gray-400 hover:text-gray-600 rounded-md"
+                    aria-label="Close menu"
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
 
             <!-- Navigation Links -->
@@ -47,6 +108,21 @@ const toggleSidebar = () => {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                             </svg>
                             <span class="ml-3 font-medium transition-opacity duration-300" v-show="isSidebarOpen">Dashboard</span>
+                        </Link>
+                    </li>
+
+                    <!-- Invoices (A5 Generator) -->
+                    <li>
+                        <Link 
+                            :href="route('invoices.index')" 
+                            class="flex items-center px-4 py-3 mx-2 rounded-lg transition-colors"
+                            :class="{'bg-primary text-white': $page.url.startsWith('/invoices'), 'hover:bg-gray-100': !$page.url.startsWith('/invoices')}"
+                            title="Invoices & Quotations"
+                        >
+                            <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <span class="ml-3 font-medium transition-opacity duration-300" v-show="isSidebarOpen">Invoices</span>
                         </Link>
                     </li>
 
@@ -240,6 +316,10 @@ const toggleSidebar = () => {
 
             <!-- Page Content -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4 md:p-6">
+                <!-- Page Header (if provided by view) -->
+                <div v-if="$slots.header" class="mb-6">
+                    <slot name="header" />
+                </div>
                 <slot />
             </main>
         </div>

@@ -48,11 +48,35 @@ const toggleAppliance = (id) => {
     }
 };
 
+const submittedQuote = ref(null);
+
+const activeReference = computed(() => {
+    return submittedQuote.value?.reference || page.props.flash?.quote_reference || null;
+});
+
+const activeWhatsAppLink = computed(() => {
+    return submittedQuote.value?.whatsapp_link || page.props.flash?.whatsapp_link || null;
+});
+
+const activeSuccessMsg = computed(() => {
+    return submittedQuote.value?.message || page.props.flash?.success || 'Your quote request has been received! Our engineering team will review and contact you shortly.';
+});
+
 const submitQuote = () => {
     form.post('/request-quote', {
-        preserveScroll: true,
-        onSuccess: () => {
+        preserveScroll: false,
+        onSuccess: (pageResp) => {
+            const flash = pageResp.props.flash || {};
+            submittedQuote.value = {
+                reference: flash.quote_reference,
+                whatsapp_link: flash.whatsapp_link,
+                message: flash.success,
+            };
             form.reset();
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+        },
+        onError: () => {
+            window.scrollTo({ top: 200, behavior: 'smooth' });
         }
     });
 };
@@ -78,7 +102,7 @@ const submitQuote = () => {
 
             <!-- Success Card -->
             <div 
-                v-if="page.props.flash?.quote_reference"
+                v-if="activeReference"
                 class="mb-8 rounded-3xl bg-emerald-600 text-white p-8 shadow-2xl space-y-4 text-center animate-in fade-in duration-300"
             >
                 <div class="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-3xl mx-auto">
@@ -86,14 +110,14 @@ const submitQuote = () => {
                 </div>
                 <h2 class="text-2xl font-black">Quote Request Received!</h2>
                 <p class="text-emerald-100 text-sm max-w-lg mx-auto">
-                    {{ page.props.flash?.success }}
+                    {{ activeSuccessMsg }}
                 </p>
                 <div class="text-xs font-mono font-bold bg-emerald-700/80 px-4 py-2 rounded-xl inline-block">
-                    Reference ID: {{ page.props.flash?.quote_reference }}
+                    Reference ID: {{ activeReference }}
                 </div>
-                <div v-if="page.props.flash?.whatsapp_link" class="pt-2">
+                <div v-if="activeWhatsAppLink" class="pt-2">
                     <a 
-                        :href="page.props.flash?.whatsapp_link"
+                        :href="activeWhatsAppLink"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="inline-flex items-center space-x-2 px-6 py-3.5 rounded-2xl bg-white text-emerald-900 font-bold text-sm shadow-lg hover:bg-emerald-50 transition"

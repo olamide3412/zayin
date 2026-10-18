@@ -21,7 +21,7 @@ const props = defineProps({
 const page = usePage();
 const bankDetails = computed(() => ({
     bankName: page.props.site?.bank_name || 'Zenith Bank PLC',
-    accountName: page.props.site?.account_name || 'Zayin Technologies Limited',
+    accountName: page.props.site?.account_name || 'Zayin Global Limited',
     accountNumber: page.props.site?.account_number || '1224908123',
     sortCode: '057150013',
 }));

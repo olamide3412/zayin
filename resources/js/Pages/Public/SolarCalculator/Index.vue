@@ -50,6 +50,20 @@ const showShareModal = ref(false);
 const copySuccess = ref(false);
 const isSaving = ref(false);
 
+const initialAppliances = Array.isArray(props.savedCalculation?.appliances) && props.savedCalculation.appliances.length > 0
+    ? props.savedCalculation.appliances
+    : [];
+
+const initialSetup = props.savedCalculation ? {
+    backup_hours: props.savedCalculation.backup_hours,
+    goal: props.savedCalculation.goal,
+    battery_type: props.savedCalculation.battery_type,
+    zone: props.savedCalculation.zone,
+    days_of_autonomy: props.savedCalculation.days_of_autonomy,
+    panel_watts: props.savedCalculation.panel_watts,
+    diversity_factor: props.savedCalculation.diversity_factor,
+} : {};
+
 const {
     appliances,
     setup,
@@ -57,7 +71,7 @@ const {
     addAppliance,
     removeAppliance,
     clearAll,
-} = useSolarCalculator([], {}, props.constants);
+} = useSolarCalculator(initialAppliances, initialSetup, props.constants);
 
 // Handle step navigation
 const nextStep = () => {
@@ -179,7 +193,7 @@ const faqs = [
         a: 'Electric irons (1,000W–1,500W) and kettles (1,500W–2,200W) are resistive heating elements that pull immense continuous current directly from your battery bank. Using them when sunlight is strong allows solar panels to power them directly, preserving battery life for night use.',
     },
     {
-        q: 'Does Zayin Technologies install systems outside Lagos and Delta State?',
+        q: 'Does Zayin Global Limited install systems outside Lagos and Delta State?',
         a: 'Yes. We are headquartered in Abraka, Ethiope East, Delta State, and operate nationwide across all 36 States and the FCT with certified engineers and insured hardware delivery.',
     },
 ];

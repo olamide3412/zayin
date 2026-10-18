@@ -20,7 +20,7 @@ AOS.init({
 const pinia = createPinia();
 
 createInertiaApp({
-    title: (title) => title ? `${title} | Zayin Technologies` : 'Zayin Technologies | Solar, Starlink & DSTV Installations',
+    title: (title) => title ? `${title} | Zayin Global Limited` : 'Zayin Global Limited | Solar, Starlink & DSTV Installations',
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
         let page =  pages[`./Pages/${name}.vue`];

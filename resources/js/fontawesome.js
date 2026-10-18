@@ -13,7 +13,8 @@ import {
   faLocationDot, faTrash, faPlus, faMinus, faLock, faFilter, faMagnifyingGlass,
   faChevronUp, faChevronDown, faChevronRight, faChevronLeft, faReceipt, faBuildingColumns,
   faCloudArrowUp, faSpinner, faPlay, faStar, faCopy, faBars, faArrowRight, faArrowLeft,
-  faBatteryThreeQuarters, faFireFlameCurved, faSun, faNetworkWired, faVideo, faCalculator
+  faBatteryThreeQuarters, faFireFlameCurved, faSun, faNetworkWired, faVideo, faCalculator,
+  faLightbulb, faFan, faTemperatureLow, faPlug, faTrashCan, faFaucetDrip
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -34,7 +35,8 @@ library.add(
   faLocationDot, faTrash, faPlus, faMinus, faLock, faFilter, faMagnifyingGlass,
   faChevronUp, faChevronDown, faChevronRight, faChevronLeft, faReceipt, faBuildingColumns,
   faCloudArrowUp, faSpinner, faPlay, faStar, faCopy, faBars, faArrowRight, faArrowLeft,
-  faBatteryThreeQuarters, faFireFlameCurved, faSun, faNetworkWired, faVideo, faCalculator
+  faBatteryThreeQuarters, faFireFlameCurved, faSun, faNetworkWired, faVideo, faCalculator,
+  faLightbulb, faFan, faTemperatureLow, faPlug, faTrashCan, faFaucetDrip
 );
 
 export { FontAwesomeIcon };

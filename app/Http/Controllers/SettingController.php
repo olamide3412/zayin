@@ -41,7 +41,7 @@ class SettingController extends Controller
                 'about_vision' => Setting::get('about_vision', '<p>To be Nigeria\'s most dependable turnkey engineering solutions provider for renewable energy and satellite telecommunications.</p>'),
                 'about_founder_name' => Setting::get('about_founder_name', 'Engr. Zayin Lead'),
                 'about_founder_title' => Setting::get('about_founder_title', 'Managing Director & Lead Systems Engineer'),
-                'about_founder_bio'   => Setting::get('about_founder_bio', '<p>Headquartered in Abraka, Delta State, Zayin Technologies deploys certified field teams across Nigeria to solve energy poverty and high-latency connectivity with robust Tier-1 equipment.</p>'),
+                'about_founder_bio'   => Setting::get('about_founder_bio', '<p>Headquartered in Abraka, Delta State, Zayin Global Limited deploys certified field teams across Nigeria to solve energy poverty and high-latency connectivity with robust Tier-1 equipment.</p>'),
                 'about_founder_image' => Setting::get('about_founder_image', ''),
                 'news_layout_style'   => Setting::get('news_layout_style', 'hero_split'),
             ]

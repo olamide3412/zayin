@@ -95,8 +95,8 @@ const remainingArticles = computed(() => props.articles?.data?.slice(4) || []);
 
 <template>
     <div class="bg-white min-h-screen">
-        <Head title="Media Center & News | Zayin Technologies">
-            <meta name="description" content="Media Center – news, field updates, and corporate announcements from Zayin Technologies." />
+        <Head title="Media Center & News | Zayin Global Limited">
+            <meta name="description" content="Media Center – news, field updates, and corporate announcements from Zayin Global Limited." />
         </Head>
 
         <!-- ═══════════════════════════════════════════════════════════════ -->

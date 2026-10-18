@@ -293,6 +293,7 @@ export function useSolarCalculator(
 
     const loadDraft = () => {
         if (typeof window === 'undefined') return;
+        if (initialAppliances && initialAppliances.length > 0) return;
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
             if (!raw) return;

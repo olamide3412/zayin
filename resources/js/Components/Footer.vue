@@ -6,7 +6,7 @@ import { generateWhatappLink } from '@/Utils/whatsappLinkGen';
 const page = usePage();
 
 const site = computed(() => page.props.site || {
-    name: 'Zayin Technologies',
+    name: 'Zayin Global Limited',
     phone: '+234 803 123 4567',
     whatsapp: '2348031234567',
     email: 'support@zayin.ng',
@@ -16,7 +16,7 @@ const site = computed(() => page.props.site || {
 const whatsappLink = computed(() => {
     const raw = site.value.whatsapp || '2348031234567';
     const clean = String(raw).replace(/[^0-9]/g, '');
-    return generateWhatappLink(clean, 'Hello Zayin Technologies, I would like to make an enquiry.');
+    return generateWhatappLink(clean, 'Hello Zayin Global Limited, I would like to make an enquiry.');
 });
 
 const scrollToTop = () => {
@@ -41,7 +41,8 @@ const scrollToTop = () => {
                         </div>
                         <div>
                             <span class="text-2xl font-black tracking-tight text-white flex items-center">
-                                ZAYIN<span class="text-amber-500 ml-1">TECH</span>
+                                ZAYIN<span class="text-amber-500 ml-1">GLOBAL</span>
+                                <span class="text-[9px] font-bold text-amber-400 bg-slate-900 border border-amber-400/40 rounded px-1.5 py-0.5 ml-1.5 leading-none">LTD</span>
                             </span>
                             <span class="text-xs font-semibold text-amber-400 tracking-wider uppercase block">
                                 Solar · Starlink · DSTV

@@ -43,7 +43,7 @@ const statusBadge = {
 
         <div class="mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Testimonials</h1>
-            <p class="text-sm text-gray-500 mt-0.5">Review and approve patient testimonials before they appear publicly.</p>
+            <p class="text-sm text-gray-500 mt-0.5">Review and approve client testimonials before they appear publicly.</p>
         </div>
 
         <!-- Stats Row -->

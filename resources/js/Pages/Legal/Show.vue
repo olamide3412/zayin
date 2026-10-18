@@ -61,7 +61,7 @@ const legalLinks = [
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-400">
-                        Zayin Technologies Limited is registered with the Corporate Affairs Commission (CAC) of the Federal Republic of Nigeria.
+                        Zayin Global Limited is registered with the Corporate Affairs Commission (CAC) of the Federal Republic of Nigeria.
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@ const legalLinks = [
                     <div v-if="pageSlug === 'privacy-policy'" class="space-y-4 text-sm text-slate-600 leading-relaxed">
                         <h2 class="text-lg font-bold text-navy-900">1. Commitment to NDPA 2023</h2>
                         <p>
-                            Zayin Technologies Limited ("we", "our", "us") is committed to safeguarding the privacy and personal data of our customers, website visitors, and corporate clients in accordance with the <strong>Nigeria Data Protection Act (NDPA) 2023</strong> and international best practices.
+                            Zayin Global Limited ("we", "our", "us") is committed to safeguarding the privacy and personal data of our customers, website visitors, and corporate clients in accordance with the <strong>Nigeria Data Protection Act (NDPA) 2023</strong> and international best practices.
                         </p>
 
                         <h2 class="text-lg font-bold text-navy-900">2. Information We Collect</h2>
@@ -99,7 +99,7 @@ const legalLinks = [
                     <div v-else-if="pageSlug === 'terms'" class="space-y-4 text-sm text-slate-600 leading-relaxed">
                         <h2 class="text-lg font-bold text-navy-900">1. Service Agreements &amp; Quotations</h2>
                         <p>
-                            All engineering quotations issued by Zayin Technologies are valid for a period of fourteen (14) days from the date of issuance, subject to foreign exchange adjustments on imported Tier-1 equipment (lithium batteries, inverters, solar panels).
+                            All engineering quotations issued by Zayin Global Limited are valid for a period of fourteen (14) days from the date of issuance, subject to foreign exchange adjustments on imported Tier-1 equipment (lithium batteries, inverters, solar panels).
                         </p>
 
                         <h2 class="text-lg font-bold text-navy-900">2. Site Preparation &amp; Access</h2>
@@ -109,14 +109,14 @@ const legalLinks = [
 
                         <h2 class="text-lg font-bold text-navy-900">3. Equipment Ownership</h2>
                         <p>
-                            Title and ownership of all supplied hardware remains with Zayin Technologies until payment in full has cleared into our corporate accounts. Risk of loss transfers upon physical handover and client sign-off.
+                            Title and ownership of all supplied hardware remains with Zayin Global Limited until payment in full has cleared into our corporate accounts. Risk of loss transfers upon physical handover and client sign-off.
                         </p>
                     </div>
 
                     <div v-else-if="pageSlug === 'warranty'" class="space-y-4 text-sm text-slate-600 leading-relaxed">
                         <h2 class="text-lg font-bold text-navy-900">1. Comprehensive Hardware Warranties</h2>
                         <p>
-                            All products supplied by Zayin Technologies come with authentic manufacturer warranties:
+                            All products supplied by Zayin Global Limited come with authentic manufacturer warranties:
                         </p>
                         <ul class="list-disc pl-5 space-y-1 text-xs">
                             <li><strong>Lithium-Iron Phosphate (LiFePO4) Batteries:</strong> 5 to 10-year manufacturer warranty (6,000+ deep cycles at 80% DoD).</li>
@@ -127,7 +127,7 @@ const legalLinks = [
 
                         <h2 class="text-lg font-bold text-navy-900">2. 12-Month Workmanship Guarantee</h2>
                         <p>
-                            Zayin Technologies guarantees all cabling, conduit work, earthing connections, breaker calibrations, and roof mounting brackets for 12 calendar months from handover. If any connection loosens or fails under normal operating conditions, our technicians will repair it at zero labor charge.
+                            Zayin Global Limited guarantees all cabling, conduit work, earthing connections, breaker calibrations, and roof mounting brackets for 12 calendar months from handover. If any connection loosens or fails under normal operating conditions, our technicians will repair it at zero labor charge.
                         </p>
 
                         <h2 class="text-lg font-bold text-navy-900">3. Warranty Exclusions</h2>

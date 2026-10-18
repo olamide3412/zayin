@@ -18,7 +18,7 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-GB', { day: 'nu
 
 <template>
     <div>
-        <Head :title="`${article.title} | News | Zayin Technologies`">
+        <Head :title="`${article.title} | News | Zayin Global Limited`">
             <meta name="description" :content="article.excerpt || article.title" />
         </Head>
 

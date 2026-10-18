@@ -24,7 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'client' => ClientMiddleware::class,
         ]);
         $middleware->validateCsrfTokens(except:[
-            'flw-webhook'
+            'flw-webhook',
+            'invoices/preview',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

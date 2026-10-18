@@ -83,7 +83,7 @@ const sidePosts    = computed(() => props.posts?.data?.slice(1, 4) || []);
 
 <template>
     <div class="bg-white min-h-screen">
-        <Head title="Engineering Insights & Solar Guides | Zayin Technologies">
+        <Head title="Engineering Insights & Solar Guides | Zayin Global Limited">
             <meta name="description" content="Technical guides on inverter sizing, Starlink mounting, DSTV signal optimization, and lithium battery maintenance in Nigeria." />
         </Head>
 

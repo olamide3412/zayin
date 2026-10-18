@@ -71,8 +71,19 @@ class BookingController extends Controller
             'notes' => $validated['notes'] ?? null,
         ]);
 
-        $whatsAppMsg = "Hello Zayin, I have booked a service visit ({$booking->service_type}) for {$booking->preferred_date->format('d M, Y')}. My Booking ID is {$reference}.";
-        $whatsappLink = whatsapp_url(config('services.whatsapp.number', '2348031234567'), $whatsAppMsg);
+        $serviceLabels = [
+            'solar_installation' => 'Solar & Inverter Installation',
+            'solar_maintenance' => 'Solar Cleaning & Maintenance',
+            'starlink_installation' => 'Starlink Rooftop Mast Setup',
+            'dstv_installation' => 'DSTV Installation & Extra View',
+            'dish_realignment' => 'DSTV Dish Realignment',
+        ];
+        $serviceTitle = $serviceLabels[$booking->service_type] ?? Str::headline($booking->service_type);
+        $dateFormatted = $booking->preferred_date ? $booking->preferred_date->format('d M, Y') : $validated['preferred_date'];
+
+        $whatsAppMsg = "Hello Zayin, I have booked a service visit ({$serviceTitle}) for {$dateFormatted} ({$booking->preferred_slot}). My Booking Reference is {$reference}.";
+        $whatsappNumber = \App\Models\Setting::get('whatsapp') ?: config('services.whatsapp.number', '2348031234567');
+        $whatsappLink = whatsapp_url($whatsappNumber, $whatsAppMsg);
 
         return redirect()->back()->with([
             'success' => "Booking confirmed! Your appointment reference is {$reference}.",

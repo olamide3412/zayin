@@ -9,10 +9,10 @@ defineProps({
 
 <template>
     <AuthenticatedLayout>
-        <Head title="Admin Dashboard | Zayin Technologies" />
+        <Head title="Admin Dashboard | Zayin Global Limited" />
 
         <div class="mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Welcome to Zayin Technologies Portal</h1>
+            <h1 class="text-2xl font-bold text-gray-800">Welcome to Zayin Global Limited Portal</h1>
             <p class="text-sm text-gray-500 mt-1">Real-time overview of orders, engineering quotes, technician dispatches, and reviews.</p>
         </div>
 

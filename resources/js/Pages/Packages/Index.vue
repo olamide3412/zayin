@@ -33,8 +33,29 @@ const handleSortChange = () => {
     handleSearch();
 };
 
+const addingId = ref(null);
+const justAddedId = ref(null);
+
 const addToCart = (product) => {
-    router.post('/cart/items', { product_id: product.id, qty: 1 }, { preserveScroll: true });
+    addingId.value = product.id;
+    router.post('/cart/items', { 
+        product_id: product.id, 
+        qty: 1 
+    }, { 
+        preserveScroll: true,
+        onSuccess: () => {
+            addingId.value = null;
+            justAddedId.value = product.id;
+            setTimeout(() => {
+                if (justAddedId.value === product.id) {
+                    justAddedId.value = null;
+                }
+            }, 2200);
+        },
+        onError: () => {
+            addingId.value = null;
+        }
+    });
 };
 </script>
 
@@ -209,10 +230,15 @@ const addToCart = (product) => {
                         <div class="grid grid-cols-2 gap-2">
                             <button 
                                 @click="addToCart(product)"
-                                class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center space-x-1.5 transition active:scale-95"
+                                :disabled="addingId === product.id"
+                                class="w-full py-2.5 rounded-xl font-bold text-xs flex items-center justify-center space-x-1.5 transition active:scale-95 disabled:opacity-75"
+                                :class="justAddedId === product.id ? 'bg-emerald-600 text-white' : 'bg-slate-900 hover:bg-slate-800 text-white'"
                             >
-                                <font-awesome-icon :icon="['fas', 'shopping-cart']" />
-                                <span>Buy Now</span>
+                                <font-awesome-icon 
+                                    :icon="['fas', addingId === product.id ? 'circle-notch' : (justAddedId === product.id ? 'check' : 'shopping-cart')]" 
+                                    :class="{'fa-spin': addingId === product.id}"
+                                />
+                                <span>{{ addingId === product.id ? 'Adding...' : (justAddedId === product.id ? 'Added!' : 'Add to Cart') }}</span>
                             </button>
 
                             <Link 

@@ -15,7 +15,7 @@ const whatsappPhone = computed(() => {
 });
 
 const whatsappUrl = computed(() => {
-    return generateWhatappLink(whatsappPhone.value, 'Hello Zayin, I would like to get a quote/enquire about your Solar, Starlink or DSTV services.');
+    return generateWhatappLink(whatsappPhone.value, 'Hello Zayin Global Limited, I would like to get a quote/enquire about your Solar, Starlink or DSTV services.');
 });
 </script>
 
@@ -25,7 +25,7 @@ const whatsappUrl = computed(() => {
         <a 
             :href="`tel:${phone}`"
             class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold transition"
-            aria-label="Call Zayin"
+            aria-label="Call Zayin Global Limited"
         >
             <font-awesome-icon :icon="['fas', 'phone']" class="text-slate-700 text-sm mb-0.5" />
             <span>Call</span>

@@ -10,7 +10,7 @@ class SettingsSeeder extends Seeder
     public function run(): void
     {
         $settings = [
-            'company_name' => 'Zayin Technologies',
+            'company_name' => 'Zayin Global Limited',
             'tagline' => 'Solar, Starlink Internet & DSTV Solutions in Nigeria',
             'phone' => '+234 803 123 4567',
             'phone_whatsapp' => '2348031234567',
@@ -23,7 +23,7 @@ class SettingsSeeder extends Seeder
             'branch_abuja' => 'Central Business District Operations Hub, Abuja, FCT',
             'hours' => 'Mon – Sat: 8:00 AM – 6:00 PM (24/7 Emergency Line)',
             'bank_name' => 'Zenith Bank Plc',
-            'bank_account_name' => 'Zayin Technologies Nigeria Ltd',
+            'bank_account_name' => 'Zayin Global Ltd',
             'bank_account_number' => '1012345678',
             'vat_percent' => '7.5',
             'hero_title' => 'Power Your Life 24/7. Connect Faster. Enjoy Entertainment.',
