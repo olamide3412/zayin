@@ -77,7 +77,7 @@ const savePreset = (preset) => {
         </div>
 
         <!-- Navigation Tabs -->
-        <div class="flex items-center gap-2 border-b border-slate-200 mb-6">
+        <div class="flex items-center gap-2 border-b border-slate-200 mb-6 overflow-x-auto whitespace-nowrap">
             <button 
                 @click="activeTab = 'constants'" 
                 class="px-4 py-2.5 text-sm font-bold border-b-2 transition"

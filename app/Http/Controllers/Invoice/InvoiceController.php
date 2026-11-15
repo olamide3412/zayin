@@ -62,7 +62,8 @@ class InvoiceController extends Controller
             $query->whereDate('issue_date', '<=', $request->date_to);
         }
 
-        $invoices = $query->paginate(15)->withQueryString();
+        $perPage = max(25, (int) $request->input('per_page', 25));
+        $invoices = $query->paginate($perPage)->withQueryString();
 
         $stats = [
             'total_invoices' => Invoice::where('business_id', $business->id)->count(),

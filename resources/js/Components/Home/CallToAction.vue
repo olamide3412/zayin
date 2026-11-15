@@ -13,7 +13,7 @@ const site = computed(() => page.props.site || {
 const whatsappUrl = computed(() => {
     const raw = site.value.whatsapp || '2348031234567';
     const clean = String(raw).replace(/[^0-9]/g, '');
-    return generateWhatappLink(clean, 'Hello Zayin Global Limited, I want to discuss a solar installation / Starlink setup for my property.');
+    return generateWhatappLink(clean, 'Hello Zayin Ltd, I want to discuss a solar installation / Starlink setup for my property.');
 });
 </script>
 

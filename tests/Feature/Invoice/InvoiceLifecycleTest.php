@@ -33,9 +33,9 @@ class InvoiceLifecycleTest extends TestCase
         $this->user = User::factory()->create();
 
         $this->business = Business::firstOrCreate(
-            ['name' => 'Zayin Global Limited'],
+            ['name' => 'Zayin Ltd'],
             [
-                'rc_number' => 'RC-7842910',
+                'rc_number' => 'RC 10005044',
                 'tin' => 'TIN-28491048-0001',
                 'phone' => '+234 803 123 4567',
                 'email' => 'invoicing@zayin.com.ng',
@@ -57,6 +57,7 @@ class InvoiceLifecycleTest extends TestCase
             [
                 'name' => 'Classic Professional',
                 'accent_color' => '#1e3a8a',
+                'document_title' => 'INVOICE',
                 'number_prefix' => 'ZYN-',
                 'number_padding' => 4,
                 'is_default' => true,
@@ -194,12 +195,105 @@ class InvoiceLifecycleTest extends TestCase
 
         $this->assertSame([], $invoice->bank_account_ids);
 
-        // Verify PDF rendering without bank accounts
+        // Verify PDF rendering without bank accounts and with company logo alongside company name
         $html = $renderer->renderHtml($invoice);
         $this->assertStringNotContainsString('Payment Bank Accounts:', $html);
+        $this->assertStringContainsString('class="company-logo"', $html);
+        $this->assertStringContainsString('data:image/png;base64,', $html);
+        $this->assertStringContainsString('Zayin Ltd', $html);
 
         $pdf = $renderer->render($invoice);
         $this->assertNotEmpty($pdf);
         $this->assertStringStartsWith('%PDF', $pdf);
+    }
+
+    public function test_invoice_item_suggestion_endpoint_returns_catalog_items(): void
+    {
+        \App\Models\InvoiceItemCatalog::create([
+            'business_id' => $this->business->id,
+            'name' => '5kVA Solar Inverter',
+            'normalized_name' => \App\Models\InvoiceItemCatalog::normalizeName('5kVA Solar Inverter'),
+            'description' => 'Pure Sine Wave',
+            'unit' => 'pcs',
+            'default_price_kobo' => 85000000,
+            'last_price_kobo' => 85000000,
+            'is_vatable' => false,
+            'category' => 'Inverters',
+            'usage_count' => 5,
+            'is_archived' => false,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->getJson('/invoice-items/suggest?q=solar');
+
+        $response->assertOk()
+            ->assertJsonFragment([
+                'name' => '5kVA Solar Inverter',
+                'unit' => 'pcs',
+                'unit_price' => 850000,
+            ]);
+    }
+
+    public function test_business_profile_and_template_toggle_tin_visibility(): void
+    {
+        $saveDraftAction = app(SaveInvoiceDraftAction::class);
+        $renderer = app(DomPdfInvoiceRenderer::class);
+
+        $invoice = $saveDraftAction->execute($this->business, [
+            'customer_id' => $this->customer->id,
+            'template_id' => $this->template->id,
+            'issue_date' => now()->toDateString(),
+            'vat_mode' => 'exclusive',
+            'vat_rate_bps' => 750,
+            'items' => [
+                [
+                    'name' => 'Diagnostic Assessment',
+                    'quantity' => 1,
+                    'unit_price_kobo' => 1000000,
+                    'unit' => 'visit',
+                ],
+            ],
+        ], userId: $this->user->id);
+
+        // 1. By default with show_tin = true and template tin = true, TIN is shown
+        $html = $renderer->renderHtml($invoice);
+        $this->assertStringContainsString('TIN-28491048-0001', $html);
+
+        // 2. Turn off show_tin on business profile
+        $this->actingAs($this->user)
+            ->put(route('invoices.settings.business.update'), [
+                'name' => 'Zayin Ltd',
+                'rc_number' => 'RC 10005044',
+                'tin' => 'TIN-28491048-0001',
+                'show_tin' => false,
+                'vat_rate_bps' => 750,
+                'default_vat_mode' => 'exclusive',
+            ])->assertSessionHasNoErrors();
+
+        $this->business->refresh();
+        $this->assertFalse((bool) $this->business->show_tin);
+
+        $htmlWithoutTin = $renderer->renderHtml($invoice->fresh());
+        $this->assertStringNotContainsString('TIN-28491048-0001', $htmlWithoutTin);
+        $this->assertStringContainsString('RC 10005044', $htmlWithoutTin);
+
+        // 3. Turn show_tin back on on business, but toggle it off on the template
+        $this->business->update(['show_tin' => true]);
+        $this->actingAs($this->user)
+            ->put(route('invoices.settings.templates.update', $this->template->id), [
+                'name' => $this->template->name,
+                'layout' => $this->template->layout,
+                'accent_color' => $this->template->accent_color,
+                'document_title' => $this->template->document_title,
+                'number_prefix' => $this->template->number_prefix,
+                'number_padding' => $this->template->number_padding,
+                'show_fields' => [
+                    'rc_number' => true,
+                    'tin' => false,
+                ],
+            ])->assertSessionHasNoErrors();
+
+        $htmlTemplateNoTin = $renderer->renderHtml($invoice->fresh());
+        $this->assertStringNotContainsString('TIN-28491048-0001', $htmlTemplateNoTin);
     }
 }

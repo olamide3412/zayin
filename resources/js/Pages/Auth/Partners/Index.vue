@@ -55,7 +55,7 @@ const applyFilters = () => {
 
         <!-- Filter Stats Bar -->
         <div class="flex items-center justify-between gap-4 flex-wrap">
-            <div class="flex items-center space-x-2 text-sm font-semibold">
+            <div class="flex items-center space-x-2 text-sm font-semibold overflow-x-auto whitespace-nowrap pb-1 w-full md:w-auto">
                 <button 
                     @click="filterStatus = ''; applyFilters()"
                     :class="[

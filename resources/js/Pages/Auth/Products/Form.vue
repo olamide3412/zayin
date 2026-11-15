@@ -126,8 +126,9 @@ const submit = () => {
                                 v-model="form.price_naira" 
                                 type="number" 
                                 step="any"
+                                @wheel="$event.target.blur()"
                                 placeholder="e.g. 1750000" 
-                                class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden" 
+                                class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-bold text-slate-900 focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                                 required 
                             />
                         </div>
@@ -143,8 +144,9 @@ const submit = () => {
                                 v-model="form.compare_at_naira" 
                                 type="number" 
                                 step="any"
+                                @wheel="$event.target.blur()"
                                 placeholder="e.g. 1950000" 
-                                class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-700 focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden" 
+                                class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-700 focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                             />
                         </div>
                         <p class="text-[11px] text-slate-400 mt-1">Displays as crossed-out discount.</p>
@@ -155,7 +157,8 @@ const submit = () => {
                         <input 
                             v-model="form.stock_qty" 
                             type="number" 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden" 
+                            @wheel="$event.target.blur()"
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                             required 
                         />
                     </div>
@@ -176,8 +179,9 @@ const submit = () => {
                             v-model="form.specs.capacity_kva" 
                             type="number" 
                             step="0.1" 
+                            @wheel="$event.target.blur()"
                             placeholder="e.g. 3.5" 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden" 
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                         />
                     </div>
 
@@ -187,8 +191,9 @@ const submit = () => {
                             v-model="form.specs.battery_kwh" 
                             type="number" 
                             step="0.1" 
+                            @wheel="$event.target.blur()"
                             placeholder="e.g. 5.12" 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden" 
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                         />
                     </div>
 
@@ -197,8 +202,9 @@ const submit = () => {
                         <input 
                             v-model="form.specs.panels_w" 
                             type="number" 
+                            @wheel="$event.target.blur()"
                             placeholder="e.g. 2200" 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden" 
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                         />
                     </div>
                 </div>

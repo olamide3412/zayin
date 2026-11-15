@@ -70,11 +70,11 @@ class BlogAndNewsSeeder extends Seeder
         // News updates
         $newsItems = [
             [
-                'title' => 'Zayin Global Expands Rapid Field Dispatch to Port Harcourt & Asaba',
+                'title' => 'Zayin Ltd Expands Rapid Field Dispatch to Port Harcourt & Asaba',
                 'category' => 'announcement',
                 'cover_image' => 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=1200&auto=format&fit=crop',
                 'excerpt' => 'Expanding our South-South operations with fully equipped mobile technician vans and emergency solar battery inventory.',
-                'body' => '<p>To meet surging commercial demand in Rivers and Delta States, Zayin Global has established dedicated logistics depots in Port Harcourt and Asaba. Field engineers are now available for 24-hour dispatch across the Niger Delta corridor.</p>',
+                'body' => '<p>To meet surging commercial demand in Rivers and Delta States, Zayin Ltd has established dedicated logistics depots in Port Harcourt and Asaba. Field engineers are now available for 24-hour dispatch across the Niger Delta corridor.</p>',
             ],
             [
                 'title' => 'Successful Commissioning of 50kVA Hybrid Solar Mini-Grid in Lekki Industrial Zone',

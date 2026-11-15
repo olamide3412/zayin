@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Models\Product;
 use App\Models\Project;
+use App\Models\BlogPost;
 use Illuminate\Http\Response;
 
 class SitemapController extends Controller
@@ -15,11 +16,13 @@ class SitemapController extends Controller
         $services = Service::published()->select('slug', 'updated_at')->get();
         $products = Product::published()->with('category:id,slug')->select('id', 'category_id', 'slug', 'updated_at')->get();
         $projects = Project::published()->select('slug', 'updated_at')->get();
+        $posts    = BlogPost::published()->select('slug', 'updated_at')->get();
 
         $content = view('sitemap', [
             'services' => $services,
             'products' => $products,
             'projects' => $projects,
+            'posts'    => $posts,
         ])->render();
 
         return response($content, 200)

@@ -115,6 +115,17 @@
 
     /* Border-radius utilities mapped to theme scale */
     .rounded-pill  { border-radius: var(--radius-pill); }
+
+    /* Hide number input spinners/arrows */
+    .no-spinners::-webkit-outer-spin-button,
+    .no-spinners::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .no-spinners {
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
 }
 
 /* ── Component defaults ───────────────────────────────────── */

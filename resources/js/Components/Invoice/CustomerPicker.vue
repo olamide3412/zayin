@@ -61,6 +61,7 @@
                         :key="c.id"
                         type="button"
                         @mousedown.prevent="selectCustomer(c)"
+                        @touchstart.prevent="selectCustomer(c)"
                         @mouseenter="highlighted = idx"
                         class="w-full text-left px-3 py-2 text-xs flex items-center justify-between border-b border-gray-50 last:border-0"
                         :class="highlighted === idx ? 'bg-primary/10' : 'hover:bg-gray-50'"
@@ -76,6 +77,7 @@
                     <button
                         type="button"
                         @mousedown.prevent="startNewFromQuery"
+                        @touchstart.prevent="startNewFromQuery"
                         class="w-full text-left px-3 py-2 text-xs font-semibold text-primary bg-primary/5 hover:bg-primary/10 border-t border-gray-100"
                     >
                         + Add "{{ query.trim() || 'new client' }}" as a new customer

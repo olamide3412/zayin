@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Zayin Global Admin',
+                'name' => 'Zayin Admin',
                 'username' => 'admin',
                 'email' => 'admin@zayin.ng',
                 'password' => Hash::make('admin123'),
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
             ],
             [
-                'name' => 'Zayin Global Support',
+                'name' => 'Zayin Support',
                 'username' => 'support',
                 'email' => 'support@zayin.ng',
                 'password' => Hash::make('admin123'),

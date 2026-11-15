@@ -83,8 +83,16 @@ const sidePosts    = computed(() => props.posts?.data?.slice(1, 4) || []);
 
 <template>
     <div class="bg-white min-h-screen">
-        <Head title="Engineering Insights & Solar Guides | Zayin Global Limited">
+        <Head title="Engineering Insights & Solar Guides | Zayin Ltd">
             <meta name="description" content="Technical guides on inverter sizing, Starlink mounting, DSTV signal optimization, and lithium battery maintenance in Nigeria." />
+            <link rel="canonical" :href="route('blog.index')" />
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content="Engineering Insights & Solar Guides | Zayin Ltd" />
+            <meta property="og:description" content="Technical guides on inverter sizing, Starlink mounting, DSTV signal optimization, and lithium battery maintenance in Nigeria." />
+            <meta property="og:url" :content="route('blog.index')" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content="Engineering Insights & Solar Guides | Zayin Ltd" />
+            <meta name="twitter:description" content="Technical guides on inverter sizing, Starlink mounting, DSTV signal optimization, and lithium battery maintenance in Nigeria." />
         </Head>
 
         <!-- ═══════════════════════════════════════════════════════════════ -->

@@ -54,7 +54,8 @@ class HandleInertiaRequests extends Middleware
                 'whatsapp_link' => fn() => $request->session()->get('whatsapp_link'),
             ],
             'site' => [
-                'name' => \App\Models\Setting::get('company_name', 'Zayin Global Limited'),
+                'name' => \App\Models\Setting::get('company_name', 'Zayin Ltd'),
+                'logo_url' => \App\Models\Setting::get('site_logo_url') ?: asset('images/logo.png'),
                 'tagline' => \App\Models\Setting::get('tagline', 'Solar, Starlink & DSTV Solutions'),
                 'phone' => \App\Models\Setting::get('phone', '+234 803 123 4567'),
                 'whatsapp' => \App\Models\Setting::get('whatsapp', '+234 803 123 4567'),
@@ -62,7 +63,7 @@ class HandleInertiaRequests extends Middleware
                 'address' => \App\Models\Setting::get('address', 'Abraka, Ethiope East, Delta State, Nigeria'),
                 'coverage_scope' => \App\Models\Setting::get('coverage_scope', 'Nationwide Service — Operating across all 36 States & FCT'),
                 'bank_name' => \App\Models\Setting::get('bank_name', 'Zenith Bank Plc'),
-                'bank_account_name' => \App\Models\Setting::get('bank_account_name', 'Zayin Global Ltd'),
+                'bank_account_name' => \App\Models\Setting::get('bank_account_name', 'ZAYIN LTD'),
                 'bank_account_number' => \App\Models\Setting::get('bank_account_number', '1012345678'),
             ],
             'support' => [

@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\TestimonyController;
-use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ProfileController;
@@ -18,6 +17,7 @@ use App\Http\Controllers\Public\CommerceController;
 use App\Http\Controllers\Public\SitemapController;
 use App\Http\Controllers\Public\SolarCalculatorController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\MaintenancePlanController as AdminPlanController;
 use App\Http\Controllers\Admin\StateFeeController as AdminStateFeeController;
 use App\Http\Controllers\Admin\SolarCalcSettingController as AdminSolarCalcSettingController;
@@ -100,6 +100,7 @@ Route::post('/checkout', [CommerceController::class, 'processCheckout'])->name('
 Route::get('/orders/{number}/track', [CommerceController::class, 'trackOrder'])->name('orders.track');
 Route::get('/orders/{number}/bank-transfer', [CommerceController::class, 'bankTransfer'])->name('orders.bank_transfer');
 Route::post('/orders/{number}/proof', [CommerceController::class, 'uploadProof'])->name('orders.upload_proof');
+Route::post('/orders/{number}/bank-transfer/upload', [CommerceController::class, 'uploadProof'])->name('orders.bank_transfer.upload');
 
 // Sitemaps & robots
 Route::get('/sitemap.xml', [SitemapController::class, 'sitemap'])->name('sitemap');
@@ -176,14 +177,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/admin/testimonials/{testimony}/reject', [TestimonyController::class, 'reject'])->name('admin.testimonials.reject');
     Route::delete('/admin/testimonials/{testimony}', [TestimonyController::class, 'destroy'])->name('admin.testimonials.destroy');
 
-    // ── Admin News & Media ───────────────────────────────────────────────────
-    Route::get('/admin/news', [NewsController::class, 'index'])->name('admin.news.index');
-    Route::get('/admin/news/create', [NewsController::class, 'create'])->name('admin.news.create');
-    Route::post('/admin/news', [NewsController::class, 'store'])->name('admin.news.store');
-    Route::get('/admin/news/{news}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
-    Route::put('/admin/news/{news}', [NewsController::class, 'update'])->name('admin.news.update');
-    Route::delete('/admin/news/{news}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
-
     // ── Admin Partners ───────────────────────────────────────────────────────
     Route::get('/admin/partners', [\App\Http\Controllers\PartnerController::class, 'index'])->name('admin.partners.index');
     Route::get('/admin/partners/create', [\App\Http\Controllers\PartnerController::class, 'create'])->name('admin.partners.create');
@@ -199,6 +192,14 @@ Route::middleware('auth')->group(function () {
     // ── Admin Profile ────────────────────────────────────────────────────────
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('admin.profile.edit');
     Route::put('/admin/profile', [ProfileController::class, 'update'])->name('admin.profile.update');
+
+    // ── Admin Projects & Installations ──────────────────────────────────────
+    Route::get('/admin/projects', [AdminProjectController::class, 'index'])->name('admin.projects.index');
+    Route::get('/admin/projects/create', [AdminProjectController::class, 'create'])->name('admin.projects.create');
+    Route::post('/admin/projects', [AdminProjectController::class, 'store'])->name('admin.projects.store');
+    Route::get('/admin/projects/{project}/edit', [AdminProjectController::class, 'edit'])->name('admin.projects.edit');
+    Route::put('/admin/projects/{project}', [AdminProjectController::class, 'update'])->name('admin.projects.update');
+    Route::delete('/admin/projects/{project}', [AdminProjectController::class, 'destroy'])->name('admin.projects.destroy');
 
     // ── Admin Products & Pricing ──────────────────────────────────────────────
     Route::get('/admin/products', [AdminProductController::class, 'index'])->name('admin.products.index');

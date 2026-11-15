@@ -1,7 +1,10 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { Link, usePage, router } from '@inertiajs/vue3'
 import FlashMessages from '@/Components/FlashMessages.vue'
+import Logo from '../../images/logo.png'
+
+const siteLogo = computed(() => usePage().props.site?.logo_url || Logo)
 
 const isSidebarOpen = ref(false)
 const isMobile = ref(false)
@@ -50,9 +53,9 @@ const toggleSidebar = () => {
             leave-to-class="opacity-0"
         >
             <div 
-                v-if="isMobile && isSidebarOpen" 
+                v-if="isSidebarOpen" 
                 @click="isSidebarOpen = false" 
-                class="fixed inset-0 bg-slate-950/50 backdrop-blur-xs z-30 lg:hidden"
+                class="fixed inset-0 bg-slate-950/50 backdrop-blur-xs z-40 lg:hidden"
                 aria-hidden="true"
             />
         </transition>
@@ -62,32 +65,32 @@ const toggleSidebar = () => {
             :class="[
                 'bg-white text-gray-800 shadow-xl transition-all duration-300 ease-in-out flex flex-col',
                 isMobile 
-                    ? ['fixed inset-y-0 left-0 w-64 z-40', isSidebarOpen ? 'translate-x-0' : '-translate-x-full']
+                    ? ['fixed inset-y-0 left-0 w-64 z-50', isSidebarOpen ? 'translate-x-0' : '-translate-x-full']
                     : ['relative z-20', isSidebarOpen ? 'w-64' : 'w-20']
             ]"
         >
             <!-- Sidebar Header -->
             <div class="flex items-center justify-between h-16 border-b border-gray-100 px-4">
-                <div class="flex items-center" v-if="isSidebarOpen || isMobile">
+                <div class="flex items-center space-x-2.5" v-if="isSidebarOpen || isMobile">
+                    <img :src="siteLogo" alt="Zayin Ltd Logo" class="w-7 h-7 object-contain rounded-lg shrink-0" />
                     <span class="text-base font-black text-slate-900 tracking-tight">
-                        ZAYIN<span class="text-amber-500 ml-1">GLOBAL</span>
+                        ZAYIN<span class="text-amber-500 ml-1">LTD</span>
                     </span>
-                    <span class="text-[9px] font-bold text-amber-700 bg-amber-100 border border-amber-300 rounded px-1.5 py-0.5 ml-1.5 leading-none">LTD</span>
                 </div>
                 <div v-else class="mx-auto">
-                    <span class="text-xl font-bold text-amber-500">Z</span>
+                    <img :src="siteLogo" alt="Z" class="w-7 h-7 object-contain rounded-lg" />
                 </div>
 
-                <!-- Close Button on Mobile -->
+                <!-- Prominent Close Button on Mobile (< lg) -->
                 <button 
-                    v-if="isMobile && isSidebarOpen" 
                     type="button"
                     @click="isSidebarOpen = false" 
-                    class="lg:hidden p-1.5 text-gray-400 hover:text-gray-600 rounded-md"
-                    aria-label="Close menu"
+                    class="lg:hidden flex items-center justify-center w-8 h-8 rounded-lg text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 transition-all border border-gray-200 shadow-2xs shrink-0"
+                    aria-label="Close sidebar"
+                    title="Close sidebar"
                 >
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -123,6 +126,67 @@ const toggleSidebar = () => {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                             <span class="ml-3 font-medium transition-opacity duration-300" v-show="isSidebarOpen">Invoices</span>
+                        </Link>
+
+                        <!-- Invoices Sub-Navigation (Expanded when in invoices module & sidebar open) -->
+                        <div v-show="isSidebarOpen && $page.url.startsWith('/invoices')" class="mt-1 ml-6 pl-4 border-l-2 border-primary/20 space-y-1">
+                            <Link 
+                                :href="route('invoices.index')"
+                                class="block px-2.5 py-1.5 text-xs rounded-md transition-colors"
+                                :class="$page.url === '/invoices' || $page.url.startsWith('/invoices?') ? 'font-bold text-primary bg-primary/10' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'"
+                            >
+                                All Invoices
+                            </Link>
+                            <Link 
+                                :href="route('invoices.create')"
+                                class="block px-2.5 py-1.5 text-xs rounded-md transition-colors"
+                                :class="$page.url.startsWith('/invoices/create') ? 'font-bold text-primary bg-primary/10' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'"
+                            >
+                                + Create Invoice
+                            </Link>
+                            <Link 
+                                :href="route('invoices.customers.index')"
+                                class="block px-2.5 py-1.5 text-xs rounded-md transition-colors"
+                                :class="$page.url.startsWith('/invoices-customers') ? 'font-bold text-primary bg-primary/10' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'"
+                            >
+                                Customers
+                            </Link>
+                            <Link 
+                                :href="route('invoices.catalog.index')"
+                                class="block px-2.5 py-1.5 text-xs rounded-md transition-colors"
+                                :class="$page.url.startsWith('/invoices-catalog') ? 'font-bold text-primary bg-primary/10' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'"
+                            >
+                                Item Catalog
+                            </Link>
+                            <Link 
+                                :href="route('invoices.settings.business')"
+                                class="block px-2.5 py-1.5 text-xs rounded-md transition-colors"
+                                :class="$page.url.startsWith('/invoices-settings/business') ? 'font-bold text-primary bg-primary/10' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'"
+                            >
+                                Business & Banks
+                            </Link>
+                            <Link 
+                                :href="route('invoices.settings.templates')"
+                                class="block px-2.5 py-1.5 text-xs rounded-md transition-colors"
+                                :class="$page.url.startsWith('/invoices-settings/templates') ? 'font-bold text-primary bg-primary/10' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'"
+                            >
+                                A5 Templates
+                            </Link>
+                        </div>
+                    </li>
+
+                    <!-- Projects & Case Studies -->
+                    <li>
+                        <Link 
+                            :href="route('admin.projects.index')" 
+                            class="flex items-center px-4 py-3 mx-2 rounded-lg transition-colors"
+                            :class="{'bg-primary text-white': $page.url.startsWith('/admin/projects'), 'hover:bg-gray-100': !$page.url.startsWith('/admin/projects')}"
+                            title="Projects"
+                        >
+                            <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                            <span class="ml-3 font-medium transition-opacity duration-300" v-show="isSidebarOpen">Projects</span>
                         </Link>
                     </li>
 
@@ -218,21 +282,6 @@ const toggleSidebar = () => {
                         </Link>
                     </li>
 
-                    <!-- News & Media Link -->
-                    <li>
-                        <Link 
-                            :href="route('admin.news.index')" 
-                            class="flex items-center px-4 py-3 mx-2 rounded-lg transition-colors"
-                            :class="{'bg-primary text-white': $page.url.startsWith('/admin/news'), 'hover:bg-gray-100': !$page.url.startsWith('/admin/news')}"
-                            title="News & Media"
-                        >
-                            <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
-                            </svg>
-                            <span class="ml-3 font-medium transition-opacity duration-300" v-show="isSidebarOpen">News & Media</span>
-                        </Link>
-                    </li>
-
                     <!-- Partners Link -->
                     <li>
                         <Link 
@@ -268,7 +317,19 @@ const toggleSidebar = () => {
             </div>
 
             <!-- Profile & Logout (Bottom pinned) -->
-            <div class="border-t border-gray-100 p-4">
+            <div class="border-t border-gray-100 p-4 space-y-2">
+                <!-- Close Button at bottom of Mobile Sidebar -->
+                <button 
+                    type="button"
+                    @click="isSidebarOpen = false" 
+                    class="lg:hidden w-full flex items-center justify-center space-x-2 px-3 py-2 text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 rounded-lg transition-colors border border-gray-200"
+                >
+                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <span>Close Sidebar</span>
+                </button>
+
                 <Link 
                     :href="route('logout')" 
                     method="post" 
@@ -292,9 +353,13 @@ const toggleSidebar = () => {
                 <div class="flex items-center space-x-3">
                     <button 
                         @click="toggleSidebar" 
-                        class="p-2 rounded-md text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring transition-colors"
+                        class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring transition-colors"
+                        :aria-label="isSidebarOpen && isMobile ? 'Close navigation sidebar' : 'Open navigation sidebar'"
                     >
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg v-if="isMobile && isSidebarOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
                         </svg>
                     </button>

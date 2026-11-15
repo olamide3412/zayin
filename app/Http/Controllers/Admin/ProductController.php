@@ -29,7 +29,9 @@ class ProductController extends Controller
             $query->where('category_id', $request->category_id);
         }
 
-        $products = $query->paginate(15)->through(function ($p) {
+        $perPage = max(25, (int) $request->input('per_page', 25));
+
+        $products = $query->paginate($perPage)->withQueryString()->through(function ($p) {
             return [
                 'id' => $p->id,
                 'name' => $p->name,

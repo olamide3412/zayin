@@ -22,7 +22,7 @@ const form = useForm({
     address: '',
     landmark: '',
     fulfilment_type: 'installation', // installation, delivery, pickup
-    payment_method: 'paystack', // paystack, bank_transfer
+    payment_method: 'bank_transfer',
     notes: '',
 });
 
@@ -215,29 +215,18 @@ const submitOrder = () => {
 
                         <!-- Payment Method Choice -->
                         <div class="space-y-3 pt-4 border-t border-slate-100">
-                            <label class="text-xs font-bold text-slate-700 block">Payment Option</label>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <label 
-                                    class="p-4 rounded-2xl border cursor-pointer text-xs flex items-start space-x-3"
-                                    :class="form.payment_method === 'paystack' ? 'border-amber-500 bg-amber-50/60 ring-2 ring-amber-500' : 'border-slate-200'"
-                                >
-                                    <input type="radio" value="paystack" v-model="form.payment_method" class="mt-0.5 text-amber-500" />
-                                    <div>
-                                        <div class="font-bold text-slate-900">Paystack (Instant Card / USSD)</div>
-                                        <div class="text-[11px] text-slate-500 mt-0.5">Automated instant verification & payment receipt</div>
+                            <label class="text-xs font-bold text-slate-700 block">Payment Method</label>
+                            <div class="p-4 rounded-2xl border border-amber-500 bg-amber-50/60 ring-2 ring-amber-500 text-xs flex items-start space-x-3">
+                                <input type="radio" value="bank_transfer" v-model="form.payment_method" checked class="mt-0.5 text-amber-500" />
+                                <div>
+                                    <div class="font-bold text-slate-900 flex items-center gap-2">
+                                        <span>Direct Corporate Bank Transfer / Wire</span>
+                                        <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">Official Method</span>
                                     </div>
-                                </label>
-
-                                <label 
-                                    class="p-4 rounded-2xl border cursor-pointer text-xs flex items-start space-x-3"
-                                    :class="form.payment_method === 'bank_transfer' ? 'border-amber-500 bg-amber-50/60 ring-2 ring-amber-500' : 'border-slate-200'"
-                                >
-                                    <input type="radio" value="bank_transfer" v-model="form.payment_method" class="mt-0.5 text-amber-500" />
-                                    <div>
-                                        <div class="font-bold text-slate-900">Direct Bank Transfer</div>
-                                        <div class="text-[11px] text-slate-500 mt-0.5">Pay to official Zenith Bank account and upload proof</div>
+                                    <div class="text-[11px] text-slate-600 mt-1 leading-relaxed">
+                                        Due to high equipment values, payments are safely processed via official company bank transfer with automated invoice generation and teller/receipt verification.
                                     </div>
-                                </label>
+                                </div>
                             </div>
                         </div>
                     </div>

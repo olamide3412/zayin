@@ -11,8 +11,42 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-GB', { day: 'nu
 
 <template>
     <div>
-        <Head :title="`${post.title} | Blog | Zayin Global Limited`">
+        <Head :title="`${post.title} | Blog | Zayin Ltd`">
             <meta name="description" :content="post.excerpt || post.title" />
+            <link rel="canonical" :href="route('blog.show', post.slug)" />
+            <meta property="og:type" content="article" />
+            <meta property="og:title" :content="`${post.title} | Zayin Ltd`" />
+            <meta property="og:description" :content="post.excerpt || post.title" />
+            <meta property="og:url" :content="route('blog.show', post.slug)" />
+            <meta v-if="post.cover_image" property="og:image" :content="post.cover_image" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" :content="post.title" />
+            <meta name="twitter:description" :content="post.excerpt || post.title" />
+            <meta v-if="post.cover_image" name="twitter:image" :content="post.cover_image" />
+            <component 
+                is="script" 
+                type="application/ld+json"
+                v-text="JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'BlogPosting',
+                    'headline': post.title,
+                    'description': post.excerpt || post.title,
+                    'image': post.cover_image || 'https://zayin.ng/images/logo.png',
+                    'datePublished': post.published_at,
+                    'author': {
+                        '@type': 'Person',
+                        'name': post.author?.name || 'Zayin Engineering'
+                    },
+                    'publisher': {
+                        '@type': 'Organization',
+                        'name': 'Zayin Ltd',
+                        'logo': {
+                            '@type': 'ImageObject',
+                            'url': 'https://zayin.ng/images/logo.png'
+                        }
+                    }
+                })"
+            />
         </Head>
 
         <!-- Article Hero -->

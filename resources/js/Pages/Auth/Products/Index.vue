@@ -105,9 +105,96 @@ const formatNaira = (val) => {
             </button>
         </div>
 
-        <!-- Product Table -->
+        <!-- Product Container: Desktop Table & Mobile Cards -->
         <div class="bg-white rounded-2xl shadow-xs border border-slate-200 overflow-hidden">
-            <div class="overflow-x-auto">
+            <!-- Mobile Card View (block sm:hidden) -->
+            <div class="block sm:hidden divide-y divide-slate-100">
+                <div v-if="products.data.length === 0" class="p-8 text-center text-xs text-slate-400">
+                    No products found. <Link :href="route('admin.products.create')" class="text-amber-600 font-bold hover:underline">Add the first product</Link>
+                </div>
+
+                <div
+                    v-for="p in products.data"
+                    :key="`m-prod-${p.id}`"
+                    class="p-4 space-y-3 hover:bg-slate-50/60 transition"
+                >
+                    <div class="flex items-start gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
+                            <img v-if="p.image" :src="p.image" :alt="p.name" class="w-full h-full object-cover" />
+                            <svg v-else class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-bold text-slate-900 text-sm leading-snug truncate">
+                                {{ p.name }}
+                            </div>
+                            <div class="text-xs text-slate-400 flex flex-wrap items-center gap-1.5 mt-0.5">
+                                <span>SKU: {{ p.sku }}</span>
+                                <span v-if="p.category" class="text-slate-300">·</span>
+                                <span v-if="p.category" class="font-medium text-slate-600">{{ p.category }}</span>
+                                <span v-if="p.specs?.capacity_kva" class="px-1.5 py-0.2 bg-amber-50 text-amber-700 rounded font-semibold text-[10px]">
+                                    {{ p.specs.capacity_kva }}kVA
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Price & Status -->
+                    <div class="flex items-center justify-between gap-2 pt-1 bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+                        <div class="flex items-center gap-1.5">
+                            <div class="relative w-32">
+                                <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">₦</span>
+                                <input 
+                                    :value="quickPrice[p.id] !== undefined ? quickPrice[p.id] : p.price_naira" 
+                                    @input="quickPrice[p.id] = $event.target.value"
+                                    @keyup.enter="saveQuickPrice(p)"
+                                    @wheel="$event.target.blur()"
+                                    type="number" 
+                                    class="w-full pl-6 pr-2 py-1.5 text-xs font-bold text-slate-900 border border-slate-200 rounded-lg focus:border-amber-500 bg-white no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                />
+                            </div>
+                            <button 
+                                v-if="quickPrice[p.id] !== undefined && quickPrice[p.id] != p.price_naira"
+                                @click="saveQuickPrice(p)"
+                                :disabled="savingId === p.id"
+                                class="px-2.5 py-1.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg hover:bg-amber-600 shadow-xs"
+                            >
+                                <span v-if="savingId === p.id">...</span>
+                                <span v-else>Save</span>
+                            </button>
+                        </div>
+
+                        <button 
+                            @click="togglePublished(p)"
+                            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold transition shrink-0"
+                            :class="p.is_published ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'"
+                        >
+                            <span class="w-1.5 h-1.5 rounded-full" :class="p.is_published ? 'bg-emerald-500' : 'bg-slate-400'"></span>
+                            <span>{{ p.is_published ? 'Active' : 'Draft' }}</span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs text-slate-500 pt-1">
+                        <div>Stock: <strong class="text-slate-800">{{ p.stock_qty }}</strong></div>
+                        <div class="flex items-center gap-2">
+                            <Link 
+                                :href="route('admin.products.edit', p.id)" 
+                                class="px-3 py-1 font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg"
+                            >
+                                Edit
+                            </Link>
+                            <button 
+                                @click="deleteProduct(p.id, p.name)" 
+                                class="px-3 py-1 font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop Table View (hidden sm:block) -->
+            <div class="hidden sm:block overflow-x-auto">
                 <table class="w-full text-sm text-left">
                     <thead>
                         <tr class="border-b border-slate-100 bg-slate-50/75 text-xs text-slate-500 font-bold uppercase tracking-wider">
@@ -162,8 +249,9 @@ const formatNaira = (val) => {
                                             :value="quickPrice[p.id] !== undefined ? quickPrice[p.id] : p.price_naira" 
                                             @input="quickPrice[p.id] = $event.target.value"
                                             @keyup.enter="saveQuickPrice(p)"
+                                            @wheel="$event.target.blur()"
                                             type="number" 
-                                            class="w-full pl-6 pr-2 py-1.5 text-xs font-bold text-slate-900 border border-slate-200 rounded-lg focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-hidden"
+                                            class="w-full pl-6 pr-2 py-1.5 text-xs font-bold text-slate-900 border border-slate-200 rounded-lg focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-hidden no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                         />
                                     </div>
                                     <button 

@@ -1,12 +1,13 @@
 <script setup>
 import { Link, useForm, usePage } from '@inertiajs/vue3'
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import Logo from '../../../images/logo.png'
 import TextInput from '@/Components/Forms/TextInput.vue';
 import { useToast } from 'vue-toastification';
 
 const toast = useToast();
 const flashMsg = usePage().props.flash.message;
+const siteLogo = computed(() => usePage().props.site?.logo_url || Logo);
 const form = useForm({
   login: null,
   password: null,
@@ -124,15 +125,25 @@ const handleLogin = () => {
         class="w-full max-w-md bg-white rounded-lg shadow-lg p-5 space-y-6"
         data-aos="zoom-out"
         data-aos-duration="600">
-        <!-- Logo -->
+        <!-- Logo & Brand Header -->
         <div class="text-center">
-          <img
-            :src="Logo"
-            alt="Logo"
-            class="h-12 mx-auto mb-4"
-          />
-          <h2 class="text-2xl font-bold text-gray-800">Login to Your Account</h2>
-          <p class="text-sm text-gray-500 mt-2">Welcome back! Please login to continue.</p>
+          <Link href="/" class="inline-flex items-center space-x-3 mb-3 group" title="Return to homepage">
+            <img
+              :src="siteLogo"
+              alt="Zayin Ltd Logo"
+              class="w-12 h-12 object-contain rounded-xl shadow-md group-hover:scale-105 transition-transform"
+            />
+            <div class="text-left leading-tight">
+              <span class="text-2xl font-black tracking-tight text-slate-900 flex items-center">
+                ZAYIN<span class="text-amber-500 ml-1">LTD</span>
+              </span>
+              <p class="text-[10px] text-slate-500 tracking-wider font-bold uppercase">
+                Solar · Starlink · DSTV
+              </p>
+            </div>
+          </Link>
+          <h2 class="text-xl font-bold text-gray-800">Login to Your Account</h2>
+          <p class="text-xs text-gray-500 mt-1">Welcome back! Please login to continue.</p>
         </div>
 
         <!-- Form -->
@@ -164,15 +175,17 @@ const handleLogin = () => {
 
           <!-- Remember Me & Forgot Password -->
           <div class="flex items-center justify-between">
-            <label class="flex items-center">
+            <label for="remember" class="flex items-center cursor-pointer select-none py-1">
               <input
+                id="remember"
+                name="remember"
                 type="checkbox"
-                class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer transition-colors"
                 v-model="form.remember"
               />
-              <span class="ml-2 text-sm text-gray-600">Remember me</span>
+              <span class="ml-2 text-sm text-gray-700 font-medium">Remember me</span>
             </label>
-            <a href="#" class=" text-sm text-primary hover:text-primary-dark">Forgot password?</a>
+            <a href="#" class="text-sm text-primary hover:text-primary-dark">Forgot password?</a>
           </div>
 
           <!-- Submit Button -->

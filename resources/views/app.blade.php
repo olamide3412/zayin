@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $meta['title'] ?? config('app.name', 'Zayin Global Limited') . ' | Solar, Starlink & DSTV Installations' }}</title>
+    <title>{{ $meta['title'] ?? config('app.name', 'Zayin Ltd') . ' | Solar, Starlink & DSTV Installations' }}</title>
 
     <meta name="description"
         content="{{ $meta['description'] ?? 'Certified solar power systems, high-speed Starlink installations, enterprise mesh Wi-Fi, and precision DSTV satellite setups across Nigeria.' }}">
     <meta name="keywords"
-        content="solar installation Nigeria, inverter battery Lagos, Starlink installer Abuja, DSTV installation Lekki, solar panels Nigeria, Wi-Fi networking, AMC solar maintenance, Zayin Global Limited">
+        content="solar installation Nigeria, inverter battery Lagos, Starlink installer Abuja, DSTV installation Lekki, solar panels Nigeria, Wi-Fi networking, AMC solar maintenance, Zayin Ltd">
     <meta name="robots" content="index, follow">
 
     <!-- ── SEO: Open Graph (Facebook / LinkedIn) ──────────────────────── -->
@@ -21,7 +21,7 @@
         <meta property="og:image" content="{{ $meta['image'] ?? asset('images/logo.png') }}">
         <meta property="og:type" content="{{ $meta['type'] ?? 'website' }}">
         <meta property="og:url" content="{{ url()->current() }}">
-        <meta property="og:site_name" content="Zayin Global Limited">
+        <meta property="og:site_name" content="Zayin Ltd">
         <meta property="og:locale" content="en_NG">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
@@ -31,13 +31,13 @@
         <meta name="twitter:title" content="{{ $meta['title'] }}">
         <meta name="twitter:description" content="{{ $meta['description'] }}">
         <meta name="twitter:image" content="{{ $meta['image'] ?? asset('images/logo.png') }}">
-        <meta name="twitter:site" content="@ZayinGlobalNG">
+        <meta name="twitter:site" content="@ZayinLtdNG">
     @else
-        <meta property="og:title" content="Zayin Global Limited | Solar, Starlink & DSTV Engineering">
+        <meta property="og:title" content="Zayin Ltd | Solar, Starlink & DSTV Engineering">
         <meta property="og:description"
             content="Certified solar power systems, Starlink satellite broadband, enterprise Wi-Fi networking, and DSTV distribution across 36 Nigerian states.">
         <meta property="og:type" content="website">
-        <meta property="og:site_name" content="Zayin Global Limited">
+        <meta property="og:site_name" content="Zayin Ltd">
         <meta property="og:locale" content="en_NG">
         <meta property="og:image" content="{{ asset('images/logo.png') }}">
         <meta property="og:image:width" content="1200">
@@ -46,11 +46,11 @@
 
         <!-- ── SEO: Twitter / X Card ──────────────────────────────────── -->
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Zayin Global Limited | Solar, Starlink & DSTV Engineering">
+        <meta name="twitter:title" content="Zayin Ltd | Solar, Starlink & DSTV Engineering">
         <meta name="twitter:description"
             content="Certified solar power systems, Starlink satellite broadband, enterprise Wi-Fi networking, and DSTV distribution across 36 Nigerian states.">
         <meta name="twitter:image" content="{{ asset('images/logo.png') }}">
-        <meta name="twitter:site" content="@ZayinGlobalNG">
+        <meta name="twitter:site" content="@ZayinLtdNG">
     @endif
 
     <!-- ── SEO: JSON-LD Structured Data (Organization) ───────────────── -->
@@ -58,8 +58,8 @@
     {
         "@@context": "https://schema.org",
         "@@type": "LocalBusiness",
-        "name": "Zayin Global Limited",
-        "alternateName": "Zayin Global Ltd",
+        "name": "Zayin Ltd",
+        "alternateName": "Zayin Ltd",
         "description": "Certified solar installations, Starlink satellite internet mounting, and professional DSTV multi-room systems in Nigeria.",
         "url": "{{ config('app.url') }}",
         "logo": "{{ asset('images/logo.png') }}",
@@ -75,7 +75,7 @@
         "areaServed": "Nigeria (Nationwide across 36 States + FCT)",
         "hasOfferCatalog": {
             "@@type": "OfferCatalog",
-            "name": "Zayin Global Limited Engineering Services",
+            "name": "Zayin Ltd Engineering Services",
             "itemListElement": [
                 { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Solar & Inverter Power Solutions" } },
                 { "@@type": "Offer", "itemOffered": { "@@type": "Service", "name": "Starlink Satellite Installation & Enterprise Wi-Fi" } },
@@ -86,7 +86,11 @@
     }
     </script>
 
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/logo.svg') }}?v=3">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon.png') }}?v=3">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}?v=3">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=3">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}?v=3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"

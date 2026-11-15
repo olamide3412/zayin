@@ -2,6 +2,7 @@
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import { generateWhatappLink } from '@/Utils/whatsappLinkGen';
+import Logo from '../../../images/logo.png';
 
 const page = usePage();
 
@@ -63,19 +64,21 @@ onUnmounted(() => {
 });
 
 const site = computed(() => page.props.site || {
-    name: 'Zayin Global Limited',
+    name: 'Zayin Ltd',
     phone: '+234 803 123 4567',
     whatsapp: '2348031234567',
     email: 'support@zayin.ng',
     address: 'Abraka, Ethiope East, Delta State, Nigeria',
 });
 
+const siteLogo = computed(() => site.value.logo_url || Logo);
+
 const cartCount = computed(() => page.props.cart?.count || 0);
 
 const whatsappLink = computed(() => {
     const raw = site.value.whatsapp || '2348031234567';
     const clean = String(raw).replace(/[^0-9]/g, '');
-    return generateWhatappLink(clean, 'Hello Zayin Global Limited, I would like to make an enquiry.');
+    return generateWhatappLink(clean, 'Hello Zayin Ltd, I would like to make an enquiry.');
 });
 
 const servicesList = [
@@ -134,7 +137,7 @@ const packagesList = [
 
 const companyList = [
     {
-        title: 'About Zayin Global Limited',
+        title: 'About Zayin Ltd',
         href: '/about',
         desc: 'Our engineering heritage, certified installers, and mission.',
         icon: 'circle-info',
@@ -164,9 +167,9 @@ const companyList = [
         icon: 'circle-question',
     },
     {
-        title: 'News & Deployments',
+        title: 'Blog & Field Updates',
         href: '/blog',
-        desc: 'Field project updates and company bulletins.',
+        desc: 'Field project updates and company articles.',
         icon: 'book-open',
     },
     {
@@ -246,13 +249,14 @@ const companyList = [
             <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 xl:gap-6">
                 <!-- Brand Logo (Shrink-0 to avoid crushing) -->
                 <Link href="/" class="flex items-center space-x-2.5 group shrink-0">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-slate-900 to-amber-500 flex items-center justify-center text-white shadow-md shadow-amber-500/10 group-hover:scale-105 transition-transform duration-300 shrink-0">
-                        <font-awesome-icon :icon="['fas', 'bolt']" class="text-lg text-amber-300" />
-                    </div>
+                    <img 
+                        :src="siteLogo" 
+                        alt="Zayin Ltd Logo" 
+                        class="w-10 h-10 object-contain rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0"
+                    />
                     <div class="leading-tight">
                         <span class="text-xl sm:text-2xl font-black tracking-tight text-slate-900 flex items-center">
-                            ZAYIN<span class="text-amber-500 ml-1">GLOBAL</span>
-                            <span class="text-[9px] font-bold text-amber-700 bg-amber-100 border border-amber-300 rounded px-1.5 py-0.5 ml-1.5 leading-none">LTD</span>
+                            ZAYIN<span class="text-amber-500 ml-1">LTD</span>
                         </span>
                         <p class="text-[9px] text-slate-500 tracking-wider font-bold uppercase hidden sm:block">
                             Solar · Starlink · DSTV
@@ -536,6 +540,20 @@ const companyList = [
                 v-show="isOpen"
                 class="relative z-40 lg:hidden bg-white border-b border-slate-200 shadow-2xl max-h-[85vh] overflow-y-auto px-5 py-5 space-y-4"
             >
+                <!-- Mobile Drawer Header with Close Button -->
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Navigation Menu</span>
+                    <button 
+                        type="button" 
+                        @click="closeMenu"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 rounded-lg transition-colors border border-slate-200 shadow-2xs"
+                        aria-label="Close navigation menu"
+                    >
+                        <font-awesome-icon :icon="['fas', 'xmark']" class="text-sm" />
+                        <span>Close</span>
+                    </button>
+                </div>
+
                 <!-- Direct Nav Links -->
                 <div class="space-y-1 font-semibold text-slate-800 text-sm">
                     <Link href="/" @click="closeMenu" class="block py-2.5 px-3 rounded-xl hover:bg-slate-50 transition-colors">
@@ -664,6 +682,15 @@ const companyList = [
                             <span>WhatsApp</span>
                         </a>
                     </div>
+
+                    <button 
+                        type="button" 
+                        @click="closeMenu"
+                        class="w-full py-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 text-xs font-semibold flex items-center justify-center space-x-1.5 transition-colors border border-dashed border-slate-200 mt-2"
+                    >
+                        <font-awesome-icon :icon="['fas', 'xmark']" class="text-xs" />
+                        <span>Close Navigation Menu</span>
+                    </button>
                 </div>
             </div>
         </transition>

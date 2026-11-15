@@ -38,8 +38,16 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-NG', { month: '
 
 <template>
     <div class="bg-slate-50 min-h-screen">
-        <Head title="Client Testimonials & Reviews | Zayin Global Limited">
-            <meta name="description" content="Read verified feedback from Nigerian homeowners and businesses powered by Zayin Global Limited solar inverters, Starlink satellite internet, and DSTV setups." />
+        <Head title="Client Testimonials & Reviews | Zayin Ltd">
+            <meta name="description" content="Read verified feedback from Nigerian homeowners and businesses powered by Zayin Ltd solar inverters, Starlink satellite internet, and DSTV setups." />
+            <link rel="canonical" :href="route('testimonials.index')" />
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content="Client Testimonials & Reviews | Zayin Ltd" />
+            <meta property="og:description" content="Read verified feedback from Nigerian homeowners and businesses powered by Zayin Ltd solar inverters, Starlink satellite internet, and DSTV setups." />
+            <meta property="og:url" :content="route('testimonials.index')" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content="Client Testimonials & Reviews | Zayin Ltd" />
+            <meta name="twitter:description" content="Read verified feedback from Nigerian homeowners and businesses powered by Zayin Ltd solar inverters, Starlink satellite internet, and DSTV setups." />
         </Head>
 
         <!-- Hero Header -->

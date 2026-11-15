@@ -31,7 +31,8 @@ class CatalogController extends Controller
             $query->where('category', $request->category);
         }
 
-        $items = $query->orderByDesc('usage_count')->paginate(20)->withQueryString();
+        $perPage = max(25, (int) $request->input('per_page', 25));
+        $items = $query->orderByDesc('usage_count')->paginate($perPage)->withQueryString();
 
         $categories = InvoiceItemCatalog::where('business_id', $business->id)
             ->whereNotNull('category')

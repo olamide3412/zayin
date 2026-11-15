@@ -9,7 +9,7 @@ const props = defineProps({
     }
 });
 
-const title = computed(() => props.seo?.title || 'Zayin Global Limited | Solar, Starlink & DSTV Nigeria');
+const title = computed(() => props.seo?.title || 'Zayin Ltd | Solar, Starlink & DSTV Nigeria');
 const description = computed(() => props.seo?.description || "Nigeria's trusted installer for engineered solar systems, Starlink satellite internet setups, and DSTV satellite TV.");
 const canonical = computed(() => props.seo?.canonical || '');
 const robots = computed(() => props.seo?.robots || 'index,follow');

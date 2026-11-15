@@ -133,6 +133,38 @@ const primaryVideo = props.project.videos?.[0] || null;
                         {{ project.body }}
                     </div>
 
+                    <!-- Media Gallery Showcase -->
+                    <div v-if="project.gallery && project.gallery.length" class="border-t border-slate-100 pt-6 space-y-4">
+                        <h3 class="text-lg font-bold text-slate-900">Installation Gallery & Media Proof</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <div 
+                                v-for="(media, mIdx) in project.gallery" 
+                                :key="mIdx"
+                                class="rounded-2xl overflow-hidden border border-slate-100 bg-slate-900 aspect-video group relative shadow-2xs"
+                            >
+                                <video 
+                                    v-if="media.endsWith('.mp4') || media.endsWith('.webm')" 
+                                    :src="media" 
+                                    controls 
+                                    playsinline
+                                    class="w-full h-full object-cover"
+                                ></video>
+                                <a 
+                                    v-else 
+                                    :href="media" 
+                                    target="_blank" 
+                                    class="block w-full h-full"
+                                >
+                                    <img 
+                                        :src="media" 
+                                        :alt="`${project.title} photo ${mIdx + 1}`" 
+                                        class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div v-if="primaryVideo?.transcript" class="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-2">
                         <span class="font-bold text-slate-800 uppercase tracking-wider block">Video Description / Walkthrough Notes:</span>
                         <p class="leading-relaxed">{{ primaryVideo.transcript }}</p>

@@ -11,13 +11,13 @@ use Illuminate\Support\Facades\Hash;
 class StaffSeeder extends Seeder
 {
     /**
-     * Run the database seeds for Zayin Global Limited staff members.
+     * Run the database seeds for Zayin Ltd staff members.
      */
     public function run(): void
     {
         $staffMembers = [
             [
-                'name' => 'Zayin Global Admin',
+                'name' => 'Zayin Admin',
                 'username' => 'admin',
                 'email' => 'admin@zayin.ng',
                 'password' => Hash::make('admin123'),
@@ -33,7 +33,7 @@ class StaffSeeder extends Seeder
                 'status' => StatusEnums::Enable->value,
             ],
             [
-                'name' => 'Zayin Global Support',
+                'name' => 'Zayin Support',
                 'username' => 'support',
                 'email' => 'support@zayin.ng',
                 'password' => Hash::make('admin123'),

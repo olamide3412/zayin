@@ -2,21 +2,24 @@
 import { computed } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import { generateWhatappLink } from '@/Utils/whatsappLinkGen';
+import Logo from '../../images/logo.png';
 
 const page = usePage();
 
 const site = computed(() => page.props.site || {
-    name: 'Zayin Global Limited',
+    name: 'Zayin Ltd',
     phone: '+234 803 123 4567',
     whatsapp: '2348031234567',
     email: 'support@zayin.ng',
     address: 'Abraka, Ethiope East, Delta State, Nigeria',
 });
 
+const siteLogo = computed(() => site.value.logo_url || Logo);
+
 const whatsappLink = computed(() => {
     const raw = site.value.whatsapp || '2348031234567';
     const clean = String(raw).replace(/[^0-9]/g, '');
-    return generateWhatappLink(clean, 'Hello Zayin Global Limited, I would like to make an enquiry.');
+    return generateWhatappLink(clean, 'Hello Zayin Ltd, I would like to make an enquiry.');
 });
 
 const scrollToTop = () => {
@@ -36,13 +39,14 @@ const scrollToTop = () => {
                 <!-- Col 1: Brand & Bio (4 cols) -->
                 <div class="lg:col-span-4 space-y-6">
                     <Link href="/" class="flex items-center space-x-3 group">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-slate-900 to-amber-500 flex items-center justify-center text-white shadow-md">
-                            <font-awesome-icon :icon="['fas', 'bolt']" class="text-xl text-amber-300" />
-                        </div>
+                        <img 
+                            :src="siteLogo" 
+                            alt="Zayin Ltd Logo" 
+                            class="w-10 h-10 object-contain rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0"
+                        />
                         <div>
                             <span class="text-2xl font-black tracking-tight text-white flex items-center">
-                                ZAYIN<span class="text-amber-500 ml-1">GLOBAL</span>
-                                <span class="text-[9px] font-bold text-amber-400 bg-slate-900 border border-amber-400/40 rounded px-1.5 py-0.5 ml-1.5 leading-none">LTD</span>
+                                ZAYIN<span class="text-amber-500 ml-1">LTD</span>
                             </span>
                             <span class="text-xs font-semibold text-amber-400 tracking-wider uppercase block">
                                 Solar · Starlink · DSTV
@@ -203,9 +207,9 @@ const scrollToTop = () => {
                         <div class="pt-2 border-t border-slate-800">
                             <span class="text-xs text-slate-500 uppercase tracking-wider block mb-1">Accepted Payments</span>
                             <div class="flex items-center space-x-2 text-xs font-semibold text-slate-300">
-                                <span class="bg-slate-900 border border-slate-800 px-2 py-1 rounded">Paystack</span>
-                                <span class="bg-slate-900 border border-slate-800 px-2 py-1 rounded">Card & USSD</span>
-                                <span class="bg-slate-900 border border-slate-800 px-2 py-1 rounded">Bank Transfer</span>
+                                <span class="bg-slate-900 border border-slate-800 px-2 py-1 rounded">Corporate Bank Wire</span>
+                                <span class="bg-slate-900 border border-slate-800 px-2 py-1 rounded">Direct Transfer</span>
+                                <span class="bg-slate-900 border border-slate-800 px-2 py-1 rounded">Official Invoicing</span>
                             </div>
                         </div>
                     </div>
@@ -215,7 +219,7 @@ const scrollToTop = () => {
             <!-- Bottom Row: Copyright, Legal & Back to Top -->
             <div class="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
                 <div>
-                    &copy; {{ new Date().getFullYear() }} {{ site.name }}. All rights reserved.
+                    &copy; {{ new Date().getFullYear() }} {{ site.name }} &bull; RC 10005044. All rights reserved.
                 </div>
 
                 <div class="flex flex-wrap items-center gap-6">

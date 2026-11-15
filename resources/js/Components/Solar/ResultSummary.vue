@@ -42,7 +42,7 @@ const whatsappMessage = computed(() => {
     const solarKw = (props.results.solar.arrayW / 1000).toFixed(2);
     const shareLink = props.shareUrl || window.location.href;
 
-    const text = `Hello Zayin Global Limited, I used your solar load calculator. Daily use: ${dailyKwh} kWh. Suggested: ${invKva}kVA inverter, ${battKwh}kWh ${battType} battery, ${solarKw}kW solar array. Result details: ${shareLink}. Please advise on installation.`;
+    const text = `Hello Zayin Ltd, I used your solar load calculator. Daily use: ${dailyKwh} kWh. Suggested: ${invKva}kVA inverter, ${battKwh}kWh ${battType} battery, ${solarKw}kW solar array. Result details: ${shareLink}. Please advise on installation.`;
     return `https://wa.me/${props.companyWhatsApp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(text)}`;
 });
 </script>
@@ -234,7 +234,7 @@ const whatsappMessage = computed(() => {
                 <font-awesome-icon icon="shield-halved" class="text-amber-500 text-base shrink-0 mt-0.5" />
                 <div>
                     <strong class="text-slate-700 font-bold">Official Engineering Disclaimer:</strong>
-                    This calculation is an estimate based on the appliances, hours, and typical equipment values you entered. Actual system performance varies with appliance age, real nameplate power factors, seasonal weather, roof tilt/shading, wire run distances, and brand specifications. A certified Zayin Global Limited field engineer will conduct a physical site survey before your final commissioning.
+                    This calculation is an estimate based on the appliances, hours, and typical equipment values you entered. Actual system performance varies with appliance age, real nameplate power factors, seasonal weather, roof tilt/shading, wire run distances, and brand specifications. A certified Zayin Ltd field engineer will conduct a physical site survey before your final commissioning.
                 </div>
             </div>
         </div>

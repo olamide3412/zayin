@@ -29,7 +29,8 @@ class CustomerController extends Controller
             });
         }
 
-        $customers = $query->latest()->paginate(15)->withQueryString();
+        $perPage = max(25, (int) $request->input('per_page', 25));
+        $customers = $query->latest()->paginate($perPage)->withQueryString();
 
         return Inertia::render('Invoices/Customers/Index', [
             'customers' => $customers,

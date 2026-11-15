@@ -25,6 +25,7 @@ class Business extends Model
         'website',
         'rc_number',
         'tin',
+        'show_tin',
         'signature_path',
         'stamp_path',
         'vat_rate_bps',
@@ -38,6 +39,7 @@ class Business extends Model
     {
         return [
             'vat_rate_bps' => 'integer',
+            'show_tin' => 'boolean',
         ];
     }
 
@@ -49,7 +51,7 @@ class Business extends Model
         return static::firstOrCreate(
             ['id' => 1],
             [
-                'name' => 'Zayin Global Limited',
+                'name' => 'Zayin Ltd',
                 'tagline' => 'Solar Energy, Starlink & DSTV Installations',
                 'address_line1' => 'Abraka, Ethiope East',
                 'address_line2' => 'Delta State, Nigeria',
@@ -58,12 +60,12 @@ class Business extends Model
                 'phone' => '+234 803 123 4567',
                 'email' => 'info@zayin.ng',
                 'website' => 'https://zayin.ng',
-                'rc_number' => 'RC-1849204',
+                'rc_number' => 'RC 10005044',
                 'tin' => '24819204-0001',
                 'vat_rate_bps' => 750,
                 'default_vat_mode' => 'exclusive',
-                'default_terms' => '1. Payment is due according to specified terms.\n2. Goods remain property of Zayin Global Limited until paid in full.\n3. Warranties cover certified equipment and standard workmanship.',
-                'default_notes' => 'Thank you for choosing Zayin Global Limited for your clean power and connectivity needs.',
+                'default_terms' => '1. Payment is due according to specified terms.\n2. Goods remain property of Zayin Ltd until paid in full.\n3. Warranties cover certified equipment and standard workmanship.',
+                'default_notes' => 'Thank you for choosing Zayin Ltd for your clean power and connectivity needs.',
                 'footer_text' => 'Thank you for your business. Certified Engineering & Nationwide Deployments.',
             ]
         );

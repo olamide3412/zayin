@@ -10,6 +10,10 @@ class CatalogSeeder extends Seeder
 {
     public function run(): void
     {
+        if (DB::table('service_categories')->count() > 0) {
+            return;
+        }
+
         // 1. Service Categories
         $solarCatId = DB::table('service_categories')->insertGetId([
             'name' => 'Solar Energy & Power Backup',

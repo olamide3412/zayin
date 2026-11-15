@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Zayin Global Limited'),
+    'name' => env('APP_NAME', 'Zayin Ltd'),
 
     /*
     |--------------------------------------------------------------------------

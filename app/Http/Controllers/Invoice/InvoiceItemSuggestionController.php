@@ -19,7 +19,7 @@ class InvoiceItemSuggestionController extends Controller
         $business = Business::current();
         $limit = min(20, max(1, (int) $request->input('limit', 8)));
 
-        $items = $catalogService->searchSuggestions($business->id, $query, $limit);
+        $items = $catalogService->suggest($business, $query, $limit);
 
         $results = $items->map(function ($item) {
             $priceKobo = $item->last_price_kobo ?? $item->default_price_kobo;

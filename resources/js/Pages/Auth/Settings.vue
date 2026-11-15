@@ -20,7 +20,7 @@ const form = useForm({
     about_founder_title: props.settings?.about_founder_title ?? '',
     about_founder_bio: props.settings?.about_founder_bio ?? '',
     about_founder_image: props.settings?.about_founder_image ?? '',
-    news_layout_style: props.settings?.news_layout_style ?? 'hero_split'
+    site_logo_url: props.settings?.site_logo_url ?? '',
 })
 
 const addSlide = () => {
@@ -61,6 +61,33 @@ const saveSettings = () => {
 
         <div class="max-w-4xl">
             <form @submit.prevent="saveSettings" class="space-y-6">
+                <!-- Company Brand & Logo Section -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-6 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+                        <div>
+                            <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Company Brand & Logo
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-1">Upload and customize the official company logo displayed across the website, navigation bar, login screen, admin dashboard, and invoices.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 space-y-4">
+                        <div class="max-w-md">
+                            <ImageUpload 
+                                v-model="form.site_logo_url" 
+                                label="Upload Company Logo (PNG, SVG, or JPG)" 
+                            />
+                            <p class="text-xs text-gray-400 mt-1.5">
+                                Recommended: Square or horizontal transparent PNG/SVG (e.g. 512×512px). Leave blank to use the built-in Zayin Ltd emblem.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Appointment Settings Section -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <div class="p-6 border-b border-gray-100 bg-gray-50">
@@ -68,7 +95,7 @@ const saveSettings = () => {
                             <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            Appointment Booking Control
+                            Site Visit & Installation Booking Control
                         </h3>
                     </div>
 
@@ -76,11 +103,11 @@ const saveSettings = () => {
                         <div class="flex items-start justify-between gap-4">
                             <div class="flex-1">
                                 <label class="text-base font-semibold text-gray-900 block">
-                                    Enable Online Appointment Booking
+                                    Enable Online Site Visit & Installation Booking
                                 </label>
                                 <p class="text-sm text-gray-500 mt-1">
-                                    Toggle whether public visitors can schedule and request appointments on the website.
-                                    When disabled, all booking entry points, buttons, navigation links, and pages on the users end are hidden.
+                                    Toggle whether public visitors can schedule and request technician site visits and engineering installations online.
+                                    When disabled, all booking entry points, buttons, and navigation links on the website are hidden.
                                 </p>
                             </div>
                             
@@ -119,7 +146,7 @@ const saveSettings = () => {
                         <!-- Mission Statement -->
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-                                Hospital Mission Statement
+                                Company Mission Statement
                             </label>
                             <textarea 
                                 v-model="form.about_mission" 
@@ -133,7 +160,7 @@ const saveSettings = () => {
                         <!-- Vision Statement -->
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-                                Hospital Vision Statement
+                                Company Vision Statement
                             </label>
                             <textarea 
                                 v-model="form.about_vision" 
@@ -166,7 +193,7 @@ const saveSettings = () => {
                                     <input 
                                         v-model="form.about_founder_name"
                                         type="text"
-                                        placeholder="e.g. His Highness Prince Abdul-Aziz bin Ahmed Al-Saud"
+                                        placeholder="e.g. Engr. Olamide Zayin"
                                         class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-slate-900 text-sm focus:ring-2 focus:ring-primary focus:outline-none font-semibold"
                                     />
                                 </div>
@@ -177,7 +204,7 @@ const saveSettings = () => {
                                     <input 
                                         v-model="form.about_founder_title"
                                         type="text"
-                                        placeholder="e.g. Founder & Chairman, Al-Basar International Foundation"
+                                        placeholder="e.g. Managing Director & Lead Systems Engineer, Zayin Ltd"
                                         class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-slate-900 text-sm focus:ring-2 focus:ring-primary focus:outline-none"
                                     />
                                 </div>
@@ -194,99 +221,6 @@ const saveSettings = () => {
                                     placeholder="Enter founder message or biography (HTML formatting supported)..."
                                     class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-slate-900 text-sm focus:ring-2 focus:ring-primary focus:outline-none font-mono"
                                 ></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- News Page Layout Style Section -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div class="p-6 border-b border-gray-100 bg-gray-50">
-                        <h3 class="font-bold text-gray-800 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                            </svg>
-                            News Page Layout Style
-                        </h3>
-                    </div>
-
-                    <div class="p-6 space-y-6">
-                        <p class="text-sm text-gray-500">
-                            Select the display style for the public News & Media page.
-                        </p>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <!-- Style 1: Featured Split Hero (King Khaled Style) -->
-                            <div 
-                                @click="form.news_layout_style = 'hero_split'"
-                                :class="[
-                                    'p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between space-y-3 relative',
-                                    form.news_layout_style === 'hero_split'
-                                        ? 'border-primary bg-sky-50/50 ring-2 ring-primary/20'
-                                        : 'border-gray-200 hover:border-gray-300'
-                                ]"
-                            >
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-extrabold uppercase tracking-wider text-primary">Style 1</span>
-                                        <span v-if="form.news_layout_style === 'hero_split'" class="w-3 h-3 rounded-full bg-primary"></span>
-                                    </div>
-                                    <h4 class="font-bold text-slate-900 text-base font-['Outfit',sans-serif]">
-                                        Featured Split Hero
-                                    </h4>
-                                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                                        Large featured main post on the left with stacked dark blue news list on the right (King Khaled Eye Hospital Style).
-                                    </p>
-                                </div>
-                                <span class="text-[11px] font-bold text-primary block mt-2">Recommended ★</span>
-                            </div>
-
-                            <!-- Style 2: Executive Magazine Grid -->
-                            <div 
-                                @click="form.news_layout_style = 'magazine_grid'"
-                                :class="[
-                                    'p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between space-y-3 relative',
-                                    form.news_layout_style === 'magazine_grid'
-                                        ? 'border-primary bg-sky-50/50 ring-2 ring-primary/20'
-                                        : 'border-gray-200 hover:border-gray-300'
-                                ]"
-                            >
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Style 2</span>
-                                        <span v-if="form.news_layout_style === 'magazine_grid'" class="w-3 h-3 rounded-full bg-primary"></span>
-                                    </div>
-                                    <h4 class="font-bold text-slate-900 text-base font-['Outfit',sans-serif]">
-                                        Magazine Grid
-                                    </h4>
-                                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                                        Full-width top hero banner with 3-column asymmetric cards and category badges.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Style 3: Editorial Horizontal List -->
-                            <div 
-                                @click="form.news_layout_style = 'editorial_list'"
-                                :class="[
-                                    'p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between space-y-3 relative',
-                                    form.news_layout_style === 'editorial_list'
-                                        ? 'border-primary bg-sky-50/50 ring-2 ring-primary/20'
-                                        : 'border-gray-200 hover:border-gray-300'
-                                ]"
-                            >
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Style 3</span>
-                                        <span v-if="form.news_layout_style === 'editorial_list'" class="w-3 h-3 rounded-full bg-primary"></span>
-                                    </div>
-                                    <h4 class="font-bold text-slate-900 text-base font-['Outfit',sans-serif]">
-                                        Editorial Timeline List
-                                    </h4>
-                                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                                        Clean horizontal editorial rows with left thumbnail images and reading time indicators.
-                                    </p>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -324,7 +258,7 @@ const saveSettings = () => {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span class="text-sm font-semibold text-gray-600">No Custom Hero Slides</span>
-                            <p class="text-xs text-gray-400 mt-1 max-w-sm text-center">Currently displaying default hospital facility images. Click "Add Slide" to begin customizing.</p>
+                            <p class="text-xs text-gray-400 mt-1 max-w-sm text-center">Currently displaying default engineering slides. Click "Add Slide" to begin customizing.</p>
                         </div>
 
                         <!-- Slides list -->

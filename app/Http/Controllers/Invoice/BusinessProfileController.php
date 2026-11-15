@@ -33,6 +33,7 @@ class BusinessProfileController extends Controller
             'tagline' => ['nullable', 'string', 'max:255'],
             'rc_number' => ['nullable', 'string', 'max:50'],
             'tin' => ['nullable', 'string', 'max:50'],
+            'show_tin' => ['nullable', 'boolean'],
             'phone' => ['nullable', 'string', 'max:50'],
             'phone_alt' => ['nullable', 'string', 'max:50'],
             'email' => ['nullable', 'email', 'max:255'],

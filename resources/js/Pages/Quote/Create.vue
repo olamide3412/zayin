@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import Layout from '@/Layouts/Layout.vue';
 import SeoHead from '@/Components/SeoHead.vue';
 import { useForm, usePage } from '@inertiajs/vue3';

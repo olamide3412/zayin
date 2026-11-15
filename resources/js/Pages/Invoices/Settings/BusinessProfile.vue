@@ -1,23 +1,17 @@
 <template>
-    <Head title="Invoice Business Profile & Accounts - Zayin Global Limited" />
+    <Head title="Invoice Business Profile & Accounts - Zayin Ltd" />
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex items-center justify-between">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 leading-tight">Business Profile & Bank Accounts</h2>
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Business Profile & Bank Accounts</h2>
                     <p class="text-xs text-gray-500 mt-0.5">Configure company branding, RC/TIN tax identifiers, and payment accounts.</p>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <Link
-                        :href="route('invoices.settings.templates')"
-                        class="px-3.5 py-2 text-xs font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 shadow-sm"
-                    >
-                        Templates Configuration →
-                    </Link>
                 </div>
             </div>
         </template>
+
+        <InvoiceNavSubBar />
 
         <div class="py-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -28,7 +22,7 @@
                     </h3>
 
                     <form @submit.prevent="updateProfile" class="space-y-4 text-xs">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block font-semibold text-gray-700 mb-1">Company Legal Name *</label>
                                 <input
@@ -47,12 +41,13 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block font-semibold text-gray-700 mb-1">CAC Registration (RC Number)</label>
                                 <input
                                     type="text"
                                     v-model="form.rc_number"
+                                    placeholder="e.g. RC 10005044"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
                                 />
                             </div>
@@ -61,12 +56,24 @@
                                 <input
                                     type="text"
                                     v-model="form.tin"
+                                    placeholder="e.g. 28491048-0001"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
                                 />
+                                <div class="mt-2 flex items-center justify-between">
+                                    <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                                        <input
+                                            type="checkbox"
+                                            v-model="form.show_tin"
+                                            class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4"
+                                        />
+                                        <span class="text-xs font-semibold text-gray-700">Show TIN on Invoices</span>
+                                    </label>
+                                    <span class="text-[11px] text-gray-400">PDF & Print</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block font-semibold text-gray-700 mb-1">Primary Phone</label>
                                 <input
@@ -85,7 +92,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block font-semibold text-gray-700 mb-1">Billing Email</label>
                                 <input
@@ -124,7 +131,7 @@
                             />
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block font-semibold text-gray-700 mb-1">City</label>
                                 <input
@@ -144,7 +151,7 @@
                         </div>
 
                         <!-- VAT Defaults -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 border-t border-gray-100">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-gray-100">
                             <div>
                                 <label class="block font-semibold text-gray-700 mb-1">Default VAT Rate (%)</label>
                                 <input
@@ -283,7 +290,7 @@
                             type="text"
                             v-model="bankForm.account_name"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-                            placeholder="ZAYIN GLOBAL LTD"
+                            placeholder="ZAYIN LTD"
                         />
                     </div>
                     <div>
@@ -332,6 +339,7 @@
 import { ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import InvoiceNavSubBar from '@/Components/Invoice/InvoiceNavSubBar.vue';
 
 const props = defineProps<{
     business: any;
@@ -343,6 +351,7 @@ const form = ref({
     tagline: props.business.tagline || '',
     rc_number: props.business.rc_number || '',
     tin: props.business.tin || '',
+    show_tin: props.business.show_tin ?? true,
     phone: props.business.phone || '',
     phone_alt: props.business.phone_alt || '',
     email: props.business.email || '',

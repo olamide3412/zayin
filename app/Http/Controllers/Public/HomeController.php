@@ -67,7 +67,7 @@ class HomeController extends Controller
             ->get(['id', 'name', 'logo_url', 'website_url', 'description']);
 
         $seo = new SeoData(
-            title: 'Zayin Global Limited | Solar, Starlink & DSTV Installation Nigeria',
+            title: 'Zayin Ltd | Solar, Starlink & DSTV Installation Nigeria',
             description: 'Engineered solar systems, zero-obstruction Starlink installations, and certified DSTV solutions across Nigeria. 24/7 power, fast internet, crystal clear TV.',
             jsonLd: [
                 JsonLdBuilder::organization(),

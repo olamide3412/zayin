@@ -51,6 +51,21 @@
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
+    <url>
+        <loc>{{ url('/blog') }}</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>{{ url('/testimonials') }}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>{{ url('/maintenance-plans') }}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
 
     <!-- Services -->
     @foreach ($services as $service)
@@ -78,6 +93,16 @@
         <loc>{{ url('/projects/' . $project->slug) }}</loc>
         <lastmod>{{ $project->updated_at?->toAtomString() }}</lastmod>
         <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    @endforeach
+
+    <!-- Engineering Blog Posts -->
+    @foreach ($posts as $post)
+    <url>
+        <loc>{{ url('/blog/' . $post->slug) }}</loc>
+        <lastmod>{{ $post->updated_at?->toAtomString() }}</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
     @endforeach

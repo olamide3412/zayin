@@ -39,7 +39,8 @@
                             step="any"
                             min="0"
                             v-model.number="discountValue"
-                            class="w-1/2 px-2 py-1.5 text-xs bg-white border border-gray-300 rounded focus:ring-primary focus:border-primary font-medium"
+                            @wheel="$event.target.blur()"
+                            class="w-1/2 px-2 py-1.5 text-xs bg-white border border-gray-300 rounded focus:ring-primary focus:border-primary font-medium no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             :placeholder="discountType === 'percentage' ? '%' : '₦'"
                         />
                     </div>
@@ -53,7 +54,8 @@
                         step="any"
                         min="0"
                         v-model.number="shippingNaira"
-                        class="w-full px-2.5 py-1.5 text-xs bg-white border border-gray-300 rounded focus:ring-primary focus:border-primary font-medium"
+                        @wheel="$event.target.blur()"
+                        class="w-full px-2.5 py-1.5 text-xs bg-white border border-gray-300 rounded focus:ring-primary focus:border-primary font-medium no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                         placeholder="0.00"
                     />
                 </div>

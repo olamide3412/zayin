@@ -47,23 +47,23 @@ const statusBadge = {
         </div>
 
         <!-- Stats Row -->
-        <div class="grid grid-cols-3 gap-4 mb-6">
-            <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-yellow-500 border border-gray-100">
-                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Pending</p>
-                <p class="text-2xl font-bold text-gray-900 mt-1">{{ counts?.pending || 0 }}</p>
+        <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
+            <div class="bg-white rounded-xl p-3 sm:p-4 shadow-sm border-l-4 border-yellow-500 border border-gray-100">
+                <p class="text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Pending</p>
+                <p class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">{{ counts?.pending || 0 }}</p>
             </div>
-            <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-green-500 border border-gray-100">
-                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Approved</p>
-                <p class="text-2xl font-bold text-gray-900 mt-1">{{ counts?.approved || 0 }}</p>
+            <div class="bg-white rounded-xl p-3 sm:p-4 shadow-sm border-l-4 border-green-500 border border-gray-100">
+                <p class="text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Approved</p>
+                <p class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">{{ counts?.approved || 0 }}</p>
             </div>
-            <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-blue-500 border border-gray-100">
-                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Total</p>
-                <p class="text-2xl font-bold text-gray-900 mt-1">{{ counts?.all || 0 }}</p>
+            <div class="bg-white rounded-xl p-3 sm:p-4 shadow-sm border-l-4 border-blue-500 border border-gray-100">
+                <p class="text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Total</p>
+                <p class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">{{ counts?.all || 0 }}</p>
             </div>
         </div>
 
         <!-- Filter Tabs -->
-        <div class="flex gap-2 mb-4">
+        <div class="flex gap-2 mb-4 overflow-x-auto whitespace-nowrap pb-1">
             <button v-for="f in [{ val: '', label: 'All' }, { val: 'pending', label: 'Pending' }, { val: 'approved', label: 'Approved' }, { val: 'rejected', label: 'Rejected' }]" :key="f.val"
                 @click="statusFilter = f.val; doFilter()"
                 :class="['px-4 py-2 rounded-lg text-sm font-medium transition-colors border', statusFilter === f.val ? 'bg-primary text-white border-primary shadow' : 'bg-white text-gray-600 border-gray-200 hover:border-primary hover:text-primary']">

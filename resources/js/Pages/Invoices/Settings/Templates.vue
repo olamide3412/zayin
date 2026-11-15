@@ -1,23 +1,17 @@
 <template>
-    <Head title="Invoice Templates - Zayin Global Limited" />
+    <Head title="Invoice Templates - Zayin Ltd" />
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex items-center justify-between">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 leading-tight">Invoice Templates</h2>
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Invoice Templates</h2>
                     <p class="text-xs text-gray-500 mt-0.5">Customize A5 layouts, brand accents, and invoice title headers.</p>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <Link
-                        :href="route('invoices.settings.business')"
-                        class="px-3.5 py-2 text-xs font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 shadow-sm"
-                    >
-                        ← Business Profile
-                    </Link>
                 </div>
             </div>
         </template>
+
+        <InvoiceNavSubBar />
 
         <div class="py-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -86,6 +80,15 @@
                             <label class="flex items-center space-x-2 cursor-pointer">
                                 <input
                                     type="checkbox"
+                                    v-model="tmpl.show_fields.tin"
+                                    class="rounded border-gray-300 text-primary focus:ring-primary h-3.5 w-3.5"
+                                />
+                                <span class="text-gray-700">Display Company TIN</span>
+                            </label>
+
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
                                     v-model="tmpl.show_watermark"
                                     class="rounded border-gray-300 text-primary focus:ring-primary h-3.5 w-3.5"
                                 />
@@ -121,10 +124,27 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import InvoiceNavSubBar from '@/Components/Invoice/InvoiceNavSubBar.vue';
 
 const props = defineProps<{
     templates: any[];
 }>();
+
+props.templates.forEach((tmpl) => {
+    if (!tmpl.show_fields || typeof tmpl.show_fields !== 'object') {
+        tmpl.show_fields = {
+            rc_number: true,
+            tin: true,
+            bank_accounts: true,
+            amount_in_words: true,
+            signature_line: true,
+            notes: true,
+            terms: true,
+        };
+    } else if (tmpl.show_fields.tin === undefined) {
+        tmpl.show_fields.tin = true;
+    }
+});
 
 function saveTemplate(tmpl: any) {
     router.put(route('invoices.settings.templates.update', tmpl.id), tmpl);

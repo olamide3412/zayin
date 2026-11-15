@@ -23,9 +23,9 @@ class SeoData
         array $jsonLd = [],
         array $breadcrumbs = []
     ) {
-        $company = config('app.name', 'Zayin Global Limited');
+        $company = config('app.name', 'Zayin Ltd');
         $this->title = $title ? "{$title} | {$company}" : "{$company} | Solar, Starlink & DSTV Installation Nigeria";
-        $this->description = $description ?: "Zayin Global Limited is Nigeria's trusted installer for engineered solar systems, zero-obstruction Starlink internet setups, and certified DSTV satellite solutions.";
+        $this->description = $description ?: "Zayin Ltd is Nigeria's trusted installer for engineered solar systems, zero-obstruction Starlink internet setups, and certified DSTV satellite solutions.";
         $this->canonical = $canonical ?: url()->current();
         $this->robots = $robots;
         $this->ogImage = $ogImage ?: url('/images/og-default.jpg');

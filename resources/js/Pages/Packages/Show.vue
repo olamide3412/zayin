@@ -25,7 +25,7 @@ const specs = computed(() => {
 const whatsappUrl = computed(() => {
     const raw = page.props.site?.whatsapp || '2348031234567';
     const clean = String(raw).replace(/[^0-9]/g, '');
-    return generateWhatappLink(clean, `Hello Zayin Global Limited, I would like to enquire about purchasing the ${props.product.name} (Price: ${formatNaira(props.product.price)}).`);
+    return generateWhatappLink(clean, `Hello Zayin Ltd, I would like to enquire about purchasing the ${props.product.name} (Price: ${formatNaira(props.product.price)}).`);
 });
 
 const addToCart = () => {

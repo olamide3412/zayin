@@ -13,7 +13,20 @@ export default defineConfig({
         tailwindcss(),
     ],
     server: { // 👈 Add this block
-        port: 5174,
+        port: 5175,
     },
-
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        if (id.includes('@tiptap') || id.includes('prosemirror')) {
+                            return 'vendor-editor';
+                        }
+                    }
+                },
+            },
+        },
+        chunkSizeWarningLimit: 600,
+    },
 });

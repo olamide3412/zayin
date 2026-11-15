@@ -49,4 +49,20 @@ class AdminAuthTest extends TestCase
         $response->assertSessionHasErrors('login');
         $this->assertGuest();
     }
+
+    public function test_admin_can_login_with_remember_me(): void
+    {
+        $response = $this->post(route('login'), [
+            'login' => 'admin',
+            'password' => 'admin123',
+            'remember' => true,
+        ]);
+
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticated();
+        
+        $user = User::where('username', 'admin')->first();
+        $this->assertNotNull($user->remember_token);
+        $response->assertCookie(\Illuminate\Support\Facades\Auth::guard()->getRecallerName());
+    }
 }

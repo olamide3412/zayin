@@ -171,7 +171,7 @@
                             type="text"
                             v-model="modalForm.account_name"
                             class="w-full px-2.5 py-1.5 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-xs"
-                            placeholder="e.g. ZAYIN GLOBAL LTD"
+                            placeholder="e.g. ZAYIN LTD"
                         />
                         <p class="text-[10px] text-gray-400 mt-0.5">The exact registered beneficiary name on the account.</p>
                     </div>
@@ -318,7 +318,7 @@ function openAddModal() {
     errorMessage.value = '';
     modalForm.value = {
         bank_name: '',
-        account_name: props.defaultAccountName || 'ZAYIN GLOBAL LTD',
+        account_name: props.defaultAccountName || 'ZAYIN LTD',
         account_number: '',
         is_default: props.bankAccounts.length === 0,
     };

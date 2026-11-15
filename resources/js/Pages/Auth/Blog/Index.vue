@@ -36,7 +36,7 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-GB', { day: 'nu
         <div class="mb-6 flex items-center justify-between flex-wrap gap-3">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">Blog Posts</h1>
-                <p class="text-sm text-gray-500 mt-0.5">Manage all hospital blog articles.</p>
+                <p class="text-sm text-gray-500 mt-0.5">Manage all Zayin Ltd articles and guides.</p>
             </div>
             <Link :href="route('admin.blog.create')" class="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-5 py-2.5 rounded-xl shadow transition-all duration-200 text-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -85,7 +85,13 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-GB', { day: 'nu
                                     </div>
                                     <div>
                                         <p class="font-semibold text-gray-900 line-clamp-1">{{ post.title }}</p>
-                                        <p class="text-xs text-gray-400 line-clamp-1">{{ post.excerpt }}</p>
+                                        <div class="flex items-center gap-1.5 mt-0.5 md:hidden">
+                                            <span :class="['px-2 py-0.5 rounded-full text-[10px] font-semibold', post.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700']">
+                                                {{ post.status === 'published' ? 'Published' : 'Draft' }}
+                                            </span>
+                                            <span v-if="post.category" class="text-[11px] text-gray-500 font-medium">· {{ post.category }}</span>
+                                        </div>
+                                        <p class="text-xs text-gray-400 line-clamp-1 hidden md:block">{{ post.excerpt }}</p>
                                     </div>
                                 </div>
                             </td>

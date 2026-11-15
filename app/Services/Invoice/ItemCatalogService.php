@@ -47,6 +47,19 @@ class ItemCatalogService
     }
 
     /**
+     * Alias for suggest supporting integer business ID or Business instance.
+     */
+    public function searchSuggestions(int|Business $business, string $query = '', int $limit = 8): Collection
+    {
+        $businessModel = $business instanceof Business ? $business : Business::find($business);
+        if (!$businessModel) {
+            $businessModel = Business::current();
+        }
+
+        return $this->suggest($businessModel, $query, $limit);
+    }
+
+    /**
      * Upsert or record usage of an item from an invoice line (§6).
      */
     public function recordUsage(

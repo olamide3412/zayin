@@ -14,11 +14,22 @@ class InvoiceSeeder extends Seeder
     public function run(): void
     {
         // 1. Business
-        $business = Business::firstOrCreate(
-            ['name' => 'Zayin Global Limited'],
-            [
+        $business = Business::first();
+        if ($business) {
+            $business->name = 'Zayin Ltd';
+            if (empty($business->default_notes) || str_contains($business->default_notes, 'Limited') || str_contains($business->default_notes, 'Technologies')) {
+                $business->default_notes = 'Thank you for choosing Zayin Ltd. Quality energy & telecom solutions built to last.';
+            }
+            if (empty($business->footer_text) || str_contains($business->footer_text, 'Limited') || str_contains($business->footer_text, 'Technologies')) {
+                $business->footer_text = 'Zayin Ltd • RC 10005044 • TIN 28491048-0001 • Abraka / Lagos';
+            }
+            $business->rc_number = 'RC 10005044';
+            $business->save();
+        } else {
+            $business = Business::create([
+                'name' => 'Zayin Ltd',
                 'tagline' => 'Solar, Starlink & DSTV Installations',
-                'rc_number' => 'RC-7842910',
+                'rc_number' => 'RC 10005044',
                 'tin' => 'TIN-28491048-0001',
                 'phone' => '+234 803 123 4567',
                 'phone_alt' => '+234 812 345 6789',
@@ -30,31 +41,31 @@ class InvoiceSeeder extends Seeder
                 'state' => 'Lagos State',
                 'vat_rate_bps' => 750, // 7.5%
                 'default_vat_mode' => 'exclusive',
-                'default_notes' => 'Thank you for choosing Zayin Global Limited. Quality energy & telecom solutions built to last.',
+                'default_notes' => 'Thank you for choosing Zayin Ltd. Quality energy & telecom solutions built to last.',
                 'default_terms' => "1. 70% commitment deposit required before equipment mobilization; 30% balance payable upon installation commissioning.\n2. Inverter & battery equipment carries a 24-month manufacturer warranty; workmanship guaranteed for 6 months.\n3. Goods once supplied in good condition are not returnable after 7 days.",
-                'footer_text' => 'Zayin Global Limited • RC 7842910 • TIN 28491048-0001 • Ikeja, Lagos',
-            ]
-        );
+                'footer_text' => 'Zayin Ltd • RC 10005044 • TIN 28491048-0001 • Abraka / Lagos',
+            ]);
+        }
 
         // 2. Bank Accounts
         $bankAccounts = [
             [
                 'bank_name' => 'Zenith Bank',
-                'account_name' => 'ZAYIN GLOBAL LTD',
+                'account_name' => 'ZAYIN LTD',
                 'account_number' => '1018492048',
                 'is_default' => true,
                 'sort_order' => 1,
             ],
             [
                 'bank_name' => 'Guaranty Trust Bank (GTBank)',
-                'account_name' => 'ZAYIN GLOBAL LTD',
+                'account_name' => 'ZAYIN LTD',
                 'account_number' => '0129481023',
                 'is_default' => false,
                 'sort_order' => 2,
             ],
             [
                 'bank_name' => 'Moniepoint Microfinance Bank',
-                'account_name' => 'ZAYIN GLOBAL LTD',
+                'account_name' => 'ZAYIN LTD',
                 'account_number' => '8294019283',
                 'is_default' => false,
                 'sort_order' => 3,
@@ -62,7 +73,7 @@ class InvoiceSeeder extends Seeder
         ];
 
         foreach ($bankAccounts as $bank) {
-            BusinessBankAccount::firstOrCreate(
+            BusinessBankAccount::updateOrCreate(
                 [
                     'business_id' => $business->id,
                     'account_number' => $bank['account_number'],

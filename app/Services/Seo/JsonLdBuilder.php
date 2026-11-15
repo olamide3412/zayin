@@ -10,7 +10,7 @@ class JsonLdBuilder
             '@context' => 'https://schema.org',
             '@type' => 'Organization',
             '@id' => url('/') . '#organization',
-            'name' => config('app.name', 'Zayin Global Limited'),
+            'name' => config('app.name', 'Zayin Ltd'),
             'url' => url('/'),
             'logo' => url('/images/logo.png'),
             'contactPoint' => [
@@ -34,7 +34,7 @@ class JsonLdBuilder
             '@context' => 'https://schema.org',
             '@type' => 'LocalBusiness',
             '@id' => url('/') . '#localbusiness',
-            'name' => config('app.name', 'Zayin Global Limited'),
+            'name' => config('app.name', 'Zayin Ltd'),
             'image' => url('/images/og-default.jpg'),
             'telephone' => '+234-803-123-4567',
             'priceRange' => '₦₦₦',
@@ -71,7 +71,7 @@ class JsonLdBuilder
             'description' => $service->summary,
             'provider' => [
                 '@type' => 'LocalBusiness',
-                'name' => config('app.name', 'Zayin Global Limited'),
+                'name' => config('app.name', 'Zayin Ltd'),
             ],
             'areaServed' => 'NG',
             'url' => url("/services/{$service->slug}"),
@@ -89,7 +89,7 @@ class JsonLdBuilder
             'image' => $product->image ?: url('/images/og-default.jpg'),
             'brand' => [
                 '@type' => 'Brand',
-                'name' => $product->brand ?: config('app.name', 'Zayin Global Limited'),
+                'name' => $product->brand ?: config('app.name', 'Zayin Ltd'),
             ],
             'offers' => [
                 '@type' => 'Offer',

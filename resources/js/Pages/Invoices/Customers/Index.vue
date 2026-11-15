@@ -1,24 +1,18 @@
 <template>
-    <Head title="Invoice Customers - Zayin Global Limited" />
+    <Head title="Invoice Customers - Zayin Ltd" />
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex items-center justify-between">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 leading-tight">Customers Directory</h2>
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Customers Directory</h2>
                     <p class="text-xs text-gray-500 mt-0.5">Manage customer profiles and billing contact details.</p>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <Link
-                        :href="route('invoices.index')"
-                        class="px-3.5 py-2 text-xs font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 shadow-sm"
-                    >
-                        ← Back to Invoices
-                    </Link>
+                <div class="flex items-center space-x-2">
                     <button
                         type="button"
                         @click="openCreateModal"
-                        class="px-4 py-2 text-xs font-bold text-white bg-primary rounded-lg hover:bg-primary/90 shadow-sm flex items-center"
+                        class="px-3.5 py-2 text-xs font-bold text-white bg-primary rounded-lg hover:bg-primary/90 shadow-sm flex items-center justify-center"
                     >
                         <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -29,10 +23,12 @@
             </div>
         </template>
 
-        <div class="py-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <InvoiceNavSubBar />
+
+        <div class="py-4 sm:py-6 max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 space-y-4 sm:space-y-6">
             <!-- Search Bar -->
-            <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
-                <div class="w-full md:w-96 relative">
+            <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col sm:flex-row gap-2.5 sm:gap-3 items-stretch sm:items-center justify-between">
+                <div class="w-full sm:w-80 md:w-96 relative">
                     <input
                         type="text"
                         v-model="search"
@@ -44,15 +40,71 @@
                 <button
                     type="button"
                     @click="applySearch"
-                    class="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-900"
+                    class="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-900 shrink-0"
                 >
                     Search
                 </button>
             </div>
 
-            <!-- Customers Table -->
+            <!-- Customers Container: Mobile Cards & Desktop Table -->
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                <div class="overflow-x-auto">
+                <!-- Mobile Card View (block sm:hidden) -->
+                <div class="block sm:hidden divide-y divide-gray-100">
+                    <div v-if="customers.data.length === 0" class="p-8 text-center text-xs text-gray-500">
+                        No customers found. Click "+ Add Customer" to add one.
+                    </div>
+
+                    <div
+                        v-for="c in customers.data"
+                        :key="`m-${c.id}`"
+                        class="p-4 space-y-2.5 hover:bg-gray-50/75 transition-colors"
+                    >
+                        <div class="flex items-start justify-between gap-2">
+                            <div>
+                                <div class="font-bold text-sm text-gray-900">{{ c.name }}</div>
+                                <div v-if="c.address" class="text-xs text-gray-500 mt-0.5">
+                                    📍 {{ c.address }}
+                                </div>
+                            </div>
+                            <span class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 shrink-0">
+                                {{ c.invoices_count }} invoice{{ c.invoices_count === 1 ? '' : 's' }}
+                            </span>
+                        </div>
+
+                        <div class="flex flex-col gap-1 text-xs text-gray-600 pt-1">
+                            <a v-if="c.phone" :href="`tel:${c.phone}`" class="text-primary hover:underline flex items-center font-medium">
+                                <span class="mr-1.5">📞</span> {{ c.phone }}
+                            </a>
+                            <a v-if="c.email" :href="`mailto:${c.email}`" class="text-gray-600 hover:text-primary flex items-center">
+                                <span class="mr-1.5">✉️</span> {{ c.email }}
+                            </a>
+                            <div v-if="c.tin" class="text-[11px] text-gray-400 font-mono">
+                                TIN: {{ c.tin }}
+                            </div>
+                        </div>
+
+                        <div class="pt-2 border-t border-gray-100 flex items-center justify-end space-x-2">
+                            <button
+                                type="button"
+                                @click="editCustomer(c)"
+                                class="px-3 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg"
+                            >
+                                Edit Profile
+                            </button>
+                            <button
+                                v-if="c.invoices_count === 0"
+                                type="button"
+                                @click="deleteCustomer(c.id)"
+                                class="px-3 py-1.5 text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Table View (hidden sm:block) -->
+                <div class="hidden sm:block overflow-x-auto">
                     <table class="w-full text-left text-sm">
                         <thead class="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600 uppercase">
                             <tr>
@@ -60,8 +112,8 @@
                                 <th class="px-5 py-3.5">Phone</th>
                                 <th class="px-5 py-3.5">Email</th>
                                 <th class="px-5 py-3.5">TIN</th>
-                                <th class="px-5 py-3.5 text-center">Invoices</th>
-                                <th class="px-5 py-3.5 text-right">Actions</th>
+                                <th class="px-5 py-3.5 text-center whitespace-nowrap">Invoices</th>
+                                <th class="px-5 py-3.5 text-right whitespace-nowrap w-28 min-w-[110px]">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -79,15 +131,15 @@
                                     {{ c.name }}
                                     <div v-if="c.address" class="text-xs font-normal text-gray-500 truncate max-w-xs">{{ c.address }}</div>
                                 </td>
-                                <td class="px-5 py-4 text-gray-700 text-xs">{{ c.phone || '-' }}</td>
-                                <td class="px-5 py-4 text-gray-700 text-xs">{{ c.email || '-' }}</td>
-                                <td class="px-5 py-4 text-gray-700 text-xs font-mono">{{ c.tin || '-' }}</td>
-                                <td class="px-5 py-4 text-center">
+                                <td class="px-5 py-4 text-gray-700 text-xs whitespace-nowrap">{{ c.phone || '-' }}</td>
+                                <td class="px-5 py-4 text-gray-700 text-xs whitespace-nowrap">{{ c.email || '-' }}</td>
+                                <td class="px-5 py-4 text-gray-700 text-xs font-mono whitespace-nowrap">{{ c.tin || '-' }}</td>
+                                <td class="px-5 py-4 text-center whitespace-nowrap">
                                     <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700">
                                         {{ c.invoices_count }}
                                     </span>
                                 </td>
-                                <td class="px-5 py-4 text-right space-x-2">
+                                <td class="px-5 py-4 text-right whitespace-nowrap w-28 min-w-[110px] space-x-2">
                                     <button
                                         type="button"
                                         @click="editCustomer(c)"
@@ -108,12 +160,32 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Pagination -->
+                <div v-if="customers.links && customers.links.length > 3" class="px-5 py-3.5 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div class="text-xs text-gray-500">
+                        Showing {{ customers.from }} to {{ customers.to }} of {{ customers.total }} customers
+                    </div>
+                    <div class="flex space-x-1 flex-wrap justify-center">
+                        <Link
+                            v-for="(link, i) in customers.links"
+                            :key="i"
+                            :href="link.url || '#'"
+                            v-html="link.label"
+                            :class="[
+                                'px-3 py-1 rounded text-xs',
+                                link.active ? 'bg-primary text-white font-bold' : 'text-gray-700 hover:bg-gray-100',
+                                !link.url ? 'opacity-40 cursor-not-allowed' : ''
+                            ]"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Create / Edit Customer Modal -->
-        <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 space-y-4">
+        <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-3 sm:p-4">
+            <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-4 sm:p-6 space-y-4 max-h-[90vh] overflow-y-auto">
                 <div class="flex items-center justify-between pb-2 border-b border-gray-100">
                     <h3 class="text-base font-bold text-gray-900">
                         {{ editingId ? 'Edit Customer' : 'Add New Customer' }}
@@ -199,6 +271,7 @@
 import { ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import InvoiceNavSubBar from '@/Components/Invoice/InvoiceNavSubBar.vue';
 
 const props = defineProps<{
     customers: any;

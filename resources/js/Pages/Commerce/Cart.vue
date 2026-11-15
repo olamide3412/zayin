@@ -169,7 +169,7 @@ const removeItem = (item) => {
                     <div class="pt-4 border-t border-slate-100 space-y-2 text-[11px] text-slate-500">
                         <div class="flex items-center space-x-2">
                             <font-awesome-icon :icon="['fas', 'shield-halved']" class="text-emerald-500" />
-                            <span>Paystack Secure Online & Bank Transfer</span>
+                            <span>Official Corporate Bank Transfer & Verified Invoicing</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <font-awesome-icon :icon="['fas', 'truck']" class="text-sky-500" />

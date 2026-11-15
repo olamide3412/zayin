@@ -19,7 +19,7 @@ class PageController extends Controller
     {
         $seo = new SeoData(
             title: 'About Us | Certified Solar, Starlink & DSTV Technicians',
-            description: 'Learn about Zayin Global Limited, our experienced electrical engineers, quality standards, and commitment to powering Nigerian homes and businesses.',
+            description: 'Learn about Zayin Ltd, our experienced electrical engineers, quality standards, and commitment to powering Nigerian homes and businesses.',
             breadcrumbs: [
                 'Home' => url('/'),
                 'About Us' => url('/about'),
@@ -35,7 +35,7 @@ class PageController extends Controller
     {
         $seo = new SeoData(
             title: 'Contact Us | Offices, Phone & WhatsApp',
-            description: 'Get in touch with Zayin Global Limited. Call our support team, chat on WhatsApp, or visit our Lagos, Abuja, and Ibadan offices.',
+            description: 'Get in touch with Zayin Ltd. Call our support team, chat on WhatsApp, or visit our Lagos, Abuja, and Ibadan offices.',
             breadcrumbs: [
                 'Home' => url('/'),
                 'Contact Us' => url('/contact'),

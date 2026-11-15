@@ -36,6 +36,7 @@ class DomPdfInvoiceRenderer implements InvoicePdfRenderer
             'layout' => $layout,
             'accentColor' => $template?->accent_color ?? '#0F5132',
             'showFields' => $template?->show_fields ?? \App\Models\InvoiceTemplate::defaultShowFields(),
+            'isPdf' => true,
         ];
     }
 
@@ -63,7 +64,7 @@ class DomPdfInvoiceRenderer implements InvoicePdfRenderer
             'isHtml5ParserEnabled' => true,
             'isRemoteEnabled' => true,
             'defaultFont' => 'DejaVu Sans',
-            'dpi' => 150,
+            'dpi' => 96,
         ]);
 
         return $pdf->output();

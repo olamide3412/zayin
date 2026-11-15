@@ -54,7 +54,7 @@ class SolarCalculatorController extends Controller
         $defaultResult = $this->calculator->calculate($defaultInput, $settings);
         $matchedPackages = $this->packageMatcher->match($defaultResult);
 
-        $companyName = Setting::get('company_name', 'Zayin Global Limited');
+        $companyName = Setting::get('company_name', 'Zayin Ltd');
 
         $seo = [
             'title' => "Solar Calculator Nigeria – Size Your Inverter, Battery & Panels | {$companyName}",
@@ -65,7 +65,7 @@ class SolarCalculatorController extends Controller
                 [
                     '@context' => 'https://schema.org',
                     '@type' => 'WebApplication',
-                    'name' => 'Zayin Global Limited Household Energy & Solar Sizing Calculator',
+                    'name' => 'Zayin Ltd Household Energy & Solar Sizing Calculator',
                     'applicationCategory' => 'UtilitiesApplication',
                     'operatingSystem' => 'All Web Browsers',
                     'browserRequirements' => 'Requires JavaScript. Requires HTML5.',
@@ -173,7 +173,7 @@ class SolarCalculatorController extends Controller
         $packages = $this->packageMatcher->match($result);
 
         $seo = [
-            'title' => "Saved Solar Sizing Specification [Ref: " . substr($uuid, 0, 8) . "] | Zayin Global Limited",
+            'title' => "Saved Solar Sizing Specification [Ref: " . substr($uuid, 0, 8) . "] | Zayin Ltd",
             'description' => 'Customized solar power and lithium battery sizing report.',
             'noindex' => true,
         ];

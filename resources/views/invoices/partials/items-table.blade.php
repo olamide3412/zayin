@@ -6,13 +6,13 @@
     <thead>
         <tr style="background-color: {{ $accentColor }}; color: #ffffff;">
             <th style="width: 5%; text-align: center; padding: 4px 3px; font-size: 8px;">#</th>
-            <th style="width: {{ $hasLineDiscounts ? '47%' : '57%' }}; text-align: left; padding: 4px 6px; font-size: 8px;">Item & Description</th>
-            <th style="width: 10%; text-align: center; padding: 4px 4px; font-size: 8px;">Qty</th>
-            <th style="width: 16%; text-align: right; padding: 4px 6px; font-size: 8px;">Rate (₦)</th>
+            <th style="width: {{ $hasLineDiscounts ? '45%' : '55%' }}; text-align: left; padding: 4px 6px; font-size: 8px;">Item & Description</th>
+            <th style="width: {{ $hasLineDiscounts ? '9%' : '10%' }}; text-align: center; padding: 4px 4px; font-size: 8px;">Qty</th>
+            <th style="width: 15%; text-align: right; padding: 4px 6px; font-size: 8px;">Rate (₦)</th>
             @if($hasLineDiscounts)
                 <th style="width: 10%; text-align: right; padding: 4px 4px; font-size: 8px;">Disc.</th>
             @endif
-            <th style="width: {{ $hasLineDiscounts ? '12%' : '14%' }}; text-align: right; padding: 4px 6px; font-size: 8px;">Amount (₦)</th>
+            <th style="width: {{ $hasLineDiscounts ? '16%' : '15%' }}; text-align: right; padding: 4px 6px; font-size: 8px;">Amount (₦)</th>
         </tr>
     </thead>
     <tbody>

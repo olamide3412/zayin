@@ -2,8 +2,8 @@
     <div class="p-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:border-gray-300 transition-all space-y-2.5">
         <!-- Primary row -->
         <div class="grid grid-cols-12 gap-2.5 items-center">
-            <!-- Item Name & Auto Suggest (5 cols on md) -->
-            <div class="col-span-12 md:col-span-5">
+            <!-- Item Name & Auto Suggest (4 cols on md) -->
+            <div class="col-span-12 md:col-span-4">
                 <label class="block text-[11px] font-semibold text-gray-600 mb-0.5">
                     Item / Service <span class="text-rose-500">*</span>
                 </label>
@@ -14,46 +14,53 @@
                 />
             </div>
 
-            <!-- Quantity (2 cols) -->
-            <div class="col-span-4 md:col-span-2">
-                <label class="block text-[11px] font-semibold text-gray-600 mb-0.5">Quantity</label>
+            <!-- Quantity (reduced width, 1 col on md, no arrows) -->
+            <div class="col-span-4 sm:col-span-2 md:col-span-1">
+                <label class="block text-[11px] font-semibold text-gray-600 mb-0.5 text-center truncate" title="Quantity">
+                    Qty
+                </label>
                 <input
                     type="number"
                     step="any"
                     min="0.01"
                     v-model.number="item.quantity"
-                    class="w-full px-2.5 py-2 text-sm border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-center font-medium"
+                    @wheel="$event.target.blur()"
+                    class="w-full px-1 py-2 text-sm border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-center font-medium no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     placeholder="1"
                 />
             </div>
 
-            <!-- Unit Price (3 cols) -->
-            <div class="col-span-5 md:col-span-3">
+            <!-- Unit Price (3 cols on md, no arrows) -->
+            <div class="col-span-8 sm:col-span-4 md:col-span-3">
                 <label class="block text-[11px] font-semibold text-gray-600 mb-0.5">Unit Price (₦)</label>
                 <div class="relative">
-                    <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center text-gray-500 text-xs font-semibold">₦</span>
+                    <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center text-gray-500 text-xs font-semibold pointer-events-none">₦</span>
                     <input
                         type="number"
                         step="any"
                         min="0"
                         v-model.number="item.unit_price"
-                        class="w-full pl-6 pr-2.5 py-2 text-sm border border-gray-300 rounded-md focus:ring-primary focus:border-primary font-medium"
+                        @wheel="$event.target.blur()"
+                        class="w-full pl-6 pr-2.5 py-2 text-sm border border-gray-300 rounded-md focus:ring-primary focus:border-primary font-medium no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                         placeholder="0.00"
                     />
                 </div>
             </div>
 
-            <!-- Line Total & Actions (2 cols on md) -->
-            <div class="col-span-3 md:col-span-2 flex flex-col items-end justify-between">
+            <!-- Line Total & Actions (expanded to 4 cols on md for large amounts) -->
+            <div class="col-span-12 sm:col-span-6 md:col-span-4">
                 <label class="block text-[11px] font-semibold text-gray-600 mb-0.5">Total</label>
-                <div class="flex items-center space-x-1.5 w-full justify-end">
-                    <span class="font-bold text-gray-900 text-xs py-1.5 px-2 bg-gray-50 rounded border border-gray-100 whitespace-nowrap">
+                <div class="flex items-center space-x-1.5 w-full">
+                    <div
+                        class="flex-1 min-w-0 h-[38px] px-2.5 bg-gray-50 rounded-md border border-gray-200 flex items-center justify-end font-bold text-gray-900 text-xs tabular-nums whitespace-nowrap overflow-x-auto shadow-2xs"
+                        :title="`₦${computedLineTotal}`"
+                    >
                         ₦{{ computedLineTotal }}
-                    </span>
+                    </div>
                     <button
                         type="button"
                         @click="$emit('remove')"
-                        class="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors"
+                        class="h-[38px] w-9 flex items-center justify-center text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors shrink-0 border border-transparent hover:border-rose-100"
                         title="Remove item"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,7 +152,8 @@
                         step="any"
                         min="0"
                         v-model.number="item.discount_value"
-                        class="flex-1 px-2 py-1.5 text-xs bg-white border border-gray-200 rounded focus:ring-primary focus:border-primary"
+                        @wheel="$event.target.blur()"
+                        class="flex-1 px-2 py-1.5 text-xs bg-white border border-gray-200 rounded focus:ring-primary focus:border-primary no-spinners [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                         :placeholder="item.discount_type === 'percentage' ? '%' : '₦'"
                     />
                 </div>

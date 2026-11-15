@@ -1,5 +1,5 @@
 <template>
-    <Head title="Invoices & Quotations - Zayin Global Limited" />
+    <Head title="Invoices & Quotations - Zayin Ltd" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -9,24 +9,6 @@
                     <p class="text-sm text-gray-500 mt-1">Manage Nigerian A5 tax invoices, drafts, revisions, and payment records.</p>
                 </div>
                 <div class="flex items-center flex-wrap gap-2.5">
-                    <Link
-                        :href="route('invoices.customers.index')"
-                        class="inline-flex items-center px-3.5 py-2 text-xs font-bold text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition shadow-xs"
-                    >
-                        Customers
-                    </Link>
-                    <Link
-                        :href="route('invoices.catalog.index')"
-                        class="inline-flex items-center px-3.5 py-2 text-xs font-bold text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition shadow-xs"
-                    >
-                        Item Catalog
-                    </Link>
-                    <Link
-                        :href="route('invoices.settings.business')"
-                        class="inline-flex items-center px-3.5 py-2 text-xs font-bold text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition shadow-xs"
-                    >
-                        Settings
-                    </Link>
                     <Link
                         :href="route('invoices.create')"
                         class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black uppercase tracking-wider text-slate-950 bg-amber-500 hover:bg-amber-400 rounded-xl shadow-md transition active:scale-95"
@@ -39,6 +21,8 @@
                 </div>
             </div>
         </template>
+
+        <InvoiceNavSubBar />
 
         <div class="py-6 space-y-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Stats Overview Cards -->
@@ -142,19 +126,132 @@
                 </div>
             </div>
 
-            <!-- Invoices Table -->
+            <!-- Invoices Container: Custom Mobile Card List (sm:hidden) + Desktop Table (hidden sm:block) -->
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                <div class="overflow-x-auto">
+                <!-- Mobile Card List View -->
+                <div class="block sm:hidden divide-y divide-gray-100">
+                    <div v-if="invoices.data.length === 0" class="px-5 py-12 text-center text-gray-500 space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <div class="font-bold text-gray-900 text-sm">No Invoices Found</div>
+                        <p class="text-xs text-gray-500">You haven't generated any invoices yet, or none match your filter.</p>
+                        <Link
+                            :href="route('invoices.create')"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black uppercase tracking-wider text-slate-950 bg-amber-500 hover:bg-amber-400 rounded-xl shadow-md transition active:scale-95"
+                        >
+                            + New Invoice
+                        </Link>
+                    </div>
+
+                    <div
+                        v-for="inv in invoices.data"
+                        :key="`mobile-${inv.id}`"
+                        class="p-4 space-y-3 hover:bg-gray-50/75 transition-colors"
+                    >
+                        <!-- Top Row: Invoice #, Rev Badge, Status -->
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center space-x-1.5 min-w-0">
+                                <Link
+                                    :href="route('invoices.show', inv.id)"
+                                    class="font-black text-sm text-gray-900 hover:text-primary truncate"
+                                >
+                                    {{ inv.invoice_number || 'DRAFT' }}
+                                </Link>
+                                <span
+                                    v-if="inv.revision_number > 1"
+                                    class="text-[10px] font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded shrink-0"
+                                >
+                                    Rev {{ inv.revision_number }}
+                                </span>
+                            </div>
+                            <StatusBadge :status="inv.status" class="shrink-0" />
+                        </div>
+
+                        <!-- Customer & Dates Info -->
+                        <div class="space-y-1">
+                            <div class="font-bold text-xs text-gray-900 truncate">
+                                {{ inv.customer?.name || 'Walk-in Client' }}
+                            </div>
+                            <div v-if="inv.customer?.phone || inv.customer?.email" class="text-[11px] text-gray-500 truncate">
+                                {{ inv.customer?.phone || inv.customer?.email }}
+                            </div>
+                            <div class="flex items-center gap-3 text-[11px] text-gray-500 pt-0.5">
+                                <span><strong class="text-gray-600">Issued:</strong> {{ formatDate(inv.issue_date) }}</span>
+                                <span v-if="inv.due_date" class="text-gray-400">•</span>
+                                <span v-if="inv.due_date"><strong class="text-gray-600">Due:</strong> {{ formatDate(inv.due_date) }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Financial Summary Box -->
+                        <div class="bg-gray-50/80 rounded-lg p-2.5 flex items-center justify-between border border-gray-100 text-xs">
+                            <div>
+                                <span class="text-[10px] uppercase font-semibold text-gray-500 block">Total</span>
+                                <span class="font-extrabold text-gray-900 text-sm">₦{{ formatKobo(inv.total_kobo, false) }}</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-[10px] uppercase font-semibold text-gray-500 block">Balance Due</span>
+                                <span
+                                    class="font-bold text-sm"
+                                    :class="inv.total_kobo - inv.amount_paid_kobo > 0 ? 'text-amber-600' : 'text-emerald-600'"
+                                >
+                                    ₦{{ formatKobo(Math.max(0, inv.total_kobo - inv.amount_paid_kobo), false) }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons Row (Touch Friendly) -->
+                        <div class="grid grid-cols-3 gap-2 pt-1">
+                            <Link
+                                :href="route('invoices.show', inv.id)"
+                                class="inline-flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition shadow-2xs"
+                            >
+                                <svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <span>View</span>
+                            </Link>
+
+                            <a
+                                :href="route('invoices.pdf.download', inv.id)"
+                                class="inline-flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold text-emerald-700 bg-emerald-50/80 border border-emerald-200 rounded-lg hover:bg-emerald-100 active:bg-emerald-200 transition shadow-2xs"
+                            >
+                                <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                <span>PDF</span>
+                            </a>
+
+                            <Link
+                                v-if="inv.status !== 'void'"
+                                :href="route('invoices.edit', inv.id)"
+                                class="inline-flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold text-blue-700 bg-blue-50/80 border border-blue-200 rounded-lg hover:bg-blue-100 active:bg-blue-200 transition shadow-2xs"
+                            >
+                                <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                <span>Edit</span>
+                            </Link>
+                            <div v-else class="text-center text-xs text-gray-400 py-2">Voided</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Table View -->
+                <div class="hidden sm:block overflow-x-auto">
                     <table class="w-full text-left text-sm">
                         <thead class="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             <tr>
-                                <th class="px-5 py-3.5">Invoice #</th>
-                                <th class="px-5 py-3.5">Customer</th>
-                                <th class="px-5 py-3.5">Date</th>
-                                <th class="px-5 py-3.5">Status</th>
-                                <th class="px-5 py-3.5 text-right">Total (₦)</th>
-                                <th class="px-5 py-3.5 text-right">Balance (₦)</th>
-                                <th class="px-5 py-3.5 text-right">Actions</th>
+                                <th class="px-5 py-3.5 whitespace-nowrap">Invoice #</th>
+                                <th class="px-5 py-3.5 min-w-[180px]">Customer</th>
+                                <th class="px-5 py-3.5 whitespace-nowrap">Date</th>
+                                <th class="px-5 py-3.5 whitespace-nowrap">Status</th>
+                                <th class="px-5 py-3.5 text-right whitespace-nowrap">Total (₦)</th>
+                                <th class="px-5 py-3.5 text-right whitespace-nowrap">Balance (₦)</th>
+                                <th class="px-5 py-3.5 text-right whitespace-nowrap w-36 min-w-[140px]">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -185,7 +282,7 @@
                                 :key="inv.id"
                                 class="hover:bg-gray-50/75 transition-colors"
                             >
-                                <td class="px-5 py-4 font-bold text-gray-900">
+                                <td class="px-5 py-4 font-bold text-gray-900 whitespace-nowrap">
                                     <Link :href="route('invoices.show', inv.id)" class="hover:text-primary">
                                         {{ inv.invoice_number || 'DRAFT' }}
                                     </Link>
@@ -193,55 +290,57 @@
                                         Rev {{ inv.revision_number }}
                                     </span>
                                 </td>
-                                <td class="px-5 py-4">
+                                <td class="px-5 py-4 min-w-[180px]">
                                     <div class="font-medium text-gray-900">{{ inv.customer?.name || 'Walk-in Client' }}</div>
                                     <div class="text-xs text-gray-500">{{ inv.customer?.phone || inv.customer?.email }}</div>
                                 </td>
-                                <td class="px-5 py-4 text-gray-600 text-xs">
-                                    <div>{{ inv.issue_date }}</div>
-                                    <div v-if="inv.due_date" class="text-gray-400">Due: {{ inv.due_date }}</div>
+                                <td class="px-5 py-4 text-gray-600 text-xs whitespace-nowrap">
+                                    <div class="font-medium text-gray-800">{{ formatDate(inv.issue_date) }}</div>
+                                    <div v-if="inv.due_date" class="text-gray-400 text-[11px]">Due: {{ formatDate(inv.due_date) }}</div>
                                 </td>
-                                <td class="px-5 py-4">
+                                <td class="px-5 py-4 whitespace-nowrap">
                                     <StatusBadge :status="inv.status" />
                                 </td>
-                                <td class="px-5 py-4 text-right font-bold text-gray-900">
+                                <td class="px-5 py-4 text-right font-bold text-gray-900 whitespace-nowrap">
                                     ₦{{ formatKobo(inv.total_kobo, false) }}
                                 </td>
-                                <td class="px-5 py-4 text-right font-medium">
+                                <td class="px-5 py-4 text-right font-medium whitespace-nowrap">
                                     <span :class="inv.total_kobo - inv.amount_paid_kobo > 0 ? 'text-amber-600' : 'text-emerald-600'">
                                         ₦{{ formatKobo(Math.max(0, inv.total_kobo - inv.amount_paid_kobo), false) }}
                                     </span>
                                 </td>
-                                <td class="px-5 py-4 text-right space-x-2">
-                                    <Link
-                                        :href="route('invoices.show', inv.id)"
-                                        class="inline-flex p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded"
-                                        title="View Details"
-                                    >
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    </Link>
-                                    <a
-                                        :href="route('invoices.pdf.download', inv.id)"
-                                        class="inline-flex p-1.5 text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded"
-                                        title="Download PDF"
-                                    >
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                        </svg>
-                                    </a>
-                                    <Link
-                                        v-if="inv.status !== 'void'"
-                                        :href="route('invoices.edit', inv.id)"
-                                        class="inline-flex p-1.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded"
-                                        title="Edit Invoice"
-                                    >
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                        </svg>
-                                    </Link>
+                                <td class="px-5 py-4 text-right whitespace-nowrap w-36 min-w-[140px]">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <Link
+                                            :href="route('invoices.show', inv.id)"
+                                            class="inline-flex items-center justify-center p-2 text-gray-500 hover:text-primary hover:bg-primary/10 rounded-lg transition"
+                                            title="View Details"
+                                        >
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                        </Link>
+                                        <a
+                                            :href="route('invoices.pdf.download', inv.id)"
+                                            class="inline-flex items-center justify-center p-2 text-gray-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition"
+                                            title="Download PDF"
+                                        >
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                            </svg>
+                                        </a>
+                                        <Link
+                                            v-if="inv.status !== 'void'"
+                                            :href="route('invoices.edit', inv.id)"
+                                            class="inline-flex items-center justify-center p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                                            title="Edit Invoice"
+                                        >
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </Link>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -249,11 +348,11 @@
                 </div>
 
                 <!-- Pagination -->
-                <div v-if="invoices.links && invoices.links.length > 3" class="px-5 py-3.5 border-t border-gray-100 flex items-center justify-between">
+                <div v-if="invoices.links && invoices.links.length > 3" class="px-5 py-3.5 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
                     <div class="text-xs text-gray-500">
                         Showing {{ invoices.from }} to {{ invoices.to }} of {{ invoices.total }} results
                     </div>
-                    <div class="flex space-x-1">
+                    <div class="flex space-x-1 flex-wrap justify-center">
                         <Link
                             v-for="(link, i) in invoices.links"
                             :key="i"
@@ -277,6 +376,7 @@ import { ref, computed } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import StatusBadge from '@/Components/Invoice/StatusBadge.vue';
+import InvoiceNavSubBar from '@/Components/Invoice/InvoiceNavSubBar.vue';
 import { useNaira } from '@/Composables/useNaira';
 
 const props = defineProps<{
@@ -308,5 +408,16 @@ function clearFilters() {
     search.value = '';
     status.value = '';
     applyFilters();
+}
+
+function formatDate(dateStr: string | null | undefined): string {
+    if (!dateStr) return '';
+    try {
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr;
+        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    } catch {
+        return dateStr;
+    }
 }
 </script>

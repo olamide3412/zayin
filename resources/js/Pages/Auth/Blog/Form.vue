@@ -28,7 +28,7 @@ const submit = () => {
     }
 };
 
-const categories = ['Eye Care Tips', 'Medical News', 'Patient Stories', 'Hospital Updates', 'Surgical Advances'];
+const categories = ['Solar Energy', 'Starlink & Internet', 'DSTV & Extra View', 'Engineering Tips', 'Field Deployments', 'Company News'];
 </script>
 
 <template>

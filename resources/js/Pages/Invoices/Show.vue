@@ -1,5 +1,5 @@
 <template>
-    <Head :title="`${invoice.invoice_number || 'Draft'} - Zayin Global Limited`" />
+    <Head :title="`${invoice.invoice_number || 'Draft'} - Zayin Ltd`" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -58,6 +58,19 @@
                         Record Payment
                     </button>
 
+                    <!-- Print A5 -->
+                    <button
+                        type="button"
+                        @click="previewFrameRef?.printIframe()"
+                        class="px-3.5 py-2 text-xs font-semibold text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg shadow-sm flex items-center"
+                        title="Print A5 Invoice"
+                    >
+                        <svg class="w-4 h-4 mr-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                        Print (A5)
+                    </button>
+
                     <!-- PDF Download -->
                     <a
                         :href="route('invoices.pdf.download', invoice.id)"
@@ -112,10 +125,36 @@
             </div>
         </template>
 
-        <div class="py-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div class="py-3 sm:py-6 max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 space-y-4 sm:space-y-6 pb-28 lg:pb-8">
+            <!-- Mobile Tab Segmented Switcher (Visible only below lg) -->
+            <div class="lg:hidden mb-3 bg-gray-200/90 p-1 rounded-xl flex items-center shadow-inner">
+                <button
+                    type="button"
+                    @click="mobileTab = 'preview'"
+                    class="flex-1 py-2 text-xs font-bold rounded-lg flex items-center justify-center space-x-1.5 transition-all"
+                    :class="mobileTab === 'preview' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'"
+                >
+                    <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span>A5 Document</span>
+                </button>
+                <button
+                    type="button"
+                    @click="mobileTab = 'summary'"
+                    class="flex-1 py-2 text-xs font-bold rounded-lg flex items-center justify-center space-x-1.5 transition-all"
+                    :class="mobileTab === 'summary' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'"
+                >
+                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <span>Financials & Payments</span>
+                </button>
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 <!-- Left Column: Details & Audit (5 cols) -->
-                <div class="lg:col-span-5 space-y-6">
+                <div :class="['lg:col-span-5 space-y-6', mobileTab === 'summary' ? 'block' : 'hidden lg:block']">
                     <!-- Key Financials Card -->
                     <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-3">
                         <div class="text-xs font-bold text-gray-500 uppercase tracking-wider">Financial Summary</div>
@@ -217,9 +256,58 @@
                 </div>
 
                 <!-- Right Column: A5 Live Document View (7 cols) -->
-                <div class="lg:col-span-7">
-                    <InvoicePreviewFrame :src="route('invoices.preview.show', invoice.id)" />
+                <div :class="['lg:col-span-7', mobileTab === 'preview' ? 'block' : 'hidden lg:block']">
+                    <InvoicePreviewFrame ref="previewFrameRef" :src="route('invoices.preview.show', invoice.id)" />
                 </div>
+            </div>
+        </div>
+
+        <!-- Sticky Mobile Bottom Bar -->
+        <div class="lg:hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-gray-200 px-3.5 py-2.5 z-30 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] flex items-center justify-between gap-2">
+            <div class="min-w-0 pr-1">
+                <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">
+                    {{ invoice.status === 'paid' ? 'Paid In Full' : 'Balance Due' }}
+                </div>
+                <div class="text-sm font-black text-amber-600 truncate tabular-nums">
+                    ₦{{ formatKobo(Math.max(0, invoice.total_kobo - invoice.amount_paid_kobo), false) }}
+                </div>
+            </div>
+            <div class="flex items-center space-x-1.5 shrink-0">
+                <button
+                    type="button"
+                    @click="previewFrameRef?.printIframe()"
+                    class="px-2.5 py-1.5 text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center"
+                    title="Print A5"
+                >
+                    <svg class="w-3.5 h-3.5 mr-1 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    Print
+                </button>
+                <a
+                    :href="route('invoices.pdf.download', invoice.id)"
+                    class="px-2.5 py-1.5 text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center"
+                >
+                    <svg class="w-3.5 h-3.5 mr-1 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    PDF
+                </a>
+                <button
+                    type="button"
+                    @click="copyShareLink"
+                    class="px-2.5 py-1.5 text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-lg"
+                >
+                    {{ copied ? 'Copied!' : 'Share' }}
+                </button>
+                <button
+                    v-if="['issued', 'partially_paid'].includes(invoice.status)"
+                    type="button"
+                    @click="showPaymentModal = true"
+                    class="px-3 py-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm"
+                >
+                    + Pay
+                </button>
             </div>
         </div>
 
@@ -371,6 +459,8 @@ const props = defineProps<{
 
 const { formatKobo } = useNaira();
 
+const previewFrameRef = ref<any>(null);
+const mobileTab = ref<'preview' | 'summary'>('preview');
 const copied = ref(false);
 const showPaymentModal = ref(false);
 const showVoidModal = ref(false);
