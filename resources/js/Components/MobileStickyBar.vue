@@ -46,7 +46,7 @@ const whatsappUrl = computed(() => {
         <!-- Request Quote -->
         <Link 
             href="/request-quote"
-            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold transition shadow-sm"
+            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition shadow-sm"
         >
             <font-awesome-icon :icon="['fas', 'file-invoice-dollar']" class="text-sm mb-0.5" />
             <span>Get Quote</span>

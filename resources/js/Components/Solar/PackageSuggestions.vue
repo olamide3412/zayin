@@ -42,7 +42,7 @@ const emit = defineEmits(['requestQuote']);
                         : 'border-slate-200 hover:border-slate-300'
                 ]"
             >
-                <div v-if="pkg.tier === 'better'" class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-amber-500 text-navy-950 font-black text-[10px] uppercase tracking-wider shadow-md">
+                <div v-if="pkg.tier === 'better'" class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-amber-500 text-white font-black text-[10px] uppercase tracking-wider shadow-md">
                     Most Popular Fit
                 </div>
 
@@ -106,7 +106,7 @@ const emit = defineEmits(['requestQuote']);
                     <div class="space-y-2">
                         <Link
                             :href="`/packages/${pkg.slug}`"
-                            class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-black text-xs uppercase tracking-wider transition shadow-md flex items-center justify-center gap-1.5 active:scale-95 text-center"
+                            class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-black text-xs uppercase tracking-wider transition shadow-md flex items-center justify-center gap-1.5 active:scale-95 text-center"
                         >
                             <span>View Full Package & Order</span>
                             <span>&rarr;</span>
@@ -138,7 +138,7 @@ const emit = defineEmits(['requestQuote']);
             <button
                 type="button"
                 @click="emit('requestQuote', null)"
-                class="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-navy-950 font-black rounded-xl text-xs uppercase tracking-wider transition shadow-lg active:scale-95 inline-flex items-center gap-2"
+                class="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-white font-black rounded-xl text-xs uppercase tracking-wider transition shadow-lg active:scale-95 inline-flex items-center gap-2"
             >
                 <font-awesome-icon icon="file-invoice" />
                 <span>Request Custom Turnkey Proposal</span>

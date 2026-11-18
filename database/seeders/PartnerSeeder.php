@@ -33,7 +33,7 @@ class PartnerSeeder extends Seeder
                 'name' => 'Victron Energy',
                 'description' => 'World-Class Dutch Smart Solar Inverters, MPPT Chargers & Monitoring Hardware.',
                 'website_url' => 'https://www.victronenergy.com',
-                'logo_url' => 'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=200&q=80',
+                'logo_url' => 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=200&q=80',
                 'status' => 'active',
                 'sort_order' => 3,
             ],

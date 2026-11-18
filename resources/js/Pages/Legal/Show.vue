@@ -52,7 +52,7 @@ const legalLinks = [
                             :class="[
                                 'block px-3.5 py-2.5 rounded-xl text-xs font-bold transition',
                                 pageSlug === item.slug
-                                    ? 'bg-amber-500 text-navy-950 font-extrabold shadow-2xs'
+                                    ? 'bg-amber-500 text-white font-extrabold shadow-2xs'
                                     : 'text-slate-600 hover:bg-slate-100 hover:text-navy-900'
                             ]"
                         >

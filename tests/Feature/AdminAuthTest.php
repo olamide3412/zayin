@@ -31,7 +31,7 @@ class AdminAuthTest extends TestCase
     public function test_admin_can_login_with_email_and_password(): void
     {
         $response = $this->post(route('login'), [
-            'login' => 'admin@zayin.ng',
+            'login' => 'admin@zayinltd.com.ng',
             'password' => 'admin123',
         ]);
 

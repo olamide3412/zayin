@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Zayin Admin',
                 'username' => 'admin',
-                'email' => 'admin@zayin.ng',
+                'email' => 'admin@zayinltd.com.ng',
                 'password' => Hash::make('admin123'),
                 'role' => RoleEnums::SuperAdministrator->value,
                 'status' => StatusEnums::Enable->value,
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Zayin Support',
                 'username' => 'support',
-                'email' => 'support@zayin.ng',
+                'email' => 'support@zayinltd.com.ng',
                 'password' => Hash::make('admin123'),
                 'role' => RoleEnums::Administrator->value,
                 'status' => StatusEnums::Enable->value,
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Zayin Lead Engineer',
                 'username' => 'engineer',
-                'email' => 'engineer@zayin.ng',
+                'email' => 'engineer@zayinltd.com.ng',
                 'password' => Hash::make('admin123'),
                 'role' => RoleEnums::Staff->value,
                 'status' => StatusEnums::Enable->value,

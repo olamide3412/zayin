@@ -458,7 +458,7 @@ const companyList = [
                         <font-awesome-icon :icon="['fas', 'shopping-cart']" class="text-base" />
                         <span 
                             v-if="cartCount > 0"
-                            class="absolute top-1 right-1 w-4 h-4 rounded-full bg-amber-500 text-slate-950 font-black text-[10px] flex items-center justify-center ring-2 ring-white"
+                            class="absolute top-1 right-1 w-4 h-4 rounded-full bg-amber-500 text-white font-black text-[10px] flex items-center justify-center ring-2 ring-white"
                         >
                             {{ cartCount }}
                         </span>
@@ -476,7 +476,7 @@ const companyList = [
                     <!-- Primary High-Impact CTA -->
                     <Link 
                         href="/request-quote"
-                        class="inline-flex items-center space-x-1.5 px-3.5 xl:px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 hover:text-slate-950 font-extrabold text-xs shadow-md shadow-amber-500/25 hover:shadow-lg transition-all duration-200 transform active:scale-95 whitespace-nowrap shrink-0"
+                        class="inline-flex items-center space-x-1.5 px-3.5 xl:px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white hover:text-white font-extrabold text-xs shadow-md shadow-amber-500/25 hover:shadow-lg transition-all duration-200 transform active:scale-95 whitespace-nowrap shrink-0"
                     >
                         <font-awesome-icon :icon="['fas', 'file-invoice-dollar']" class="text-xs" />
                         <span>Get Free Quote</span>
@@ -493,7 +493,7 @@ const companyList = [
                         <font-awesome-icon :icon="['fas', 'shopping-cart']" class="text-lg" />
                         <span 
                             v-if="cartCount > 0"
-                            class="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-amber-500 text-slate-950 font-bold text-[10px] flex items-center justify-center"
+                            class="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-amber-500 text-white font-bold text-[10px] flex items-center justify-center"
                         >
                             {{ cartCount }}
                         </span>
@@ -617,7 +617,7 @@ const companyList = [
                             <font-awesome-icon :icon="['fas', 'calculator']" class="text-amber-600" />
                             <span>Solar Load Calculator</span>
                         </span>
-                        <span class="text-[10px] bg-amber-500 text-slate-950 font-extrabold px-1.5 py-0.5 rounded">FREE</span>
+                        <span class="text-[10px] bg-amber-500 text-white font-extrabold px-1.5 py-0.5 rounded">FREE</span>
                     </Link>
 
                     <!-- Projects -->
@@ -657,7 +657,7 @@ const companyList = [
                     <Link 
                         href="/request-quote"
                         @click="closeMenu"
-                        class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-center text-xs shadow-md flex items-center justify-center space-x-2"
+                        class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold text-center text-xs shadow-md flex items-center justify-center space-x-2"
                     >
                         <font-awesome-icon :icon="['fas', 'file-invoice-dollar']" />
                         <span>Request Free Quote</span>

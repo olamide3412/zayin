@@ -25,7 +25,7 @@ class BlogAndNewsSeeder extends Seeder
             [
                 'title' => 'How to Accurately Size a Solar Inverter System for Nigerian Homes',
                 'category' => 'Solar & Inverters',
-                'cover_image' => 'https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=1200&auto=format&fit=crop',
+                'cover_image' => 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=1200&auto=format&fit=crop',
                 'excerpt' => 'Avoid blown inverters and premature battery death by calculating true inrush currents for inverter air conditioners, deep freezers, and pumping machines.',
                 'body' => '<h3>Understanding True Electrical Load</h3><p>Many Nigerian homeowners fall victim to inadequate solar sizing because installers count only nominal running wattage while ignoring high starting surge currents (inrush inductive loads). An inverter AC rated at 800W can pull up to 2,400W for a split second upon compressor startup.</p><h3>Key Appliance Sizing Rules</h3><ul><li><strong>Inverter Air Conditioners (1HP / 1.5HP):</strong> Require at least a 3.5kVA or 5kVA pure sine wave inverter and a minimum 48V battery bank.</li><li><strong>Water Pumping Machines (0.75HP–1HP):</strong> Best powered during peak solar hours (11am–2pm) with dedicated solar priority programming to save battery cycle life.</li><li><strong>Deep Freezers:</strong> Modern inverter chest freezers consume under 120W running, making them ideal for 24/7 battery operation.</li></ul><h3>Lithium vs Lead-Acid</h3><p>LiFePO4 lithium batteries allow 80%–90% Depth of Discharge (DoD) without degradation, whereas lead-acid and tubular batteries suffer permanent plate sulfation if discharged below 50%.</p>',
             ],
@@ -46,7 +46,7 @@ class BlogAndNewsSeeder extends Seeder
             [
                 'title' => 'Harmattan Season Maintenance: Why Dusty Solar Panels Lose 35% Capacity',
                 'category' => 'Battery Storage',
-                'cover_image' => 'https://images.unsplash.com/photo-1508873696983-2df57046475a?q=80&w=1200&auto=format&fit=crop',
+                'cover_image' => 'https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=1200&auto=format&fit=crop',
                 'excerpt' => 'Dust, soot, and harmattan haze severely diminish solar irradiance. Learn the safe way to clean panels and check inverter cooling fans.',
                 'body' => '<h3>The Impact of Saharan Dust Layers</h3><p>Between November and February, fine airborne dust settles on photovoltaic glass surfaces across Nigeria. Because cells are wired in series strings, shading or soiling on just two panels can bottleneck an entire array output by over a third.</p><h3>Safe Cleaning Rules</h3><ul><li>Never wash hot panels under blazing noon sunlight; thermal shock can crack tempered glass. Clean early morning or after sunset.</li><li>Use deionized or clean soft water with soft microfiber brushes. Avoid harsh detergents or abrasive sponges that scratch anti-reflective coatings.</li><li>Inspect inverter intake fan filters to prevent thermal throttling and component overheating.</li></ul>',
             ],

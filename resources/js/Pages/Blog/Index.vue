@@ -6,6 +6,10 @@ import Layout from '@/Layouts/Layout.vue';
 defineOptions({ layout: Layout });
 
 const props = defineProps({
+    heroSlides: {
+        type: Array,
+        default: () => []
+    },
     posts: Object,
     filters: Object,
     layoutStyle: {
@@ -16,13 +20,18 @@ const props = defineProps({
 
 const page = usePage();
 
-// ─── Hero banner: first homepage slider image ─────────────────────────────
+const defaultSolarImage = 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2070&auto=format&fit=crop';
+
+// ─── Hero banner: dynamic hero slide or verified default ─────────────────────
 const heroBgImage = computed(() => {
+    if (props.heroSlides && props.heroSlides.length > 0 && props.heroSlides[0]?.value) {
+        return props.heroSlides[0].value;
+    }
     const slides = page.props.settings?.hero_slides;
     if (slides && Array.isArray(slides) && slides.length > 0) {
         return slides[0]?.value || slides[0];
     }
-    return 'https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=2070&auto=format&fit=crop';
+    return defaultSolarImage;
 });
 
 const search         = ref(props.filters?.search   || '');
@@ -64,9 +73,11 @@ const formatFullTimestamp = (d) => {
 };
 
 const getCoverImage = (post) => {
-    if (!post) return null;
-    if (post.cover_image) return post.cover_image;
-    return null;
+    if (!post) return defaultSolarImage;
+    if (post.cover_image && !post.cover_image.includes('photo-1509391365360') && !post.cover_image.includes('photo-1508873696983')) {
+        return post.cover_image;
+    }
+    return defaultSolarImage;
 };
 
 // Share helpers
@@ -101,9 +112,10 @@ const sidePosts    = computed(() => props.posts?.data?.slice(1, 4) || []);
         <section class="relative w-full overflow-hidden" style="height: 210px;">
             <img
                 :src="heroBgImage"
-                alt="Blog"
+                alt="Engineering Blog"
                 class="absolute inset-0 w-full h-full object-cover object-center"
                 loading="eager"
+                @error="(e) => { e.target.src = defaultSolarImage }"
             />
             <div class="absolute inset-0 bg-black/45"></div>
             <div class="relative z-10 h-full flex flex-col items-center justify-center text-white gap-3">
@@ -210,13 +222,11 @@ const sidePosts    = computed(() => props.posts?.data?.slice(1, 4) || []);
                             class="group relative lg:col-span-7 flex flex-col justify-end bg-slate-900 min-h-[360px] lg:min-h-0"
                         >
                             <img
-                                v-if="getCoverImage(featuredPost)"
                                 :src="getCoverImage(featuredPost)"
                                 :alt="featuredPost.title"
                                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                @error="(e) => { e.target.src = defaultSolarImage }"
                             />
-                            <!-- Fallback gradient if no image -->
-                            <div v-else class="absolute inset-0 bg-gradient-to-br from-primary/80 to-blue-900"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent"></div>
                             <div class="relative z-10 p-8 text-white text-center">
                                 <span v-if="featuredPost.category" class="inline-block bg-primary/80 text-white text-[11px] font-bold px-3 py-0.5 rounded-full mb-3 uppercase">
@@ -244,8 +254,12 @@ const sidePosts    = computed(() => props.posts?.data?.slice(1, 4) || []);
                                     <Link :href="route('blog.show', post.slug)" class="group/item flex items-start gap-4">
                                         <!-- Thumbnail -->
                                         <div class="w-[90px] h-[68px] rounded-lg bg-slate-100 overflow-hidden shrink-0 border border-gray-200">
-                                            <img v-if="getCoverImage(post)" :src="getCoverImage(post)" :alt="post.title" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-300" />
-                                            <div v-else class="w-full h-full flex items-center justify-center text-[10px] font-bold text-primary">BLOG</div>
+                                            <img 
+                                                :src="getCoverImage(post)" 
+                                                :alt="post.title" 
+                                                class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-300"
+                                                @error="(e) => { e.target.src = defaultSolarImage }" 
+                                            />
                                         </div>
                                         <!-- Text -->
                                         <div class="flex-1 min-w-0">
@@ -289,6 +303,7 @@ const sidePosts    = computed(() => props.posts?.data?.slice(1, 4) || []);
                                 :src="getCoverImage(post)"
                                 :alt="post.title"
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                @error="(e) => { e.target.src = defaultSolarImage }"
                             />
                             <div v-else class="w-full h-full flex items-center justify-center">
                                 <svg class="w-12 h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

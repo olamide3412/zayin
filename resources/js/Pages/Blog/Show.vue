@@ -84,7 +84,12 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-GB', { day: 'nu
 
         <!-- Cover Image -->
         <div v-if="post.cover_image" class="max-w-5xl mx-auto px-4 mb-0">
-            <img :src="post.cover_image" :alt="post.title" class="w-full h-72 md:h-[450px] object-cover rounded-2xl shadow-md" />
+            <img 
+                :src="post.cover_image" 
+                :alt="post.title" 
+                class="w-full h-72 md:h-[450px] object-cover rounded-2xl shadow-md"
+                @error="(e) => { e.target.src = 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=1200&auto=format&fit=crop' }"
+            />
         </div>
 
         <!-- Article Body -->
@@ -110,7 +115,13 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-GB', { day: 'nu
                     <Link v-for="r in related" :key="r.id" :href="route('blog.show', r.slug)"
                         class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100">
                         <div class="h-36 overflow-hidden bg-gradient-to-br from-primary/10 to-blue-50">
-                            <img v-if="r.cover_image" :src="r.cover_image" :alt="r.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <img 
+                                v-if="r.cover_image" 
+                                :src="r.cover_image" 
+                                :alt="r.title" 
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                @error="(e) => { e.target.src = 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=1200&auto=format&fit=crop' }" 
+                            />
                         </div>
                         <div class="p-4">
                             <p class="text-xs text-gray-400 mb-1">{{ formatDate(r.published_at) }}</p>

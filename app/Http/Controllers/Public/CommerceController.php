@@ -280,8 +280,11 @@ class CommerceController extends Controller
             robots: 'noindex,nofollow'
         );
 
+        $bankAccounts = \App\Models\BusinessBankAccount::orderBy('sort_order')->get();
+
         return Inertia::render('Commerce/BankTransfer', [
             'order' => $order,
+            'bankAccounts' => $bankAccounts,
             'seo' => $seo->toArray(),
         ]);
     }

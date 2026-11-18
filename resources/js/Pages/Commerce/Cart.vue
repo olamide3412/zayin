@@ -48,7 +48,7 @@ const removeItem = (item) => {
                 </p>
                 <Link 
                     href="/packages"
-                    class="inline-block px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md transition"
+                    class="inline-block px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs shadow-md transition"
                 >
                     Browse Equipment Packages
                 </Link>
@@ -152,7 +152,7 @@ const removeItem = (item) => {
                     <div class="space-y-3">
                         <Link 
                             href="/checkout"
-                            class="w-full py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm text-center block shadow-lg shadow-amber-500/20 transition transform active:scale-95"
+                            class="w-full py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-white font-black text-sm text-center block shadow-lg shadow-amber-500/20 transition transform active:scale-95"
                         >
                             Proceed to Checkout &rarr;
                         </Link>

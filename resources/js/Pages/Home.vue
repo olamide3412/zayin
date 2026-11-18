@@ -15,6 +15,10 @@ import CallToAction from '@/Components/Home/CallToAction.vue';
 defineOptions({ layout: Layout });
 
 defineProps({
+    heroSlides: {
+        type: Array,
+        default: () => [],
+    },
     categories: Array,
     featuredServices: Array,
     featuredProducts: Array,
@@ -31,8 +35,8 @@ defineProps({
     <SeoHead :seo="seo" />
 
     <div>
-        <!-- Hero with CTA & Stats -->
-        <HeroSection />
+        <!-- Hero with Background Slider & Featured Package Card -->
+        <HeroSection :hero-slides="heroSlides" :featured-product="featuredProducts?.[0]" />
 
         <!-- Certified OEM Brands & Technology Partners -->
         <BrandPartners :partners="partners" />

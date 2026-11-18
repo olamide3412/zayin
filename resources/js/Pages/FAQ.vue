@@ -146,7 +146,7 @@ const toggleFaq = (id) => {
                 <div class="mt-6 flex flex-wrap justify-center gap-3">
                     <Link
                         :href="route('quote.create')"
-                        class="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold rounded-xl text-xs uppercase tracking-wider transition"
+                        class="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl text-xs uppercase tracking-wider transition"
                     >
                         Get Free Load Calculation
                     </Link>

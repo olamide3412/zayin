@@ -11,7 +11,7 @@
                 <div class="flex items-center flex-wrap gap-2.5">
                     <Link
                         :href="route('invoices.create')"
-                        class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black uppercase tracking-wider text-slate-950 bg-amber-500 hover:bg-amber-400 rounded-xl shadow-md transition active:scale-95"
+                        class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black uppercase tracking-wider text-white bg-amber-500 hover:bg-amber-400 rounded-xl shadow-md transition active:scale-95"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
@@ -140,7 +140,7 @@
                         <p class="text-xs text-gray-500">You haven't generated any invoices yet, or none match your filter.</p>
                         <Link
                             :href="route('invoices.create')"
-                            class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black uppercase tracking-wider text-slate-950 bg-amber-500 hover:bg-amber-400 rounded-xl shadow-md transition active:scale-95"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black uppercase tracking-wider text-white bg-amber-500 hover:bg-amber-400 rounded-xl shadow-md transition active:scale-95"
                         >
                             + New Invoice
                         </Link>
@@ -267,7 +267,7 @@
                                         <p class="text-xs text-gray-500">You haven't generated any invoices yet, or none match your search filter.</p>
                                         <Link
                                             :href="route('invoices.create')"
-                                            class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-black uppercase tracking-wider text-slate-950 bg-amber-500 hover:bg-amber-400 rounded-xl shadow-md transition"
+                                            class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-black uppercase tracking-wider text-white bg-amber-500 hover:bg-amber-400 rounded-xl shadow-md transition"
                                         >
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />

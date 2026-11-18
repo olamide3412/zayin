@@ -103,7 +103,7 @@ const addToCart = (product) => {
                         href="/packages"
                         :class="[
                             'px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap',
-                            !currentCategory ? 'bg-amber-500 text-slate-950' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
+                            !currentCategory ? 'bg-amber-500 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
                         ]"
                     >
                         All ({{ categories.reduce((sum, c) => sum + c.products_count, 0) }})
@@ -115,7 +115,7 @@ const addToCart = (product) => {
                         :href="`/packages/${cat.slug}`"
                         :class="[
                             'px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap',
-                            currentCategory?.id === cat.id ? 'bg-amber-500 text-slate-950' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
+                            currentCategory?.id === cat.id ? 'bg-amber-500 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
                         ]"
                     >
                         {{ cat.name }} ({{ cat.products_count }})
@@ -153,7 +153,7 @@ const addToCart = (product) => {
                 </div>
                 <h3 class="text-lg font-bold text-slate-800">No packages found</h3>
                 <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Try clearing your search query or switching categories.</p>
-                <Link href="/packages" class="mt-4 inline-block px-5 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-bold">
+                <Link href="/packages" class="mt-4 inline-block px-5 py-2 rounded-xl bg-amber-500 text-white text-xs font-bold">
                     View All Packages
                 </Link>
             </div>
@@ -169,9 +169,10 @@ const addToCart = (product) => {
                         <!-- Image -->
                         <div class="aspect-[16/10] bg-slate-100 relative overflow-hidden">
                             <img 
-                                :src="product.image || 'https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=800&auto=format&fit=crop'" 
+                                :src="product.image || 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800&auto=format&fit=crop'" 
                                 :alt="product.name"
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                                @error="(e) => e.target.src = 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800&auto=format&fit=crop'"
                             />
                             <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
                                 <span class="px-2.5 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-amber-400 text-[10px] font-black uppercase">
@@ -243,7 +244,7 @@ const addToCart = (product) => {
 
                             <Link 
                                 :href="`/packages/${product.category?.slug || 'all'}/${product.slug}`"
-                                class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center space-x-1 transition shadow-sm"
+                                class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs flex items-center justify-center space-x-1 transition shadow-sm"
                             >
                                 <span>Details</span>
                                 <font-awesome-icon :icon="['fas', 'arrow-right']" class="text-[10px]" />
@@ -261,7 +262,7 @@ const addToCart = (product) => {
                     :href="link.url || '#'"
                     :class="[
                         'px-3.5 py-2 rounded-xl text-xs font-bold transition',
-                        link.active ? 'bg-amber-500 text-slate-950' : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200',
+                        link.active ? 'bg-amber-500 text-white' : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200',
                         !link.url ? 'opacity-40 cursor-not-allowed pointer-events-none' : ''
                     ]"
                     v-html="link.label"

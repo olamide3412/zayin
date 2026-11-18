@@ -79,7 +79,7 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-NG', { month: '
                 <button 
                     v-if="!showForm && !submitted" 
                     @click="showForm = true"
-                    class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-navy-950 font-black px-8 py-3.5 rounded-xl shadow-sm transition uppercase text-xs tracking-wider shrink-0"
+                    class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-white font-black px-8 py-3.5 rounded-xl shadow-sm transition uppercase text-xs tracking-wider shrink-0"
                 >
                     <font-awesome-icon icon="edit" />
                     <span>Submit Your Review</span>
@@ -161,7 +161,7 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-NG', { month: '
                         <!-- Buttons -->
                         <div class="flex items-center gap-3 pt-2">
                             <button type="submit" :disabled="form.processing"
-                                class="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-navy-950 font-black rounded-xl text-xs uppercase tracking-wider transition shadow-sm flex items-center gap-2">
+                                class="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-white font-black rounded-xl text-xs uppercase tracking-wider transition shadow-sm flex items-center gap-2">
                                 <font-awesome-icon v-if="form.processing" icon="spinner" class="animate-spin" />
                                 <span>{{ form.processing ? 'Submitting...' : 'Submit Feedback' }}</span>
                             </button>
@@ -190,7 +190,7 @@ const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-NG', { month: '
                 <font-awesome-icon icon="comments" class="text-4xl text-slate-300 mb-3" />
                 <h3 class="text-base font-bold text-navy-950">No Reviews Published Yet</h3>
                 <p class="text-xs text-slate-500 mt-1">Be the first to leave a review of our installations!</p>
-                <button @click="showForm = true" class="mt-4 px-6 py-2.5 bg-amber-500 text-navy-950 font-bold rounded-xl text-xs">
+                <button @click="showForm = true" class="mt-4 px-6 py-2.5 bg-amber-500 text-white font-bold rounded-xl text-xs">
                     Write a Review
                 </button>
             </div>

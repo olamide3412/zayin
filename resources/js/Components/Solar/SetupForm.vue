@@ -35,7 +35,7 @@ const showAdvanced = ref(false);
                         How many hours must the battery power your appliances when grid (NEPA) or sun is unavailable?
                     </span>
                 </div>
-                <div class="px-3.5 py-1.5 rounded-xl bg-amber-500 text-navy-950 font-black text-lg sm:text-xl shrink-0 shadow-sm">
+                <div class="px-3.5 py-1.5 rounded-xl bg-amber-500 text-white font-black text-lg sm:text-xl shrink-0 shadow-sm">
                     {{ setup.backup_hours }} hrs
                 </div>
             </div>

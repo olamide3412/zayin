@@ -68,7 +68,7 @@ const formatNaira = (val) => {
             </div>
             <Link 
                 :href="route('admin.products.create')" 
-                class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl shadow-md transition text-sm"
+                class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-2.5 rounded-xl shadow-md transition text-sm"
             >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                 <span>Add Product / Package</span>
@@ -156,7 +156,7 @@ const formatNaira = (val) => {
                                 v-if="quickPrice[p.id] !== undefined && quickPrice[p.id] != p.price_naira"
                                 @click="saveQuickPrice(p)"
                                 :disabled="savingId === p.id"
-                                class="px-2.5 py-1.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg hover:bg-amber-600 shadow-xs"
+                                class="px-2.5 py-1.5 bg-amber-500 text-white font-bold text-xs rounded-lg hover:bg-amber-600 shadow-xs"
                             >
                                 <span v-if="savingId === p.id">...</span>
                                 <span v-else>Save</span>
@@ -258,7 +258,7 @@ const formatNaira = (val) => {
                                         v-if="quickPrice[p.id] !== undefined && quickPrice[p.id] != p.price_naira"
                                         @click="saveQuickPrice(p)"
                                         :disabled="savingId === p.id"
-                                        class="px-2 py-1 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg hover:bg-amber-600 shadow-xs"
+                                        class="px-2 py-1 bg-amber-500 text-white font-bold text-xs rounded-lg hover:bg-amber-600 shadow-xs"
                                         title="Save Price"
                                     >
                                         <span v-if="savingId === p.id">...</span>
@@ -332,7 +332,7 @@ const formatNaira = (val) => {
                         :href="link.url" 
                         v-html="link.label" 
                         class="px-3 py-1 text-xs rounded-lg transition font-medium" 
-                        :class="link.active ? 'bg-amber-500 text-slate-950 font-bold' : link.url ? 'text-slate-600 hover:bg-slate-100' : 'text-slate-300 cursor-not-allowed'" 
+                        :class="link.active ? 'bg-amber-500 text-white font-bold' : link.url ? 'text-slate-600 hover:bg-slate-100' : 'text-slate-300 cursor-not-allowed'" 
                     />
                 </div>
             </div>

@@ -88,10 +88,9 @@ class SettingController extends Controller
         if (isset($validated['about_founder_image'])) Setting::set('about_founder_image', $validated['about_founder_image']);
 
         if (array_key_exists('site_logo_url', $validated)) {
-            Setting::set('site_logo_url', $validated['site_logo_url'] ?? '');
-            if ($business = \App\Models\Business::current()) {
-                $business->update(['logo_path' => $validated['site_logo_url'] ?? null]);
-            }
+            $logoUrl = $validated['site_logo_url'] ?? '';
+            Setting::set('site_logo_url', $logoUrl);
+            \App\Models\Business::query()->update(['logo_path' => $logoUrl ?: null]);
         }
 
         return redirect()->back()->with('message', 'Settings updated successfully!');

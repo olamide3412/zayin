@@ -132,14 +132,14 @@ const submitCustom = () => {
                 class="flex-1 flex items-center justify-between px-4 py-3 rounded-2xl border border-slate-200 bg-white hover:border-amber-400 hover:shadow-md text-slate-600 text-sm transition group cursor-pointer"
             >
                 <span class="flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xs group-hover:bg-amber-500 group-hover:text-navy-950 transition">
+                    <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xs group-hover:bg-amber-500 group-hover:text-white transition">
                         <font-awesome-icon icon="magnifying-glass" />
                     </span>
                     <span class="font-medium text-slate-700 group-hover:text-navy-950 text-xs sm:text-sm">
                         Search &amp; browse 28+ appliances...
                     </span>
                 </span>
-                <span class="inline-flex items-center gap-1.5 text-xs font-bold bg-slate-100 group-hover:bg-amber-500 group-hover:text-navy-950 text-slate-700 px-3 py-1.5 rounded-xl transition">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold bg-slate-100 group-hover:bg-amber-500 group-hover:text-white text-slate-700 px-3 py-1.5 rounded-xl transition">
                     <span>Show More Appliances ({{ presets.length }})</span>
                     <font-awesome-icon icon="chevron-right" class="text-[10px]" />
                 </span>
@@ -149,7 +149,7 @@ const submitCustom = () => {
             <button
                 type="button"
                 @click="showCustomModal = true"
-                class="px-5 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition active:scale-95 shrink-0 cursor-pointer"
+                class="px-5 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition active:scale-95 shrink-0 cursor-pointer"
             >
                 <font-awesome-icon icon="plus" />
                 <span>+ Custom Appliance</span>
@@ -236,7 +236,7 @@ const submitCustom = () => {
                                 :class="[
                                     'px-2.5 py-1 rounded-full text-xs font-bold transition whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer',
                                     selectedCategory === String(c.id)
-                                        ? 'bg-amber-500 text-navy-950 shadow-xs'
+                                        ? 'bg-amber-500 text-white shadow-xs'
                                         : 'bg-white text-slate-600 hover:bg-slate-200 hover:text-navy-950 border border-slate-200'
                                 ]"
                             >
@@ -244,7 +244,7 @@ const submitCustom = () => {
                                 <span
                                     v-if="categoryCounts[c.id]"
                                     class="text-[10px] px-1.5 py-0.2 rounded-full"
-                                    :class="selectedCategory === String(c.id) ? 'bg-navy-950/20 text-navy-950' : 'bg-slate-100 text-slate-600'"
+                                    :class="selectedCategory === String(c.id) ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'"
                                 >
                                     {{ categoryCounts[c.id] }}
                                 </span>
@@ -270,7 +270,7 @@ const submitCustom = () => {
                                 class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200 hover:border-amber-400 hover:shadow-xs transition group"
                             >
                                 <div class="flex items-center gap-2.5 min-w-0 pr-2">
-                                    <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0 text-xs group-hover:bg-amber-500 group-hover:text-navy-950 transition">
+                                    <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0 text-xs group-hover:bg-amber-500 group-hover:text-white transition">
                                         <font-awesome-icon :icon="p.icon || 'bolt'" />
                                     </div>
                                     <div class="min-w-0">
@@ -293,7 +293,7 @@ const submitCustom = () => {
                                         'px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1 shrink-0 active:scale-95 cursor-pointer',
                                         recentlyAddedId === p.id
                                             ? 'bg-emerald-600 text-white shadow-xs'
-                                            : 'bg-amber-100 hover:bg-amber-500 text-navy-950 font-bold'
+                                            : 'bg-amber-100 hover:bg-amber-500 hover:text-white text-navy-950 font-bold'
                                     ]"
                                 >
                                     <span v-if="recentlyAddedId === p.id">✓ Added</span>
@@ -311,7 +311,7 @@ const submitCustom = () => {
                             <button
                                 type="button"
                                 @click="showCustomModal = true"
-                                class="mt-2 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold text-xs cursor-pointer shadow-xs"
+                                class="mt-2 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs cursor-pointer shadow-xs"
                             >
                                 <font-awesome-icon icon="plus" />
                                 <span>Add Custom Appliance</span>
@@ -476,7 +476,7 @@ const submitCustom = () => {
                             </button>
                             <button
                                 type="submit"
-                                class="w-1/2 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-black shadow-md transition uppercase tracking-wider text-xs cursor-pointer"
+                                class="w-1/2 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-black shadow-md transition uppercase tracking-wider text-xs cursor-pointer"
                             >
                                 Add Appliance
                             </button>

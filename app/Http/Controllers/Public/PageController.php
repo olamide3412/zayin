@@ -27,6 +27,14 @@ class PageController extends Controller
         );
 
         return Inertia::render('About', [
+            'mission' => \App\Models\Setting::get('about_mission', '<p>To provide Nigerian homes and enterprises with reliable solar power, high-speed Starlink satellite internet, and precision digital installations with unmatched engineering excellence.</p>'),
+            'vision' => \App\Models\Setting::get('about_vision', '<p>To be Nigeria\'s most dependable turnkey engineering solutions provider for renewable energy and satellite telecommunications.</p>'),
+            'founder' => [
+                'name' => \App\Models\Setting::get('about_founder_name', 'Engr. Zayin Lead'),
+                'title' => \App\Models\Setting::get('about_founder_title', 'Managing Director & Lead Systems Engineer'),
+                'bio'   => \App\Models\Setting::get('about_founder_bio', '<p>Headquartered in Abraka, Delta State, Zayin Ltd deploys certified field teams across Nigeria to solve energy poverty and high-latency connectivity with robust Tier-1 equipment.</p>'),
+                'image' => \App\Models\Setting::get('about_founder_image', ''),
+            ],
             'seo' => $seo->toArray(),
         ]);
     }

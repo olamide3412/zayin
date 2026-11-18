@@ -71,7 +71,7 @@ const addToCart = (product) => {
                     <div class="pt-4 flex flex-wrap gap-4">
                         <Link 
                             href="/request-quote"
-                            class="px-7 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-lg transition"
+                            class="px-7 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-sm shadow-lg transition"
                         >
                             Request Quote
                         </Link>
@@ -223,7 +223,7 @@ const addToCart = (product) => {
                             </button>
                             <Link 
                                 :href="`/packages/${prod.category?.slug || 'all'}/${prod.slug}`"
-                                class="flex-1 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold text-center transition"
+                                class="flex-1 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-white text-xs font-bold text-center transition"
                             >
                                 Details
                             </Link>

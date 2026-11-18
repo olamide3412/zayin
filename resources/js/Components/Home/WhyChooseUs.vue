@@ -67,7 +67,7 @@ const reasons = [
                     :data-aos-delay="idx * 80"
                 >
                     <div class="flex items-center justify-between mb-5">
-                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl group-hover:bg-amber-500 group-hover:text-white transition-colors">
                             <font-awesome-icon :icon="['fas', item.icon]" />
                         </div>
                         <span class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-amber-300">

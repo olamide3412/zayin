@@ -399,7 +399,7 @@ const submitBooking = () => {
                         <button 
                             type="submit"
                             :disabled="form.processing"
-                            class="w-full py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/20 transition transform active:scale-98 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                            class="w-full py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-white font-black text-sm shadow-xl shadow-amber-500/20 transition transform active:scale-98 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                         >
                             <font-awesome-icon 
                                 :icon="['fas', form.processing ? 'circle-notch' : 'calendar-check']" 

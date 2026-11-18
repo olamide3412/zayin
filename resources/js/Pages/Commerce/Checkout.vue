@@ -70,7 +70,7 @@ const submitOrder = () => {
                     <!-- 1. Contact Info -->
                     <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm space-y-6">
                         <h2 class="text-lg font-black text-slate-900 flex items-center space-x-2">
-                            <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 text-xs flex items-center justify-center font-black">1</span>
+                            <span class="w-6 h-6 rounded-full bg-amber-500 text-white text-xs flex items-center justify-center font-black">1</span>
                             <span>Customer Information</span>
                         </h2>
 
@@ -113,7 +113,7 @@ const submitOrder = () => {
                     <!-- 2. Destination & Landmark -->
                     <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm space-y-6">
                         <h2 class="text-lg font-black text-slate-900 flex items-center space-x-2">
-                            <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 text-xs flex items-center justify-center font-black">2</span>
+                            <span class="w-6 h-6 rounded-full bg-amber-500 text-white text-xs flex items-center justify-center font-black">2</span>
                             <span>Delivery & Installation Address</span>
                         </h2>
 
@@ -170,7 +170,7 @@ const submitOrder = () => {
                     <!-- 3. Fulfilment & Payment Method -->
                     <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm space-y-6">
                         <h2 class="text-lg font-black text-slate-900 flex items-center space-x-2">
-                            <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 text-xs flex items-center justify-center font-black">3</span>
+                            <span class="w-6 h-6 rounded-full bg-amber-500 text-white text-xs flex items-center justify-center font-black">3</span>
                             <span>Fulfilment & Payment Method</span>
                         </h2>
 
@@ -276,7 +276,7 @@ const submitOrder = () => {
                     <button 
                         type="submit"
                         :disabled="form.processing"
-                        class="w-full py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/20 transition transform active:scale-95 disabled:opacity-50 flex items-center justify-center space-x-2"
+                        class="w-full py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-white font-black text-sm shadow-xl shadow-amber-500/20 transition transform active:scale-95 disabled:opacity-50 flex items-center justify-center space-x-2"
                     >
                         <font-awesome-icon :icon="['fas', 'lock']" />
                         <span>{{ form.processing ? 'Processing...' : 'Place Order & Pay' }}</span>

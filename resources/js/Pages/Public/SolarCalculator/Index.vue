@@ -232,12 +232,12 @@ const toggleFaq = (idx) => {
                         :class="[
                             'flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2',
                             currentStep === 1
-                                ? 'bg-amber-500 text-navy-950 shadow-md'
+                                ? 'bg-amber-500 text-white shadow-md'
                                 : 'text-slate-400 hover:text-white'
                         ]"
                     >
                         <span>① Appliances</span>
-                        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-navy-950/20" v-if="appliances.length > 0">
+                        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-white/20 text-white" v-if="appliances.length > 0">
                             {{ appliances.length }}
                         </span>
                     </button>
@@ -248,7 +248,7 @@ const toggleFaq = (idx) => {
                         :class="[
                             'flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2',
                             currentStep === 2
-                                ? 'bg-amber-500 text-navy-950 shadow-md'
+                                ? 'bg-amber-500 text-white shadow-md'
                                 : 'text-slate-400 hover:text-white'
                         ]"
                     >
@@ -261,7 +261,7 @@ const toggleFaq = (idx) => {
                         :class="[
                             'flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2',
                             currentStep === 3
-                                ? 'bg-amber-500 text-navy-950 shadow-md'
+                                ? 'bg-amber-500 text-white shadow-md'
                                 : 'text-slate-400 hover:text-white'
                         ]"
                     >
@@ -346,7 +346,7 @@ const toggleFaq = (idx) => {
                             type="button"
                             @click="nextStep"
                             :disabled="appliances.length === 0"
-                            class="px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-navy-950 font-black text-xs uppercase tracking-wider transition shadow-md flex items-center gap-2 active:scale-95"
+                            class="px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-white font-black text-xs uppercase tracking-wider transition shadow-md flex items-center gap-2 active:scale-95"
                         >
                             <span>Configure Backup &amp; Location (Step 2)</span>
                             <span>&rarr;</span>
@@ -371,7 +371,7 @@ const toggleFaq = (idx) => {
                     <button
                         type="button"
                         @click="nextStep"
-                        class="px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-black text-xs uppercase tracking-wider transition shadow-md active:scale-95 flex items-center gap-2"
+                        class="px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-black text-xs uppercase tracking-wider transition shadow-md active:scale-95 flex items-center gap-2"
                     >
                         <span>Calculate Recommended System (Step 3)</span>
                         <span>&rarr;</span>
@@ -507,7 +507,7 @@ const toggleFaq = (idx) => {
                     <button
                         type="button"
                         @click="copyShareLink"
-                        class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-black text-xs uppercase tracking-wider transition shadow-md flex items-center justify-center gap-2"
+                        class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-black text-xs uppercase tracking-wider transition shadow-md flex items-center justify-center gap-2"
                     >
                         <font-awesome-icon :icon="copySuccess ? 'check' : 'copy'" />
                         <span>{{ copySuccess ? 'Copied to Clipboard!' : 'Copy Shareable Link' }}</span>

@@ -81,9 +81,10 @@ const buyNow = () => {
                 <div class="lg:col-span-6 space-y-4">
                     <div class="aspect-[16/11] rounded-3xl bg-slate-900 overflow-hidden relative border border-slate-200 shadow-lg">
                         <img 
-                            :src="product.image || 'https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=1200&auto=format&fit=crop'" 
+                            :src="product.image || 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=1200&auto=format&fit=crop'" 
                             :alt="product.name"
                             class="w-full h-full object-cover" 
+                            @error="(e) => e.target.src = 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=1200&auto=format&fit=crop'"
                         />
                         <div class="absolute top-4 left-4 flex flex-wrap gap-2">
                             <span class="px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md text-amber-400 text-xs font-black uppercase tracking-wider">
@@ -148,7 +149,7 @@ const buyNow = () => {
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                             <button 
                                 @click="buyNow"
-                                class="py-3.5 px-6 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-md transition transform active:scale-95 flex items-center justify-center space-x-2"
+                                class="py-3.5 px-6 rounded-2xl bg-amber-500 hover:bg-amber-400 text-white font-black text-sm shadow-md transition transform active:scale-95 flex items-center justify-center space-x-2"
                             >
                                 <font-awesome-icon :icon="['fas', 'bolt']" />
                                 <span>Buy & Checkout Now</span>

@@ -34,7 +34,7 @@ defineProps({
                     data-aos-delay="100"
                 >
                     <div>
-                        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl mb-6 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors duration-300">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl mb-6 group-hover:bg-amber-500 group-hover:text-white transition-colors duration-300">
                             <font-awesome-icon :icon="['fas', 'solar-panel']" />
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition">

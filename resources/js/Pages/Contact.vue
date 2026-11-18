@@ -172,7 +172,7 @@ const submit = () => {
                         <button
                             type="submit"
                             :disabled="form.processing"
-                            class="w-full sm:w-auto px-8 py-4 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-navy-950 font-black rounded-xl text-sm transition shadow-md uppercase tracking-wider flex items-center justify-center gap-2"
+                            class="w-full sm:w-auto px-8 py-4 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-white font-black rounded-xl text-sm transition shadow-md uppercase tracking-wider flex items-center justify-center gap-2"
                         >
                             <font-awesome-icon v-if="form.processing" icon="spinner" class="animate-spin" />
                             <span>{{ form.processing ? 'Submitting...' : 'Send Message to Engineers' }}</span>
@@ -191,7 +191,7 @@ const submit = () => {
                                 :href="`tel:${companyPhone}`"
                                 class="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition border border-white/10"
                             >
-                                <div class="w-10 h-10 rounded-lg bg-amber-500 text-navy-950 flex items-center justify-center font-bold text-base flex-shrink-0">
+                                <div class="w-10 h-10 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-base flex-shrink-0">
                                     <font-awesome-icon icon="phone" />
                                 </div>
                                 <div>

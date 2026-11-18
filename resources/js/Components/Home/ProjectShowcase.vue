@@ -57,7 +57,7 @@ defineProps({
 
                             <!-- Play Icon Overlay -->
                             <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-12 h-12 rounded-full bg-amber-500/90 text-slate-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <div class="w-12 h-12 rounded-full bg-amber-500/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                                     <font-awesome-icon :icon="['fas', 'play']" class="ml-1 text-sm" />
                                 </div>
                             </div>

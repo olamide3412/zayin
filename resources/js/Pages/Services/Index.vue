@@ -57,7 +57,7 @@ defineProps({
                     >
                         <div>
                             <div class="flex items-center justify-between mb-4">
-                                <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-xl group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                                <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-xl group-hover:bg-amber-500 group-hover:text-white transition-colors">
                                     <font-awesome-icon :icon="['fas', service.icon || 'bolt']" />
                                 </div>
                                 <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">

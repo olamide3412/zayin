@@ -80,7 +80,7 @@ const addToCart = (product) => {
                         :class="[
                             'px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap',
                             activeTab === 'solar' 
-                                ? 'bg-amber-500 text-slate-950 shadow-md' 
+                                ? 'bg-amber-500 text-white shadow-md' 
                                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                         ]"
                     >
@@ -123,9 +123,10 @@ const addToCart = (product) => {
                         <!-- Product Image -->
                         <div class="aspect-[16/10] bg-slate-100 relative overflow-hidden">
                             <img 
-                                :src="product.image || 'https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=800&auto=format&fit=crop'" 
+                                :src="product.image || 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800&auto=format&fit=crop'" 
                                 :alt="product.name"
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                                @error="(e) => e.target.src = 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800&auto=format&fit=crop'"
                             />
                             <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
                                 <span class="px-2.5 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-amber-400 text-[10px] font-black uppercase tracking-wider">
@@ -202,7 +203,7 @@ const addToCart = (product) => {
 
                             <Link 
                                 :href="`/packages/${product.category?.slug || 'all'}/${product.slug}`"
-                                class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center space-x-1 transition shadow-sm"
+                                class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs flex items-center justify-center space-x-1 transition shadow-sm"
                             >
                                 <span>Details</span>
                                 <font-awesome-icon :icon="['fas', 'arrow-right']" class="text-[10px]" />

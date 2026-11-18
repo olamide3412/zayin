@@ -89,7 +89,7 @@ const handleFilter = () => {
                 </div>
                 <h3 class="text-lg font-bold text-slate-800">No project case studies match your filter</h3>
                 <p class="text-xs text-slate-500 mt-1">Try resetting the filter above.</p>
-                <Link href="/projects" class="mt-4 inline-block px-5 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-bold">
+                <Link href="/projects" class="mt-4 inline-block px-5 py-2 rounded-xl bg-amber-500 text-white text-xs font-bold">
                     View All Projects
                 </Link>
             </div>
@@ -112,7 +112,7 @@ const handleFilter = () => {
 
                             <!-- Play Icon Overlay -->
                             <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-12 h-12 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <div class="w-12 h-12 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                                     <font-awesome-icon :icon="['fas', 'play']" class="ml-1 text-sm" />
                                 </div>
                             </div>
@@ -166,7 +166,7 @@ const handleFilter = () => {
                     :href="link.url || '#'"
                     :class="[
                         'px-3.5 py-2 rounded-xl text-xs font-bold transition',
-                        link.active ? 'bg-amber-500 text-slate-950' : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200',
+                        link.active ? 'bg-amber-500 text-white' : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200',
                         !link.url ? 'opacity-40 cursor-not-allowed pointer-events-none' : ''
                     ]"
                     v-html="link.label"

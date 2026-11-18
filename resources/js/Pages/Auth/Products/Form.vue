@@ -1,6 +1,8 @@
 <script setup>
+import { ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import ImageUpload from '@/Components/ImageUpload.vue';
 
 const props = defineProps({
     product: Object,
@@ -8,6 +10,13 @@ const props = defineProps({
 });
 
 const isEdit = !!props.product;
+
+// Image source mode: 'upload' | 'url'
+const imageMode = ref(
+    props.product?.image && (props.product.image.startsWith('http://') || props.product.image.startsWith('https://'))
+        ? 'url'
+        : 'upload'
+);
 
 const form = useForm({
     name: props.product?.name || '',
@@ -210,7 +219,7 @@ const submit = () => {
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                    <div>
+                    <div class="md:col-span-2">
                         <label class="block text-xs font-bold text-slate-700 mb-1">Warranty Coverage</label>
                         <input 
                             v-model="form.warranty_text" 
@@ -219,15 +228,93 @@ const submit = () => {
                             class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden" 
                         />
                     </div>
+                </div>
+            </div>
 
+            <!-- 4. Package / Product Image (Upload or URL) -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-wrap gap-2">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Image URL / Path</label>
-                        <input 
-                            v-model="form.image" 
-                            type="text" 
-                            placeholder="e.g. /storage/packages/solar-3kva.jpg" 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden" 
-                        />
+                        <h2 class="text-base font-bold text-slate-900">Package / Product Image</h2>
+                        <p class="text-xs text-slate-500">Upload an image directly from your device, or paste a URL / file path.</p>
+                    </div>
+
+                    <!-- Mode Toggle -->
+                    <div class="inline-flex rounded-xl bg-slate-100 p-1 border border-slate-200 text-xs font-bold">
+                        <button
+                            type="button"
+                            @click="imageMode = 'upload'"
+                            :class="[
+                                'px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer',
+                                imageMode === 'upload' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-900'
+                            ]"
+                        >
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span>Upload Image</span>
+                        </button>
+                        <button
+                            type="button"
+                            @click="imageMode = 'url'"
+                            :class="[
+                                'px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer',
+                                imageMode === 'url' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-900'
+                            ]"
+                        >
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                            </svg>
+                            <span>Image URL / Path</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mode A: Upload from Device -->
+                <div v-if="imageMode === 'upload'">
+                    <ImageUpload 
+                        v-model="form.image" 
+                        label="Upload Package Image (PNG, JPG, or WebP)" 
+                    />
+                    <p class="text-xs text-slate-400 mt-1.5">
+                        Selected file will be automatically compressed and saved to the storage disk.
+                    </p>
+                </div>
+
+                <!-- Mode B: Paste URL or Local Path -->
+                <div v-else class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Image URL / Local Path</label>
+                        <div class="relative">
+                            <input 
+                                v-model="form.image" 
+                                type="text" 
+                                placeholder="e.g. https://images.unsplash.com/... or /storage/packages/solar.jpg" 
+                                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-hidden" 
+                            />
+                            <button
+                                v-if="form.image"
+                                type="button"
+                                @click="form.image = ''"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-red-500 font-bold"
+                            >
+                                Clear
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">Paste a full web URL or local path to the product image.</p>
+                    </div>
+
+                    <!-- Live Preview for URL Mode -->
+                    <div v-if="form.image" class="pt-2">
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">Image Preview</label>
+                        <div class="w-full max-w-xs h-44 rounded-xl overflow-hidden border border-slate-200 bg-slate-50 relative">
+                            <img 
+                                :src="form.image" 
+                                alt="Package Image Preview" 
+                                class="w-full h-full object-cover" 
+                                @error="(e) => e.target.src = 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800&auto=format&fit=crop'"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -253,7 +340,7 @@ const submit = () => {
                     <button 
                         type="submit" 
                         :disabled="form.processing"
-                        class="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-sm shadow-md transition disabled:opacity-50"
+                        class="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-sm shadow-md transition disabled:opacity-50"
                     >
                         <span v-if="form.processing">Saving...</span>
                         <span v-else>{{ isEdit ? 'Save Changes' : 'Create Product' }}</span>

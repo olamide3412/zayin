@@ -64,7 +64,7 @@ const onModify = () => {
                 <div class="flex items-center gap-3">
                     <Link
                         href="/solar-calculator"
-                        class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold text-xs uppercase tracking-wider transition shadow-sm"
+                        class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs uppercase tracking-wider transition shadow-sm"
                     >
                         Create New Sizing &rarr;
                     </Link>

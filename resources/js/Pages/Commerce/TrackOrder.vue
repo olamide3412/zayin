@@ -130,7 +130,7 @@ const paymentStatusBadge = computed(() => {
                                     :class="[
                                         'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-colors flex-shrink-0 shadow-sm',
                                         idx <= currentStepIndex && order.status !== 'cancelled'
-                                            ? 'bg-amber-500 text-navy-950 font-extrabold ring-4 ring-amber-100'
+                                            ? 'bg-amber-500 text-white font-extrabold ring-4 ring-amber-100'
                                             : 'bg-slate-100 text-slate-400 border border-slate-200'
                                     ]"
                                 >
@@ -164,7 +164,7 @@ const paymentStatusBadge = computed(() => {
                     </div>
                     <Link
                         :href="route('orders.bank_transfer', order.number)"
-                        class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold rounded-lg text-xs tracking-wider uppercase transition shadow-sm flex-shrink-0"
+                        class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-lg text-xs tracking-wider uppercase transition shadow-sm flex-shrink-0"
                     >
                         View Bank Details & Upload
                     </Link>

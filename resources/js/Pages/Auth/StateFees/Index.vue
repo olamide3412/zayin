@@ -154,7 +154,7 @@ const formatNaira = (val) => {
                                 <button 
                                     @click="saveRow(state)" 
                                     :disabled="savingId === state.id"
-                                    class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow-xs transition disabled:opacity-50"
+                                    class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl shadow-xs transition disabled:opacity-50"
                                 >
                                     <span v-if="savingId === state.id">Saving...</span>
                                     <span v-else>Save</span>

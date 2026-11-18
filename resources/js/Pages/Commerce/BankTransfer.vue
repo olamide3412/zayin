@@ -12,6 +12,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    bankAccounts: {
+        type: Array,
+        default: () => [],
+    },
     seo: {
         type: Object,
         default: () => ({}),
@@ -19,17 +23,36 @@ const props = defineProps({
 });
 
 const page = usePage();
-const bankDetails = computed(() => ({
-    bankName: page.props.site?.bank_name || 'Zenith Bank PLC',
-    accountName: page.props.site?.account_name || 'ZAYIN LTD',
-    accountNumber: page.props.site?.account_number || '1224908123',
-    sortCode: '057150013',
-}));
+
+// Available accounts from Admin (Business & Banks) or site props fallback
+const accountsList = computed(() => {
+    if (props.bankAccounts && props.bankAccounts.length > 0) {
+        return props.bankAccounts;
+    }
+    return [
+        {
+            id: 1,
+            bank_name: page.props.site?.bank_name || 'Zenith Bank PLC',
+            account_name: page.props.site?.account_name || page.props.site?.bank_account_name || 'Zayin Global Resources',
+            account_number: page.props.site?.account_number || page.props.site?.bank_account_number || '1228540866',
+            is_default: true,
+        }
+    ];
+});
+
+// Currently selected bank account (defaults to primary/default)
+const selectedAccountId = ref(
+    accountsList.value.find(a => a.is_default)?.id || accountsList.value[0]?.id
+);
+
+const activeAccount = computed(() => {
+    return accountsList.value.find(a => a.id === selectedAccountId.value) || accountsList.value[0];
+});
 
 const copied = ref(false);
 const copyAccountNumber = async () => {
     try {
-        await navigator.clipboard.writeText(bankDetails.value.accountNumber);
+        await navigator.clipboard.writeText(activeAccount.value.account_number);
         copied.value = true;
         setTimeout(() => {
             copied.value = false;
@@ -114,31 +137,54 @@ const submitProof = () => {
                     </div>
 
                     <!-- Bank Account Details Card -->
-                    <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50/50">
-                        <h2 class="text-xs uppercase font-bold text-slate-400 tracking-wider mb-4">Official Bank Account Information</h2>
+                    <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50/50 space-y-4">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h2 class="text-xs uppercase font-bold text-slate-400 tracking-wider">Official Bank Account Information</h2>
+                            
+                            <!-- If multiple accounts exist, show quick bank switch pills -->
+                            <div v-if="accountsList.length > 1" class="flex items-center gap-1.5 flex-wrap">
+                                <span class="text-[11px] font-semibold text-slate-500 mr-1">Choose Bank:</span>
+                                <button
+                                    v-for="acc in accountsList"
+                                    :key="acc.id"
+                                    type="button"
+                                    @click="selectedAccountId = acc.id"
+                                    class="px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                                    :class="selectedAccountId === acc.id ? 'bg-navy-950 text-white shadow-xs' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'"
+                                >
+                                    <span>{{ acc.bank_name.split(' ')[0] }}</span>
+                                    <span v-if="acc.is_default" class="text-[9px] text-amber-400 font-black">★</span>
+                                </button>
+                            </div>
+                        </div>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="p-4 bg-white rounded-xl border border-slate-200">
                                 <div class="text-[11px] text-slate-400 font-medium">Bank Name</div>
-                                <div class="text-base font-bold text-navy-950 mt-0.5">{{ bankDetails.bankName }}</div>
+                                <div class="text-base font-bold text-navy-950 mt-0.5 flex items-center justify-between">
+                                    <span>{{ activeAccount.bank_name }}</span>
+                                    <span v-if="activeAccount.is_default" class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
+                                        Primary
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="p-4 bg-white rounded-xl border border-slate-200">
                                 <div class="text-[11px] text-slate-400 font-medium">Account Name</div>
-                                <div class="text-base font-bold text-navy-950 mt-0.5">{{ bankDetails.accountName }}</div>
+                                <div class="text-base font-bold text-navy-950 mt-0.5">{{ activeAccount.account_name }}</div>
                             </div>
 
-                            <div class="p-4 bg-white rounded-xl border border-slate-200 sm:col-span-2 flex items-center justify-between">
+                            <div class="p-4 bg-white rounded-xl border border-slate-200 sm:col-span-2 flex items-center justify-between flex-wrap gap-3">
                                 <div>
                                     <div class="text-[11px] text-slate-400 font-medium">Account Number (NUBAN)</div>
-                                    <div class="text-xl font-mono font-extrabold text-navy-950 mt-0.5 tracking-wider">
-                                        {{ bankDetails.accountNumber }}
+                                    <div class="text-xl sm:text-2xl font-mono font-extrabold text-navy-950 mt-0.5 tracking-wider">
+                                        {{ activeAccount.account_number }}
                                     </div>
                                 </div>
                                 <button
                                     type="button"
                                     @click="copyAccountNumber"
-                                    class="px-4 py-2 bg-navy-900 hover:bg-navy-800 text-white rounded-xl text-xs font-bold transition flex items-center gap-2"
+                                    class="px-4 py-2.5 bg-navy-900 hover:bg-navy-800 active:scale-98 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm cursor-pointer"
                                 >
                                     <font-awesome-icon :icon="copied ? 'check' : 'copy'" />
                                     <span>{{ copied ? 'Copied!' : 'Copy Account Number' }}</span>
@@ -146,8 +192,8 @@ const submitProof = () => {
                             </div>
                         </div>
 
-                        <div class="mt-4 p-3 rounded-xl bg-blue-50 border border-blue-100 text-xs text-blue-900 flex items-start gap-2">
-                            <font-awesome-icon icon="circle-info" class="text-blue-600 mt-0.5" />
+                        <div class="p-3 rounded-xl bg-blue-50 border border-blue-100 text-xs text-blue-900 flex items-start gap-2">
+                            <font-awesome-icon icon="circle-info" class="text-blue-600 mt-0.5 shrink-0" />
                             <span>
                                 <strong>Important:</strong> Kindly ensure the transfer description / narration contains your order number <strong>{{ order.number }}</strong> for instant automated reconciliation.
                             </span>
@@ -197,7 +243,7 @@ const submitProof = () => {
                                 <button
                                     type="submit"
                                     :disabled="form.processing || !form.proof_file"
-                                    class="w-full sm:w-auto px-8 py-3.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-navy-950 font-extrabold rounded-xl text-sm transition shadow-sm uppercase tracking-wider flex items-center justify-center gap-2"
+                                    class="w-full sm:w-auto px-8 py-3.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-white font-extrabold rounded-xl text-sm transition shadow-sm uppercase tracking-wider flex items-center justify-center gap-2"
                                 >
                                     <font-awesome-icon v-if="form.processing" icon="spinner" class="animate-spin" />
                                     <span>{{ form.processing ? 'Uploading...' : 'Submit Payment Proof' }}</span>

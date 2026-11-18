@@ -6,6 +6,12 @@ import { Link } from '@inertiajs/vue3';
 defineOptions({ layout: Layout });
 
 const props = defineProps({
+    mission: String,
+    vision: String,
+    founder: {
+        type: Object,
+        default: () => ({}),
+    },
     seo: {
         type: Object,
         default: () => ({}),
@@ -87,7 +93,7 @@ const milestones = [
                 <div class="mt-8 flex flex-wrap gap-4">
                     <Link
                         :href="route('quote.create')"
-                        class="px-6 py-3.5 bg-amber-500 hover:bg-amber-400 text-navy-950 font-extrabold rounded-xl text-sm transition shadow-md uppercase tracking-wider"
+                        class="px-6 py-3.5 bg-amber-500 hover:bg-amber-400 text-white font-extrabold rounded-xl text-sm transition shadow-md uppercase tracking-wider"
                     >
                         Request Site Audit
                     </Link>
@@ -145,17 +151,17 @@ const milestones = [
                 <div class="relative">
                     <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-100 aspect-4/3 bg-slate-900">
                         <img 
-                            src="https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=1200&auto=format&fit=crop" 
-                            alt="Solar Engineering by Zayin Ltd" 
+                            :src="founder?.image || 'https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=1200&auto=format&fit=crop'" 
+                            :alt="founder?.name || 'Solar Engineering by Zayin Ltd'" 
                             class="w-full h-full object-cover"
                         />
                     </div>
-                    <div class="absolute -bottom-6 -right-6 hidden sm:block p-6 rounded-2xl bg-amber-500 text-navy-950 shadow-xl max-w-xs font-bold text-sm">
+                    <div class="absolute -bottom-6 -right-6 hidden sm:block p-6 rounded-2xl bg-amber-500 text-white shadow-xl max-w-xs font-bold text-sm">
                         <div class="flex items-center gap-2 mb-1">
                             <font-awesome-icon icon="certificate" class="text-lg" />
-                            <span>Zero Compromise</span>
+                            <span>{{ founder?.name || 'Zero Compromise' }}</span>
                         </div>
-                        <p class="text-xs text-navy-900 font-medium">Guaranteed performance with genuine warranty certificates handed to every client.</p>
+                        <p class="text-xs text-amber-100 font-medium">{{ founder?.title || 'Guaranteed performance with genuine warranty certificates handed to every client.' }}</p>
                     </div>
                 </div>
             </div>
@@ -223,7 +229,7 @@ const milestones = [
             <div class="mt-8 flex flex-wrap justify-center gap-4">
                 <Link
                     :href="route('quote.create')"
-                    class="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-navy-950 font-black rounded-xl text-sm transition shadow-lg uppercase tracking-wider"
+                    class="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-white font-black rounded-xl text-sm transition shadow-lg uppercase tracking-wider"
                 >
                     Request Free Engineering Quote
                 </Link>

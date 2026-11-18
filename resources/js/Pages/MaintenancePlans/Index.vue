@@ -68,7 +68,7 @@ const parseInclusions = (inc) => {
                     <!-- Popular Badge -->
                     <div 
                         v-if="idx === 1"
-                        class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-500 text-navy-950 text-[11px] font-black uppercase tracking-wider shadow-sm"
+                        class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-500 text-white text-[11px] font-black uppercase tracking-wider shadow-sm"
                     >
                         Most Popular for Homes
                     </div>
@@ -127,7 +127,7 @@ const parseInclusions = (inc) => {
                             :class="[
                                 'w-full py-3.5 px-6 rounded-xl font-extrabold text-xs tracking-wider uppercase transition text-center flex items-center justify-center gap-2 shadow-sm',
                                 idx === 1
-                                    ? 'bg-amber-500 hover:bg-amber-400 text-navy-950'
+                                    ? 'bg-amber-500 hover:bg-amber-400 text-white'
                                     : 'bg-navy-900 hover:bg-navy-800 text-white'
                             ]"
                         >

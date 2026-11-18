@@ -65,7 +65,7 @@ const primaryVideo = props.project.videos?.[0] || null;
 
                     <!-- Big Play Button -->
                     <div class="absolute inset-0 flex flex-col items-center justify-center space-y-3">
-                        <div class="w-20 h-20 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center text-2xl shadow-2xl group-hover:scale-110 transition-transform">
+                        <div class="w-20 h-20 rounded-full bg-amber-500 text-white flex items-center justify-center text-2xl shadow-2xl group-hover:scale-110 transition-transform">
                             <font-awesome-icon :icon="['fas', 'play']" class="ml-1" />
                         </div>
                         <span class="text-white text-xs font-bold uppercase tracking-wider bg-slate-900/80 px-4 py-1.5 rounded-full backdrop-blur-md">
@@ -172,10 +172,10 @@ const primaryVideo = props.project.videos?.[0] || null;
                 </div>
 
                 <!-- Want a similar setup? CTA -->
-                <div class="rounded-3xl bg-amber-500 p-8 text-slate-950 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+                <div class="rounded-3xl bg-amber-500 p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
                     <div class="space-y-1 text-center sm:text-left">
                         <h3 class="text-xl sm:text-2xl font-black">Want a Similar Installation for Your Property?</h3>
-                        <p class="text-xs sm:text-sm font-medium text-slate-900 max-w-xl">
+                        <p class="text-xs sm:text-sm font-medium text-amber-100 max-w-xl">
                             Our engineers assess your energy consumption or internet coverage and deploy the right equipment.
                         </p>
                     </div>

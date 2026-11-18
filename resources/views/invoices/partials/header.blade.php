@@ -1,34 +1,110 @@
 @php
     $logoFile = null;
-    $candidates = array_filter([
-        $business->logo_path ?? null,
-        \App\Models\Setting::get('site_logo_url'),
+    $logoDataUri = null;
+    $logoSrc = null;
+
+    $siteLogo = \App\Models\Setting::get('site_logo_url');
+    $businessLogo = $business->logo_path ?? null;
+
+    // Prefer the latest uploaded site logo from Settings, then business profile logo, then default emblem
+    $candidates = array_values(array_filter([
+        $siteLogo,
+        $businessLogo,
         'images/logo.png',
-    ]);
+        public_path('images/logo.png'),
+    ]));
 
     foreach ($candidates as $candidate) {
-        $cleanPath = ltrim(parse_url($candidate, PHP_URL_PATH) ?? $candidate, '/');
+        if (empty($candidate)) continue;
+
+        // If it's already a Data URI
+        if (str_starts_with($candidate, 'data:image/')) {
+            $logoDataUri = $candidate;
+            $logoSrc = $candidate;
+            break;
+        }
+
+        $parsedPath = parse_url($candidate, PHP_URL_PATH) ?? $candidate;
+        $cleanPath = ltrim($parsedPath, '/\\');
+
+        // Check 1: public_path match
         if ($cleanPath && file_exists(public_path($cleanPath)) && is_file(public_path($cleanPath))) {
             $logoFile = public_path($cleanPath);
+            $logoSrc = asset($cleanPath);
             break;
         }
+
+        // Check 2: Absolute file path
+        if (file_exists($candidate) && is_file($candidate)) {
+            $logoFile = $candidate;
+            $logoSrc = asset($cleanPath);
+            break;
+        }
+
+        // Check 3: storage_path('app/public/' . $cleanPath)
         if ($cleanPath && file_exists(storage_path('app/public/' . $cleanPath)) && is_file(storage_path('app/public/' . $cleanPath))) {
             $logoFile = storage_path('app/public/' . $cleanPath);
+            $logoSrc = asset('storage/' . $cleanPath);
             break;
         }
+
+        // Check 4: When cleanPath starts with storage/
         if (str_starts_with($cleanPath, 'storage/')) {
             $storageRelative = substr($cleanPath, strlen('storage/'));
             if (file_exists(storage_path('app/public/' . $storageRelative)) && is_file(storage_path('app/public/' . $storageRelative))) {
                 $logoFile = storage_path('app/public/' . $storageRelative);
+                $logoSrc = asset($cleanPath);
                 break;
             }
         }
+
+        // Check 5: When cleanPath starts with public/
+        if (str_starts_with($cleanPath, 'public/')) {
+            $publicRelative = substr($cleanPath, strlen('public/'));
+            if (file_exists(public_path($publicRelative)) && is_file(public_path($publicRelative))) {
+                $logoFile = public_path($publicRelative);
+                $logoSrc = asset($publicRelative);
+                break;
+            }
+        }
+
+        // Check 6: Remote URL (http/https)
+        if (filter_var($candidate, FILTER_VALIDATE_URL) && !str_contains($candidate, '127.0.0.1') && !str_contains($candidate, 'localhost')) {
+            $ctx = stream_context_create(['http' => ['timeout' => 3]]);
+            $contents = @file_get_contents($candidate, false, $ctx);
+            if ($contents) {
+                $logoDataUri = 'data:image/png;base64,' . base64_encode($contents);
+            }
+            $logoSrc = $candidate;
+            break;
+        }
     }
 
-    $logoDataUri = null;
     if ($logoFile && is_readable($logoFile)) {
-        $mime = @mime_content_type($logoFile) ?: 'image/png';
-        $logoDataUri = 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($logoFile));
+        $ext = strtolower(pathinfo($logoFile, PATHINFO_EXTENSION));
+        $mimeMap = [
+            'png'  => 'image/png',
+            'jpg'  => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'webp' => 'image/webp',
+            'gif'  => 'image/gif',
+            'svg'  => 'image/svg+xml',
+        ];
+        $mime = $mimeMap[$ext] ?? (@mime_content_type($logoFile) ?: 'image/png');
+        $rawBytes = @file_get_contents($logoFile);
+        if ($rawBytes) {
+            $logoDataUri = 'data:' . $mime . ';base64,' . base64_encode($rawBytes);
+        }
+    }
+
+    // Ultimate fallback if neither logoDataUri nor logoSrc was resolved
+    if (!$logoDataUri && !$logoSrc && file_exists(public_path('images/logo.png'))) {
+        $logoFile = public_path('images/logo.png');
+        $rawBytes = @file_get_contents($logoFile);
+        if ($rawBytes) {
+            $logoDataUri = 'data:image/png;base64,' . base64_encode($rawBytes);
+        }
+        $logoSrc = asset('images/logo.png');
     }
 @endphp
 <table class="w-full header-table mb-4">
@@ -36,9 +112,9 @@
         <td class="align-top company-cell" style="width: 58%;">
             <table style="width: 100%; border-collapse: collapse; margin-bottom: 4px;">
                 <tr>
-                    @if($logoDataUri)
-                        <td style="width: 36px; padding: 0 8px 0 0; vertical-align: middle;">
-                            <img src="{{ $logoDataUri }}" alt="{{ $business->name }}" class="company-logo" style="width: 34px; height: 34px; max-width: 34px; max-height: 34px; object-fit: contain; border-radius: 6px; display: block;">
+                    @if($logoDataUri || $logoSrc)
+                        <td style="width: 44px; padding: 0 10px 0 0; vertical-align: middle;">
+                            <img src="{{ $logoDataUri ?: $logoSrc }}" alt="{{ $business->name }}" class="company-logo" style="width: auto; height: 36px; max-width: 90px; max-height: 40px; object-fit: contain; border-radius: 4px; display: block;">
                         </td>
                     @endif
                     <td style="padding: 0; vertical-align: middle;">

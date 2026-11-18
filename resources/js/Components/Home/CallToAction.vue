@@ -39,7 +39,7 @@ const whatsappUrl = computed(() => {
                 <div class="flex flex-col sm:flex-row items-center gap-4 shrink-0">
                     <Link 
                         href="/request-quote"
-                        class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5"
+                        class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-white font-black text-sm shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5"
                     >
                         Request Instant Quote
                     </Link>

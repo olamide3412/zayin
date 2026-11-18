@@ -59,7 +59,7 @@ const steps = [
                         {{ step.num }}
                     </div>
 
-                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-xl mb-4 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-xl mb-4 group-hover:bg-amber-500 group-hover:text-white transition-colors">
                         <font-awesome-icon :icon="['fas', step.icon]" />
                     </div>
 
@@ -77,7 +77,7 @@ const steps = [
             <div class="mt-12 text-center" data-aos="fade-up">
                 <Link 
                     href="/request-quote"
-                    class="inline-flex items-center space-x-2 px-8 py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-0.5"
+                    class="inline-flex items-center space-x-2 px-8 py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-white font-black text-sm shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-0.5"
                 >
                     <font-awesome-icon :icon="['fas', 'file-invoice-dollar']" />
                     <span>Start with a Free Energy Audit</span>

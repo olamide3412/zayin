@@ -69,7 +69,7 @@ const savePreset = (preset) => {
                 v-if="activeTab !== 'presets'"
                 @click="saveSettings" 
                 :disabled="configForm.processing"
-                class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl shadow-md transition text-sm disabled:opacity-50"
+                class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-2.5 rounded-xl shadow-md transition text-sm disabled:opacity-50"
             >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 <span>{{ configForm.processing ? 'Saving...' : 'Save Engine Parameters' }}</span>
@@ -305,7 +305,7 @@ const savePreset = (preset) => {
                                     <button 
                                         @click="savePreset(preset)" 
                                         :disabled="savingPresetId === preset.id"
-                                        class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow-xs transition disabled:opacity-50"
+                                        class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl shadow-xs transition disabled:opacity-50"
                                     >
                                         <span v-if="savingPresetId === preset.id">Saving...</span>
                                         <span v-else>Save</span>

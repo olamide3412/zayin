@@ -215,7 +215,7 @@ const submitQuote = () => {
                                 <div 
                                     :class="[
                                         'w-5 h-5 rounded-md flex items-center justify-center text-xs shrink-0',
-                                        form.appliances.includes(app.id) ? 'bg-amber-500 text-slate-950 font-bold' : 'border border-slate-300'
+                                        form.appliances.includes(app.id) ? 'bg-amber-500 text-white font-bold' : 'border border-slate-300'
                                     ]"
                                 >
                                     <font-awesome-icon v-if="form.appliances.includes(app.id)" :icon="['fas', 'check']" />
@@ -341,7 +341,7 @@ const submitQuote = () => {
                         <button 
                             type="submit"
                             :disabled="form.processing"
-                            class="w-full py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/20 transition transform active:scale-95 flex items-center justify-center space-x-2 disabled:opacity-50"
+                            class="w-full py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-white font-black text-sm shadow-xl shadow-amber-500/20 transition transform active:scale-95 flex items-center justify-center space-x-2 disabled:opacity-50"
                         >
                             <font-awesome-icon :icon="['fas', 'file-invoice-dollar']" />
                             <span>{{ form.processing ? 'Calculating & Submitting...' : 'Generate My Custom Quote' }}</span>

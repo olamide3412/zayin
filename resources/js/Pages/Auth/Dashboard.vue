@@ -51,7 +51,7 @@ defineProps({
             <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Live Pricing & Catalog Management</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <Link :href="route('admin.products.index')" class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs hover:border-amber-400 hover:shadow-md transition group">
-                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold mb-3 group-hover:bg-amber-500 group-hover:text-slate-950 transition">
+                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold mb-3 group-hover:bg-amber-500 group-hover:text-white transition">
                         ₦
                     </div>
                     <h4 class="font-bold text-slate-900 text-sm">Products & Live Pricing</h4>

@@ -76,6 +76,7 @@ class HomeController extends Controller
         );
 
         return Inertia::render('Home', [
+            'heroSlides' => json_decode(\App\Models\Setting::get('hero_slides', '[]'), true) ?: [],
             'categories' => $categories,
             'featuredServices' => $featuredServices,
             'featuredProducts' => $featuredProducts,

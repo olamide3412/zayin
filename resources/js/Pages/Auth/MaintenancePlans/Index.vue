@@ -29,7 +29,7 @@ const formatNaira = (val) => {
             </div>
             <Link 
                 :href="route('admin.plans.create')" 
-                class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl shadow-md transition text-sm"
+                class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-2.5 rounded-xl shadow-md transition text-sm"
             >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                 <span>Add Maintenance Plan</span>
@@ -85,7 +85,7 @@ const formatNaira = (val) => {
                 <div class="flex items-center justify-end gap-2 border-t border-slate-100 pt-4">
                     <Link 
                         :href="route('admin.plans.edit', plan.id)" 
-                        class="px-4 py-2 bg-slate-100 hover:bg-amber-500 hover:text-slate-950 text-slate-700 font-bold text-xs rounded-xl transition"
+                        class="px-4 py-2 bg-slate-100 hover:bg-amber-500 hover:text-white text-slate-700 font-bold text-xs rounded-xl transition"
                     >
                         Edit Plan & Price
                     </Link>

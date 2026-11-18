@@ -65,7 +65,7 @@ const emit = defineEmits(['next', 'prev', 'goToStep']);
                     type="button"
                     @click="emit('next')"
                     :disabled="applianceCount === 0"
-                    class="px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-40 disabled:cursor-not-allowed text-navy-950 text-xs sm:text-sm font-black uppercase tracking-wider shadow-lg transition active:scale-95 flex items-center gap-2"
+                    class="px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-black uppercase tracking-wider shadow-lg transition active:scale-95 flex items-center gap-2"
                 >
                     <span>{{ currentStep === 1 ? 'Configure System' : 'View Results' }}</span>
                     <span>&rarr;</span>
@@ -74,7 +74,7 @@ const emit = defineEmits(['next', 'prev', 'goToStep']);
                 <a
                     v-else
                     href="#packages-section"
-                    class="px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-navy-950 text-xs sm:text-sm font-black uppercase tracking-wider shadow-lg transition active:scale-95 flex items-center gap-2"
+                    class="px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-white text-xs sm:text-sm font-black uppercase tracking-wider shadow-lg transition active:scale-95 flex items-center gap-2"
                 >
                     <span>Shop Matching Packages</span>
                     <font-awesome-icon icon="arrow-down" class="text-xs" />

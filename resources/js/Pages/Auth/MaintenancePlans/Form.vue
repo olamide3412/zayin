@@ -165,7 +165,7 @@ const submit = () => {
                 <button 
                     type="submit" 
                     :disabled="form.processing"
-                    class="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-sm shadow-md transition disabled:opacity-50"
+                    class="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-sm shadow-md transition disabled:opacity-50"
                 >
                     <span v-if="form.processing">Saving...</span>
                     <span v-else>{{ isEdit ? 'Save Changes' : 'Create Plan' }}</span>
