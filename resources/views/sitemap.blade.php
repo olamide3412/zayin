@@ -66,6 +66,26 @@
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
+    <url>
+        <loc>{{ url('/privacy-policy') }}</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>{{ url('/terms') }}</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>{{ url('/warranty') }}</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>{{ url('/refund-policy') }}</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
 
     <!-- Services -->
     @foreach ($services as $service)
