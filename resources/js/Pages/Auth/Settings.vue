@@ -9,6 +9,11 @@ const props = defineProps({
 
 const form = useForm({
     enable_appointments: props.settings?.enable_appointments ?? true,
+    company_name: props.settings?.company_name ?? '',
+    phone: props.settings?.phone ?? '',
+    whatsapp: props.settings?.whatsapp ?? '',
+    email: props.settings?.email ?? '',
+    address: props.settings?.address ?? '',
     hero_slides: (props.settings?.hero_slides ?? []).map((slide, idx) => ({
         id: slide.id ?? `slide-${Date.now()}-${idx}-${Math.random()}`,
         type: slide.type,
@@ -88,7 +93,124 @@ const saveSettings = () => {
                     </div>
                 </div>
 
-                <!-- Appointment Settings Section -->
+                <!-- Company Contact & Customer Support Section -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-6 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+                        <div>
+                            <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                                Contact & WhatsApp Support
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-1">
+                                Update the live WhatsApp number, customer phone line, support email, and office address shown across the website header, footer, quote generator, and mobile bar.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 space-y-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <!-- WhatsApp Number -->
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
+                                    <span class="flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                        Official WhatsApp Number
+                                    </span>
+                                    <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">Live Chat & Quotes</span>
+                                </label>
+                                <div class="relative">
+                                    <input 
+                                        v-model="form.whatsapp"
+                                        type="text"
+                                        placeholder="e.g. +234 803 123 4567 or 08031234567"
+                                        class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-white text-slate-900 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none font-semibold"
+                                    />
+                                    <svg class="w-5 h-5 text-emerald-600 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1">
+                                    Directs all WhatsApp chat buttons, quote follow-ups, and the mobile sticky bar across the entire site.
+                                </p>
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                    Customer Phone Line (Calls)
+                                </label>
+                                <div class="relative">
+                                    <input 
+                                        v-model="form.phone"
+                                        type="text"
+                                        placeholder="e.g. +234 803 123 4567"
+                                        class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-white text-slate-900 text-sm focus:ring-2 focus:ring-primary focus:outline-none font-semibold"
+                                    />
+                                    <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    </svg>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1">
+                                    Displayed in header and footer for customer voice telephone calls.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
+                            <!-- Support Email -->
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                    Official Support Email
+                                </label>
+                                <div class="relative">
+                                    <input 
+                                        v-model="form.email"
+                                        type="email"
+                                        placeholder="e.g. support@zayin.ng"
+                                        class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-white text-slate-900 text-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                                    />
+                                    <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Company Name -->
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                    Company / Brand Name
+                                </label>
+                                <input 
+                                    v-model="form.company_name"
+                                    type="text"
+                                    placeholder="e.g. Zayin Global Ltd"
+                                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-slate-900 text-sm focus:ring-2 focus:ring-primary focus:outline-none font-semibold"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Office Address -->
+                        <div class="pt-1">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                Corporate Office / Headquarters Address
+                            </label>
+                            <div class="relative">
+                                <input 
+                                    v-model="form.address"
+                                    type="text"
+                                    placeholder="e.g. Abraka, Ethiope East, Delta State, Nigeria"
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-white text-slate-900 text-sm focus:ring-2 focus:ring-primary focus:outline-none"
+                                />
+                                <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <div class="p-6 border-b border-gray-100 bg-gray-50">
                         <h3 class="font-bold text-gray-800 flex items-center gap-2">

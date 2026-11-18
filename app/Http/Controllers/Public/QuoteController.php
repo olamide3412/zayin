@@ -87,7 +87,8 @@ class QuoteController extends Controller
         }
 
         $whatsAppMsg = "Hello Zayin, I just submitted a quote request for {$quote->service_type} on your website. My Reference Code is {$reference}.";
-        $whatsappLink = whatsapp_url(config('services.whatsapp.number', '2348031234567'), $whatsAppMsg);
+        $whatsappNumber = \App\Models\Setting::get('whatsapp') ?: config('services.whatsapp.number', '2348031234567');
+        $whatsappLink = whatsapp_url($whatsappNumber, $whatsAppMsg);
 
         return redirect()->back()->with([
             'success' => "Your quote request has been received! Your Reference Number is {$reference}.",

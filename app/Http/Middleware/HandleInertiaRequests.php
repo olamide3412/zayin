@@ -78,7 +78,8 @@ class HandleInertiaRequests extends Middleware
             },
             'support' => [
                 'phone' => \App\Models\Setting::get('phone', '+234 803 123 4567'),
-                'phone_whatsapp' => \App\Models\Setting::get('phone_whatsapp', '2348031234567'),
+                'phone_whatsapp' => \App\Models\Setting::get('phone_whatsapp') ?: \App\Models\Setting::get('whatsapp', '2348031234567'),
+                'whatsapp' => \App\Models\Setting::get('whatsapp', '+234 803 123 4567'),
                 'email' => \App\Models\Setting::get('email', 'support@zayin.ng'),
                 'location' => \App\Models\Setting::get('address', 'Abraka, Ethiope East, Delta State, Nigeria'),
                 'coverage_scope' => \App\Models\Setting::get('coverage_scope', 'Nationwide Service — Operating across all 36 States & FCT'),

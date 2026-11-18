@@ -37,6 +37,11 @@ class SettingController extends Controller
             'settings' => [
                 'enable_appointments' => filter_var(Setting::get('enable_appointments', 'true'), FILTER_VALIDATE_BOOLEAN),
                 'hero_slides' => $heroSlides,
+                'company_name' => Setting::get('company_name', 'Zayin Global Ltd'),
+                'phone' => Setting::get('phone', '+234 803 123 4567'),
+                'whatsapp' => Setting::get('whatsapp', '+234 803 123 4567'),
+                'email' => Setting::get('email', 'support@zayin.ng'),
+                'address' => Setting::get('address', 'Abraka, Ethiope East, Delta State, Nigeria'),
                 'about_mission' => Setting::get('about_mission', '<p>To provide Nigerian homes and enterprises with reliable solar power, high-speed Starlink satellite internet, and precision digital installations with unmatched engineering excellence.</p>'),
                 'about_vision' => Setting::get('about_vision', '<p>To be Nigeria\'s most dependable turnkey engineering solutions provider for renewable energy and satellite telecommunications.</p>'),
                 'about_founder_name' => Setting::get('about_founder_name', 'Engr. Zayin Lead'),
@@ -57,6 +62,11 @@ class SettingController extends Controller
             'site_logo_url'       => 'nullable|string|max:500',
             'enable_appointments' => 'required|boolean',
             'hero_slides'         => 'nullable|array',
+            'company_name'        => 'nullable|string|max:200',
+            'phone'               => 'nullable|string|max:100',
+            'whatsapp'            => 'nullable|string|max:100',
+            'email'               => 'nullable|string|max:200',
+            'address'             => 'nullable|string|max:500',
             'about_mission'       => 'nullable|string',
             'about_vision'        => 'nullable|string',
             'about_founder_name'  => 'nullable|string|max:200',
@@ -66,6 +76,21 @@ class SettingController extends Controller
         ]);
 
         Setting::set('enable_appointments', $validated['enable_appointments'] ? 'true' : 'false');
+
+        if (array_key_exists('company_name', $validated)) Setting::set('company_name', $validated['company_name'] ?? 'Zayin Ltd');
+        if (array_key_exists('phone', $validated)) Setting::set('phone', $validated['phone'] ?? '');
+        if (array_key_exists('whatsapp', $validated)) {
+            $rawWa = $validated['whatsapp'] ?? '';
+            Setting::set('whatsapp', $rawWa);
+            // Also store normalized digits for wa.me links
+            $cleanWa = preg_replace('/[^0-9]/', '', $rawWa);
+            if (str_starts_with($cleanWa, '0') && strlen($cleanWa) === 11) {
+                $cleanWa = '234' . substr($cleanWa, 1);
+            }
+            Setting::set('phone_whatsapp', $cleanWa);
+        }
+        if (array_key_exists('email', $validated)) Setting::set('email', $validated['email'] ?? '');
+        if (array_key_exists('address', $validated)) Setting::set('address', $validated['address'] ?? '');
 
         $heroSlides = [];
         if (isset($validated['hero_slides']) && is_array($validated['hero_slides'])) {
