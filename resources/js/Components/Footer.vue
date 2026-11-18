@@ -15,6 +15,7 @@ const site = computed(() => page.props.site || {
 });
 
 const siteLogo = computed(() => site.value.logo_url || Logo);
+const authUser = computed(() => page.props.auth?.user);
 
 const whatsappLink = computed(() => {
     const raw = site.value.whatsapp || '2348031234567';
@@ -227,6 +228,22 @@ const scrollToTop = () => {
                     <Link href="/terms" class="hover:text-slate-300 transition">Terms of Service</Link>
                     <Link href="/warranty" class="hover:text-slate-300 transition">Warranty Guarantee</Link>
                     <Link href="/refund-policy" class="hover:text-slate-300 transition">Refunds</Link>
+                    <Link 
+                        v-if="authUser" 
+                        :href="route('dashboard')" 
+                        class="text-amber-400 hover:text-amber-300 transition font-bold flex items-center gap-1.5"
+                    >
+                        <font-awesome-icon :icon="['fas', 'gauge-high']" class="text-[10px]" />
+                        <span>Admin Dashboard</span>
+                    </Link>
+                    <Link 
+                        v-else 
+                        :href="route('login')" 
+                        class="text-slate-400 hover:text-amber-400 transition flex items-center gap-1.5 font-medium"
+                    >
+                        <font-awesome-icon :icon="['fas', 'lock']" class="text-[10px]" />
+                        <span>Login</span>
+                    </Link>
                 </div>
 
                 <button 

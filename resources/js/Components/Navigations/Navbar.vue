@@ -74,6 +74,7 @@ const site = computed(() => page.props.site || {
 const siteLogo = computed(() => site.value.logo_url || Logo);
 
 const cartCount = computed(() => page.props.cart?.count || 0);
+const authUser = computed(() => page.props.auth?.user);
 
 const whatsappLink = computed(() => {
     const raw = site.value.whatsapp || '2348031234567';
@@ -235,6 +236,25 @@ const companyList = [
 
                     <Link href="/contact" class="hover:text-amber-400 transition-colors font-medium">Contact Us</Link>
                     <Link href="/faq" class="hover:text-amber-400 transition-colors">FAQs</Link>
+
+                    <span class="text-slate-700">|</span>
+
+                    <Link 
+                        v-if="authUser"
+                        :href="route('dashboard')"
+                        class="text-amber-400 hover:text-amber-300 transition-colors font-bold flex items-center space-x-1"
+                    >
+                        <font-awesome-icon :icon="['fas', 'gauge-high']" class="text-[10px]" />
+                        <span>Dashboard</span>
+                    </Link>
+                    <Link 
+                        v-else
+                        :href="route('login')"
+                        class="hover:text-amber-400 transition-colors font-medium flex items-center space-x-1"
+                    >
+                        <font-awesome-icon :icon="['fas', 'lock']" class="text-[10px] text-slate-400" />
+                        <span>Login</span>
+                    </Link>
                 </div>
             </div>
         </div>
@@ -447,8 +467,28 @@ const companyList = [
                     </div>
                 </div>
 
-                <!-- Desktop Actions: Cart + Book Visit (on wide screens) + Primary Quote Button -->
+                <!-- Desktop Actions: Login/Dashboard + Cart + Book Visit + Primary Quote Button -->
                 <div class="hidden lg:flex items-center space-x-2 shrink-0">
+                    <!-- Staff / Admin Portal Quick Link -->
+                    <Link 
+                        v-if="authUser"
+                        :href="route('dashboard')"
+                        class="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold text-xs shadow-xs transition"
+                        title="Dashboard"
+                    >
+                        <font-awesome-icon :icon="['fas', 'gauge-high']" class="text-xs" />
+                        <span>Dashboard</span>
+                    </Link>
+                    <Link 
+                        v-else
+                        :href="route('login')"
+                        class="inline-flex items-center space-x-1.5 px-2.5 py-2 rounded-xl text-slate-700 hover:text-amber-600 hover:bg-slate-100 font-bold text-xs transition"
+                        title="Login"
+                    >
+                        <font-awesome-icon :icon="['fas', 'lock']" class="text-xs text-slate-400" />
+                        <span>Login</span>
+                    </Link>
+
                     <!-- Cart Trigger -->
                     <Link 
                         href="/cart"
@@ -650,6 +690,31 @@ const companyList = [
                     <Link href="/contact" @click="closeMenu" class="block py-2.5 px-3 rounded-xl hover:bg-slate-50 transition-colors">
                         Contact Us
                     </Link>
+
+                    <!-- Mobile Staff / Admin Link -->
+                    <div class="pt-1">
+                        <Link 
+                            v-if="authUser"
+                            :href="route('dashboard')" 
+                            @click="closeMenu" 
+                            class="flex items-center justify-between py-2.5 px-3 rounded-xl font-bold bg-slate-900 text-amber-400 shadow-sm"
+                        >
+                            <span class="flex items-center gap-2">
+                                <font-awesome-icon :icon="['fas', 'gauge-high']" />
+                                <span>Admin Dashboard</span>
+                            </span>
+                            <span class="text-[10px] bg-amber-500 text-slate-950 font-black px-1.5 py-0.5 rounded">STAFF</span>
+                        </Link>
+                        <Link 
+                            v-else
+                            :href="route('login')" 
+                            @click="closeMenu" 
+                            class="flex items-center gap-2.5 py-2.5 px-3 rounded-xl font-bold text-slate-700 bg-slate-50 hover:bg-slate-100 transition border border-slate-200"
+                        >
+                            <font-awesome-icon :icon="['fas', 'lock']" class="text-amber-600 text-xs" />
+                            <span>Login</span>
+                        </Link>
+                    </div>
                 </div>
 
                 <!-- Mobile Action CTA Buttons -->

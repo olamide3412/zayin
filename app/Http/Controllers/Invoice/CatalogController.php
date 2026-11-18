@@ -105,7 +105,7 @@ class CatalogController extends Controller
 
     public function destroy(InvoiceItemCatalog $item): RedirectResponse
     {
-        $item->update(['is_archived' => true]);
-        return back()->with('success', 'Catalog item archived.');
+        $item->delete();
+        return back()->with('success', 'Catalog item deleted successfully.');
     }
 }

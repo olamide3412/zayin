@@ -98,16 +98,16 @@
                             <button
                                 type="button"
                                 @click="editItem(item)"
-                                class="px-3 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg"
+                                class="px-3 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition"
                             >
                                 Edit Item
                             </button>
                             <button
                                 type="button"
-                                @click="deleteItem(item.id)"
-                                class="px-3 py-1.5 text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg"
+                                @click="deleteItem(item)"
+                                class="px-3 py-1.5 text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg transition"
                             >
-                                Archive
+                                Delete
                             </button>
                         </div>
                     </div>
@@ -164,16 +164,16 @@
                                     <button
                                         type="button"
                                         @click="editItem(item)"
-                                        class="px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded"
+                                        class="px-2 py-1 text-xs font-semibold text-blue-600 hover:bg-blue-50 rounded transition"
                                     >
                                         Edit
                                     </button>
                                     <button
                                         type="button"
-                                        @click="deleteItem(item.id)"
-                                        class="px-2 py-1 text-xs font-medium text-rose-600 hover:bg-rose-50 rounded"
+                                        @click="deleteItem(item)"
+                                        class="px-2 py-1 text-xs font-semibold text-rose-600 hover:bg-rose-50 hover:text-rose-700 rounded transition"
                                     >
-                                        Archive
+                                        Delete
                                     </button>
                                 </td>
                             </tr>
@@ -280,21 +280,33 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
-                    <button
-                        type="button"
-                        @click="showModal = false"
-                        class="px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded-lg"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        type="button"
-                        @click="saveItem"
-                        class="px-4 py-2 text-xs font-bold text-white bg-primary rounded-lg shadow-sm"
-                    >
-                        Save Item
-                    </button>
+                <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                    <div>
+                        <button
+                            v-if="editingId"
+                            type="button"
+                            @click="deleteCurrentEditingItem"
+                            class="px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-lg transition"
+                        >
+                            Delete Item
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button
+                            type="button"
+                            @click="showModal = false"
+                            class="px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded-lg transition"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="button"
+                            @click="saveItem"
+                            class="px-4 py-2 text-xs font-bold text-white bg-primary rounded-lg shadow-sm hover:bg-primary/90 transition"
+                        >
+                            Save Item
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -388,8 +400,20 @@ function saveItem() {
     }
 }
 
-function deleteItem(id: number) {
-    if (confirm('Are you sure you want to archive this catalog item?')) {
+function deleteItem(item: any) {
+    const itemName = item?.name || 'this catalog item';
+    const id = item?.id || item;
+    if (confirm(`Are you sure you want to delete "${itemName}"?`)) {
+        router.delete(route('invoices.catalog.destroy', id));
+    }
+}
+
+function deleteCurrentEditingItem() {
+    if (!editingId.value) return;
+    const name = modalForm.value.name || 'this catalog item';
+    if (confirm(`Are you sure you want to delete "${name}"?`)) {
+        const id = editingId.value;
+        showModal.value = false;
         router.delete(route('invoices.catalog.destroy', id));
     }
 }

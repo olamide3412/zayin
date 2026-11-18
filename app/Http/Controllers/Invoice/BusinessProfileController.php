@@ -94,7 +94,7 @@ class BusinessProfileController extends Controller
             'sort_order' => $sortOrder,
         ]));
 
-        if ($request->wantsJson() || $request->ajax()) {
+        if ($request->wantsJson() && !$request->header('X-Inertia')) {
             return response()->json([
                 'success' => true,
                 'message' => 'Bank account added successfully.',
@@ -123,7 +123,7 @@ class BusinessProfileController extends Controller
 
         $account->update($validated);
 
-        if ($request->wantsJson() || $request->ajax()) {
+        if ($request->wantsJson() && !$request->header('X-Inertia')) {
             return response()->json([
                 'success' => true,
                 'message' => 'Bank account updated successfully.',
@@ -140,7 +140,7 @@ class BusinessProfileController extends Controller
         $businessId = $account->business_id;
         $account->delete();
 
-        if ($request->wantsJson() || $request->ajax()) {
+        if ($request->wantsJson() && !$request->header('X-Inertia')) {
             return response()->json([
                 'success' => true,
                 'message' => 'Bank account removed.',

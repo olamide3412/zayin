@@ -296,4 +296,80 @@ class InvoiceLifecycleTest extends TestCase
         $htmlTemplateNoTin = $renderer->renderHtml($invoice->fresh());
         $this->assertStringNotContainsString('TIN-28491048-0001', $htmlTemplateNoTin);
     }
+
+    public function test_bank_account_crud_handles_both_inertia_and_json(): void
+    {
+        // 1. Inertia requests must return redirect back (NOT plain json)
+        $inertiaHeaders = ['X-Inertia' => 'true'];
+
+        $storeResponse = $this->actingAs($this->user)
+            ->withHeaders($inertiaHeaders)
+            ->post(route('invoices.settings.bank-accounts.store'), [
+                'bank_name' => 'First Bank',
+                'account_name' => 'Zayin Ltd',
+                'account_number' => '3001234567',
+                'is_default' => true,
+            ]);
+
+        $storeResponse->assertRedirect();
+        $storeResponse->assertSessionHas('success');
+
+        $account = \App\Models\BusinessBankAccount::where('account_number', '3001234567')->firstOrFail();
+        $this->assertTrue((bool) $account->is_default);
+
+        // Update via Inertia
+        $updateResponse = $this->actingAs($this->user)
+            ->withHeaders($inertiaHeaders)
+            ->put(route('invoices.settings.bank-accounts.update', $account->id), [
+                'bank_name' => 'First Bank of Nigeria',
+                'account_name' => 'Zayin Ltd Commercial',
+                'account_number' => '3001234567',
+                'is_default' => true,
+            ]);
+
+        $updateResponse->assertRedirect();
+        $updateResponse->assertSessionHas('success');
+        $this->assertEquals('First Bank of Nigeria', $account->fresh()->bank_name);
+
+        // Delete via Inertia
+        $deleteResponse = $this->actingAs($this->user)
+            ->withHeaders($inertiaHeaders)
+            ->delete(route('invoices.settings.bank-accounts.destroy', $account->id));
+
+        $deleteResponse->assertRedirect();
+        $this->assertDatabaseMissing('business_bank_accounts', ['id' => $account->id]);
+
+        // 2. Direct API / Axios calls with Accept: application/json must return JSON
+        $this->flushHeaders();
+        $jsonStore = $this->actingAs($this->user)
+            ->postJson(route('invoices.settings.bank-accounts.store'), [
+                'bank_name' => 'Zenith Bank',
+                'account_name' => 'Zayin Ltd',
+                'account_number' => '1228540866',
+                'is_default' => true,
+            ]);
+
+        $jsonStore->assertStatus(200);
+        $jsonStore->assertJson(['success' => true]);
+    }
+
+    public function test_catalog_item_can_be_deleted(): void
+    {
+        $item = \App\Models\InvoiceItemCatalog::create([
+            'business_id' => $this->business->id,
+            'name' => '10kVA Hybrid Inverter',
+            'normalized_name' => \App\Models\InvoiceItemCatalog::normalizeName('10kVA Hybrid Inverter'),
+            'category' => 'Inverters',
+            'unit' => 'pcs',
+            'default_price_kobo' => 150000000,
+            'is_vatable' => true,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->delete(route('invoices.catalog.destroy', $item->id));
+
+        $response->assertRedirect();
+        $response->assertSessionHas('success', 'Catalog item deleted successfully.');
+        $this->assertDatabaseMissing('invoice_items_catalog', ['id' => $item->id]);
+    }
 }
