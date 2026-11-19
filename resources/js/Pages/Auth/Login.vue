@@ -233,13 +233,6 @@ const handleLogin = () => {
             </svg>
           </button>
         </div>
-
-        <!-- Register Link -->
-        <p class=" text-center text-sm text-gray-600 mt-4">
-          Don't have an account?
-          <Link href="/" class="font-medium text-primary hover:text-primary-dark">Sign Up</Link>
-          <a href="/register" class=" hidden font-medium text-primary hover:text-primary-dark">Sign up</a>
-        </p>
       </div>
     </div>
 
