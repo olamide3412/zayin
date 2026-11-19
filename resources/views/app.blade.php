@@ -11,7 +11,7 @@
     <meta name="description"
         content="{{ $meta['description'] ?? 'Certified solar power systems, high-speed Starlink installations, enterprise mesh Wi-Fi, and precision DSTV satellite setups across Nigeria.' }}">
     <meta name="keywords"
-        content="solar installation Nigeria, inverter battery Lagos, Starlink installer Abuja, DSTV installation Lekki, solar panels Nigeria, Wi-Fi networking, AMC solar maintenance, Zayin Ltd">
+        content="{{ $meta['keywords'] ?? 'Zayin, Zayin Ltd, Zayin Global, Zayin Global Ltd, Zayin Global Resources, Zayin Abraka, Zayin Delta State, Zayin Nigeria, Zayin Solar, Zayin Starlink, Zayin DSTV, Zayin Engineering, solar installation Nigeria, solar installation Abraka, solar installation Delta State, solar installer Warri, solar installer Asaba, solar installer Ughelli, solar installer Sapele, solar installer Benin City, solar installer Lagos, solar installer Abuja, solar installer Port Harcourt, solar installer Ibadan, solar company in Nigeria, solar panels Nigeria, hybrid solar inverter Nigeria, lithium battery Nigeria, LiFePO4 battery solar system, inverter battery Lagos, 5kVA solar package Nigeria, 10kVA solar system Nigeria, commercial solar installation Nigeria, turnkey solar package Nigeria, solar load calculator Nigeria, solar maintenance Nigeria, AMC solar maintenance, Starlink installation Nigeria, Starlink installer Abraka, Starlink installer Delta State, Starlink installer Warri, Starlink installer Asaba, Starlink installer Lagos, Starlink installer Abuja, Starlink mast mounting Nigeria, enterprise mesh Wi-Fi Nigeria, Wi-Fi networking Nigeria, DSTV installation Nigeria, DSTV installation Abraka, DSTV installation Delta State, DSTV installation Lekki, DSTV Extra View setup, satellite dish alignment Nigeria' }}">
     <meta name="robots" content="index, follow">
 
     <!-- ── SEO: Open Graph (Facebook / LinkedIn) ──────────────────────── -->
@@ -54,17 +54,29 @@
     @endif
 
     <!-- ── SEO: JSON-LD Structured Data (Organization) ───────────────── -->
+    @php
+        try {
+            $ldLogo = \App\Models\Setting::get('site_logo_url');
+            $ldLogoUrl = $ldLogo ? (str_starts_with($ldLogo, 'http') ? $ldLogo : url($ldLogo)) : asset('images/logo.png');
+            $ldPhone = \App\Models\Setting::get('phone', '+234 803 123 4567');
+            $ldEmail = \App\Models\Setting::get('email', 'support@zayin.ng');
+        } catch (\Throwable $e) {
+            $ldLogoUrl = asset('images/logo.png');
+            $ldPhone = '+234 803 123 4567';
+            $ldEmail = 'support@zayin.ng';
+        }
+    @endphp
     <script type="application/ld+json">
     {
         "@@context": "https://schema.org",
         "@@type": "LocalBusiness",
         "name": "Zayin Ltd",
-        "alternateName": "Zayin Ltd",
-        "description": "Certified solar installations, Starlink satellite internet mounting, and professional DSTV multi-room systems in Nigeria.",
+        "alternateName": ["Zayin Global Resources", "Zayin Global", "Zayin Global Ltd", "Zayin", "Zayin Abraka"],
+        "description": "Zayin Global Resources (Zayin Ltd) — Certified solar power installations, Starlink satellite internet mounting, enterprise Wi-Fi, and professional DSTV multi-room systems in Abraka, Delta State and across Nigeria.",
         "url": "{{ config('app.url') }}",
-        "logo": "{{ asset('images/logo.png') }}",
-        "telephone": "+2348000000000",
-        "email": "support@zayin.ng",
+        "logo": "{{ $ldLogoUrl }}",
+        "telephone": "{{ $ldPhone }}",
+        "email": "{{ $ldEmail }}",
         "address": {
             "@@type": "PostalAddress",
             "streetAddress": "Abraka",
@@ -72,7 +84,7 @@
             "addressRegion": "Delta State",
             "addressCountry": "NG"
         },
-        "areaServed": "Nigeria (Nationwide across 36 States + FCT)",
+        "areaServed": ["Abraka", "Delta State", "Warri", "Asaba", "Lagos", "Abuja", "Port Harcourt", "Nigeria (Nationwide across 36 States + FCT)"],
         "hasOfferCatalog": {
             "@@type": "OfferCatalog",
             "name": "Zayin Ltd Engineering Services",
